@@ -1,0 +1,1674 @@
+[
+  {
+    "id": "essential-tee",
+    "name": "Essential Tee",
+    "gender": "men",
+    "type": "T-Shirts",
+    "art": "tee",
+    "price": 899,
+    "rating": 4.4,
+    "reviewCount": 417,
+    "popularity": 85,
+    "trending": 59,
+    "featured": 0,
+    "createdAt": "2026-08-02",
+    "isNew": false,
+    "collections": [
+      "essentials"
+    ],
+    "tags": [
+      "cotton",
+      "basic",
+      "crew neck"
+    ],
+    "description": "The tee you reach for first. Heavy 220 GSM cotton with a relaxed body and a collar that keeps its shape wash after wash.",
+    "details": [
+      "220 GSM combed cotton",
+      "Relaxed fit, true to size",
+      "Ribbed crew neck",
+      "Machine wash cold"
+    ],
+    "colors": [
+      {
+        "name": "Off-White",
+        "hex": "#F1EEE6",
+        "family": "white"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Lavender",
+        "hex": "#C2B0FA",
+        "family": "purple"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Off-White": {
+        "XS": 3,
+        "S": 5,
+        "M": 2,
+        "L": 13,
+        "XL": 0
+      },
+      "Black": {
+        "XS": 0,
+        "S": 5,
+        "M": 9,
+        "L": 3,
+        "XL": 12
+      },
+      "Lavender": {
+        "XS": 6,
+        "S": 0,
+        "M": 9,
+        "L": 16,
+        "XL": 5
+      }
+    }
+  },
+  {
+    "id": "everyday-hoodie",
+    "name": "Everyday Hoodie",
+    "gender": "men",
+    "type": "Hoodies",
+    "art": "hoodie",
+    "price": 1699,
+    "rating": 4.4,
+    "reviewCount": 63,
+    "popularity": 56,
+    "trending": 51,
+    "featured": 1,
+    "createdAt": "2026-09-10",
+    "isNew": false,
+    "collections": [
+      "essentials",
+      "move"
+    ],
+    "tags": [
+      "fleece",
+      "pullover",
+      "drawstring"
+    ],
+    "description": "Brushed-back fleece with a double-layer hood and a roomy kangaroo pocket. Built for cold mornings and late nights.",
+    "details": [
+      "330 GSM brushed fleece",
+      "Regular fit with dropped shoulder",
+      "Double-layer hood",
+      "Kangaroo pocket"
+    ],
+    "colors": [
+      {
+        "name": "Lavender",
+        "hex": "#C2B0FA",
+        "family": "purple"
+      },
+      {
+        "name": "Charcoal",
+        "hex": "#3C3C4A",
+        "family": "grey"
+      },
+      {
+        "name": "Sand",
+        "hex": "#D9C7A6",
+        "family": "neutral"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Lavender": {
+        "XS": 5,
+        "S": 14,
+        "M": 0,
+        "L": 8,
+        "XL": 16
+      },
+      "Charcoal": {
+        "XS": 1,
+        "S": 13,
+        "M": 9,
+        "L": 5,
+        "XL": 9
+      },
+      "Sand": {
+        "XS": 6,
+        "S": 16,
+        "M": 2,
+        "L": 4,
+        "XL": 7
+      }
+    }
+  },
+  {
+    "id": "cargo-pants",
+    "name": "Cargo Pants",
+    "gender": "men",
+    "type": "Bottoms",
+    "art": "cargo",
+    "price": 1499,
+    "rating": 4.9,
+    "reviewCount": 265,
+    "popularity": 58,
+    "trending": 26,
+    "featured": 2,
+    "createdAt": "2026-07-21",
+    "isNew": false,
+    "collections": [
+      "essentials",
+      "move"
+    ],
+    "tags": [
+      "utility",
+      "pockets",
+      "relaxed"
+    ],
+    "description": "Six-pocket cargos in a soft cotton twill. Relaxed through the thigh with adjustable cuffs you can wear long or stacked.",
+    "details": [
+      "100% cotton twill",
+      "Relaxed tapered leg",
+      "Six pockets",
+      "Toggle cuffs"
+    ],
+    "colors": [
+      {
+        "name": "Olive",
+        "hex": "#62684A",
+        "family": "green"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Stone",
+        "hex": "#B9AD94",
+        "family": "neutral"
+      }
+    ],
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "stock": {
+      "Olive": {
+        "28": 17,
+        "30": 7,
+        "32": 10,
+        "34": 17,
+        "36": 17
+      },
+      "Black": {
+        "28": 9,
+        "30": 9,
+        "32": 3,
+        "34": 5,
+        "36": 12
+      },
+      "Stone": {
+        "28": 4,
+        "30": 10,
+        "32": 7,
+        "34": 15,
+        "36": 7
+      }
+    }
+  },
+  {
+    "id": "zip-overshirt",
+    "name": "Zip Overshirt",
+    "gender": "men",
+    "type": "Jackets",
+    "art": "jacket",
+    "price": 1999,
+    "rating": 4.5,
+    "reviewCount": 317,
+    "popularity": 55,
+    "trending": 93,
+    "featured": 3,
+    "createdAt": "2026-10-04",
+    "isNew": true,
+    "collections": [
+      "move"
+    ],
+    "tags": [
+      "layer",
+      "zip",
+      "overshirt"
+    ],
+    "description": "A structured overshirt that layers over tees and hoodies. Two chest pockets and a full-length zip.",
+    "details": [
+      "Cotton-nylon blend",
+      "Boxy fit",
+      "Two patch pockets",
+      "Metal zip"
+    ],
+    "colors": [
+      {
+        "name": "Midnight",
+        "hex": "#1F2447",
+        "family": "blue"
+      },
+      {
+        "name": "Olive",
+        "hex": "#62684A",
+        "family": "green"
+      },
+      {
+        "name": "Sand",
+        "hex": "#D9C7A6",
+        "family": "neutral"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Midnight": {
+        "XS": 0,
+        "S": 4,
+        "M": 3,
+        "L": 0,
+        "XL": 4
+      },
+      "Olive": {
+        "XS": 15,
+        "S": 0,
+        "M": 4,
+        "L": 5,
+        "XL": 11
+      },
+      "Sand": {
+        "XS": 10,
+        "S": 15,
+        "M": 10,
+        "L": 5,
+        "XL": 17
+      }
+    }
+  },
+  {
+    "id": "boxy-graphic-tee",
+    "name": "Boxy Graphic Tee",
+    "gender": "men",
+    "type": "T-Shirts",
+    "art": "tee",
+    "price": 999,
+    "compareAt": 1299,
+    "rating": 4.6,
+    "reviewCount": 27,
+    "popularity": 63,
+    "trending": 44,
+    "featured": 4,
+    "createdAt": "2026-06-18",
+    "isNew": false,
+    "collections": [],
+    "tags": [
+      "graphic",
+      "oversized",
+      "cotton"
+    ],
+    "description": "An oversized tee cut wide and short, with a small chest print. Pairs with cargos or wide-leg denim.",
+    "details": [
+      "240 GSM cotton",
+      "Boxy oversized fit",
+      "Screen-printed chest graphic",
+      "Machine wash cold"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Electric Purple",
+        "hex": "#7B2FF7",
+        "family": "purple"
+      },
+      {
+        "name": "White",
+        "hex": "#F4F4F6",
+        "family": "white"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Black": {
+        "XS": 0,
+        "S": 8,
+        "M": 1,
+        "L": 14,
+        "XL": 11
+      },
+      "Electric Purple": {
+        "XS": 6,
+        "S": 13,
+        "M": 0,
+        "L": 16,
+        "XL": 0
+      },
+      "White": {
+        "XS": 0,
+        "S": 0,
+        "M": 15,
+        "L": 11,
+        "XL": 12
+      }
+    }
+  },
+  {
+    "id": "relaxed-jeans",
+    "name": "Relaxed Straight Jeans",
+    "gender": "men",
+    "type": "Bottoms",
+    "art": "jeans",
+    "price": 1899,
+    "rating": 4.3,
+    "reviewCount": 463,
+    "popularity": 48,
+    "trending": 60,
+    "featured": 5,
+    "createdAt": "2026-05-30",
+    "isNew": false,
+    "collections": [
+      "essentials"
+    ],
+    "tags": [
+      "denim",
+      "straight leg"
+    ],
+    "description": "Rigid-look denim with a touch of stretch. A straight leg that sits just above the shoe.",
+    "details": [
+      "98% cotton, 2% elastane",
+      "Relaxed straight fit",
+      "Five-pocket styling",
+      "Button fly"
+    ],
+    "colors": [
+      {
+        "name": "Indigo",
+        "hex": "#3F5C96",
+        "family": "blue"
+      },
+      {
+        "name": "Washed Blue",
+        "hex": "#7FA0CC",
+        "family": "blue"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      }
+    ],
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "stock": {
+      "Indigo": {
+        "28": 3,
+        "30": 16,
+        "32": 14,
+        "34": 11,
+        "36": 12
+      },
+      "Washed Blue": {
+        "28": 17,
+        "30": 5,
+        "32": 4,
+        "34": 10,
+        "36": 17
+      },
+      "Black": {
+        "28": 7,
+        "30": 0,
+        "32": 14,
+        "34": 13,
+        "36": 17
+      }
+    }
+  },
+  {
+    "id": "track-jacket",
+    "name": "Track Jacket",
+    "gender": "men",
+    "type": "Jackets",
+    "art": "bomber",
+    "price": 2299,
+    "rating": 4.4,
+    "reviewCount": 125,
+    "popularity": 80,
+    "trending": 79,
+    "featured": 6,
+    "createdAt": "2026-11-08",
+    "isNew": true,
+    "collections": [
+      "move"
+    ],
+    "tags": [
+      "sport",
+      "zip",
+      "retro"
+    ],
+    "description": "A lightweight track jacket with ribbed cuffs and hem. Throw it on for training or over a tee for the street.",
+    "details": [
+      "Recycled polyester shell",
+      "Regular fit",
+      "Ribbed cuffs and hem",
+      "Zip side pockets"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Lavender",
+        "hex": "#C2B0FA",
+        "family": "purple"
+      },
+      {
+        "name": "Navy",
+        "hex": "#222B55",
+        "family": "blue"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Black": {
+        "XS": 6,
+        "S": 6,
+        "M": 4,
+        "L": 12,
+        "XL": 11
+      },
+      "Lavender": {
+        "XS": 13,
+        "S": 4,
+        "M": 1,
+        "L": 12,
+        "XL": 2
+      },
+      "Navy": {
+        "XS": 2,
+        "S": 11,
+        "M": 12,
+        "L": 16,
+        "XL": 12
+      }
+    }
+  },
+  {
+    "id": "heavyweight-crew",
+    "name": "Heavyweight Crew",
+    "gender": "men",
+    "type": "Sweatshirts",
+    "art": "sweat",
+    "price": 1399,
+    "rating": 4.3,
+    "reviewCount": 271,
+    "popularity": 48,
+    "trending": 59,
+    "featured": 7,
+    "createdAt": "2026-09-25",
+    "isNew": false,
+    "collections": [
+      "essentials"
+    ],
+    "tags": [
+      "fleece",
+      "crew neck"
+    ],
+    "description": "A dense crew-neck sweatshirt with ribbed trims and a clean front. Holds its shape season after season.",
+    "details": [
+      "380 GSM loopback cotton",
+      "Regular fit",
+      "Ribbed cuffs and hem",
+      "Pre-shrunk"
+    ],
+    "colors": [
+      {
+        "name": "Heather Grey",
+        "hex": "#9C9CA8",
+        "family": "grey"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Forest",
+        "hex": "#3E5A4B",
+        "family": "green"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Heather Grey": {
+        "XS": 0,
+        "S": 9,
+        "M": 9,
+        "L": 7,
+        "XL": 17
+      },
+      "Black": {
+        "XS": 11,
+        "S": 12,
+        "M": 12,
+        "L": 16,
+        "XL": 7
+      },
+      "Forest": {
+        "XS": 7,
+        "S": 13,
+        "M": 0,
+        "L": 3,
+        "XL": 1
+      }
+    }
+  },
+  {
+    "id": "retro-runner",
+    "name": "Retro Runner Sneakers",
+    "gender": "unisex",
+    "type": "Footwear",
+    "art": "shoe",
+    "price": 2499,
+    "compareAt": 3199,
+    "rating": 4.2,
+    "reviewCount": 116,
+    "popularity": 44,
+    "trending": 47,
+    "featured": 8,
+    "createdAt": "2026-08-15",
+    "isNew": false,
+    "collections": [
+      "move"
+    ],
+    "tags": [
+      "sneakers",
+      "shoes",
+      "running"
+    ],
+    "description": "A 90s-inspired runner with a cushioned sole and suede overlays. Light enough for all-day wear.",
+    "details": [
+      "Suede and mesh upper",
+      "EVA cushioned midsole",
+      "Rubber outsole",
+      "True to size"
+    ],
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#F4F4F6",
+        "family": "white"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Lilac",
+        "hex": "#D6C9FF",
+        "family": "purple"
+      }
+    ],
+    "sizes": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10"
+    ],
+    "stock": {
+      "White": {
+        "UK 6": 10,
+        "UK 7": 17,
+        "UK 8": 2,
+        "UK 9": 2,
+        "UK 10": 0
+      },
+      "Black": {
+        "UK 6": 9,
+        "UK 7": 16,
+        "UK 8": 12,
+        "UK 9": 8,
+        "UK 10": 10
+      },
+      "Lilac": {
+        "UK 6": 11,
+        "UK 7": 0,
+        "UK 8": 7,
+        "UK 9": 14,
+        "UK 10": 0
+      }
+    }
+  },
+  {
+    "id": "dad-cap",
+    "name": "Classic Dad Cap",
+    "gender": "unisex",
+    "type": "Accessories",
+    "art": "cap",
+    "price": 599,
+    "rating": 4.8,
+    "reviewCount": 95,
+    "popularity": 47,
+    "trending": 21,
+    "featured": 9,
+    "createdAt": "2026-04-12",
+    "isNew": false,
+    "collections": [
+      "essentials"
+    ],
+    "tags": [
+      "cap",
+      "hat"
+    ],
+    "description": "A soft six-panel cap with a curved brim and an adjustable strap.",
+    "details": [
+      "Washed cotton twill",
+      "Adjustable back strap",
+      "Embroidered eyelets",
+      "One size fits most"
+    ],
+    "colors": [
+      {
+        "name": "Slate",
+        "hex": "#4A4C5C",
+        "family": "grey"
+      },
+      {
+        "name": "Navy",
+        "hex": "#222B55",
+        "family": "blue"
+      },
+      {
+        "name": "Lavender",
+        "hex": "#C2B0FA",
+        "family": "purple"
+      }
+    ],
+    "sizes": [
+      "One Size"
+    ],
+    "stock": {
+      "Slate": {
+        "One Size": 6
+      },
+      "Navy": {
+        "One Size": 15
+      },
+      "Lavender": {
+        "One Size": 10
+      }
+    }
+  },
+  {
+    "id": "tech-joggers",
+    "name": "Tech Cargo Joggers",
+    "gender": "men",
+    "type": "Bottoms",
+    "art": "cargo",
+    "price": 1799,
+    "rating": 4.7,
+    "reviewCount": 258,
+    "popularity": 70,
+    "trending": 73,
+    "featured": 10,
+    "createdAt": "2026-11-12",
+    "isNew": true,
+    "collections": [
+      "move"
+    ],
+    "tags": [
+      "joggers",
+      "stretch",
+      "utility"
+    ],
+    "description": "Four-way stretch joggers with zip cargo pockets. Made to move from the gym to the street.",
+    "details": [
+      "Nylon-elastane stretch",
+      "Slim tapered fit",
+      "Zip cargo pockets",
+      "Elastic cuffs"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Stone",
+        "hex": "#B9AD94",
+        "family": "neutral"
+      }
+    ],
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "stock": {
+      "Black": {
+        "28": 4,
+        "30": 1,
+        "32": 15,
+        "34": 9,
+        "36": 16
+      },
+      "Stone": {
+        "28": 0,
+        "30": 0,
+        "32": 11,
+        "34": 14,
+        "36": 8
+      }
+    }
+  },
+  {
+    "id": "zip-utility-hoodie",
+    "name": "Zip Utility Hoodie",
+    "gender": "men",
+    "type": "Hoodies",
+    "art": "hoodie",
+    "price": 2099,
+    "compareAt": 2599,
+    "rating": 4.9,
+    "reviewCount": 92,
+    "popularity": 84,
+    "trending": 63,
+    "featured": 11,
+    "createdAt": "2026-07-02",
+    "isNew": false,
+    "collections": [],
+    "tags": [
+      "zip",
+      "fleece"
+    ],
+    "description": "A full-zip hoodie with a structured hood and hidden phone pocket.",
+    "details": [
+      "340 GSM fleece",
+      "Regular fit",
+      "Two-way zip",
+      "Hidden phone pocket"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Olive",
+        "hex": "#62684A",
+        "family": "green"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Black": {
+        "XS": 13,
+        "S": 10,
+        "M": 15,
+        "L": 16,
+        "XL": 11
+      },
+      "Olive": {
+        "XS": 3,
+        "S": 16,
+        "M": 5,
+        "L": 11,
+        "XL": 0
+      }
+    }
+  },
+  {
+    "id": "cropped-hoodie",
+    "name": "Cropped Hoodie",
+    "gender": "women",
+    "type": "Hoodies",
+    "art": "cropped-hoodie",
+    "price": 1599,
+    "rating": 4.2,
+    "reviewCount": 186,
+    "popularity": 96,
+    "trending": 72,
+    "featured": 12,
+    "createdAt": "2026-11-02",
+    "isNew": true,
+    "collections": [
+      "move"
+    ],
+    "tags": [
+      "cropped",
+      "fleece"
+    ],
+    "description": "A cropped hoodie that hits right at the waist. Soft fleece, wide sleeves, made to pair with high-rise bottoms.",
+    "details": [
+      "320 GSM brushed fleece",
+      "Cropped boxy fit",
+      "Wide sleeves",
+      "Raw-edge hem"
+    ],
+    "colors": [
+      {
+        "name": "Lavender",
+        "hex": "#C2B0FA",
+        "family": "purple"
+      },
+      {
+        "name": "Cream",
+        "hex": "#EDE3CF",
+        "family": "neutral"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Lavender": {
+        "XS": 2,
+        "S": 6,
+        "M": 1,
+        "L": 16,
+        "XL": 11
+      },
+      "Cream": {
+        "XS": 6,
+        "S": 5,
+        "M": 15,
+        "L": 9,
+        "XL": 7
+      },
+      "Black": {
+        "XS": 16,
+        "S": 5,
+        "M": 6,
+        "L": 16,
+        "XL": 12
+      }
+    }
+  },
+  {
+    "id": "wide-leg-jeans",
+    "name": "Wide-Leg Jeans",
+    "gender": "women",
+    "type": "Bottoms",
+    "art": "wide",
+    "price": 1899,
+    "compareAt": 2599,
+    "rating": 4.3,
+    "reviewCount": 228,
+    "popularity": 95,
+    "trending": 24,
+    "featured": 13,
+    "createdAt": "2026-06-08",
+    "isNew": false,
+    "collections": [],
+    "tags": [
+      "denim",
+      "high rise",
+      "wide leg"
+    ],
+    "description": "High-rise jeans with a full wide leg that skims the floor.",
+    "details": [
+      "100% cotton denim",
+      "High rise, wide leg",
+      "Five-pocket styling",
+      "Zip fly"
+    ],
+    "colors": [
+      {
+        "name": "Indigo",
+        "hex": "#3F5C96",
+        "family": "blue"
+      },
+      {
+        "name": "Washed Blue",
+        "hex": "#7FA0CC",
+        "family": "blue"
+      }
+    ],
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "stock": {
+      "Indigo": {
+        "28": 4,
+        "30": 13,
+        "32": 17,
+        "34": 2,
+        "36": 9
+      },
+      "Washed Blue": {
+        "28": 11,
+        "30": 13,
+        "32": 2,
+        "34": 11,
+        "36": 11
+      }
+    }
+  },
+  {
+    "id": "fitted-baby-tee",
+    "name": "Fitted Baby Tee",
+    "gender": "women",
+    "type": "T-Shirts",
+    "art": "tee",
+    "price": 699,
+    "rating": 4.5,
+    "reviewCount": 171,
+    "popularity": 71,
+    "trending": 40,
+    "featured": 14,
+    "createdAt": "2026-05-14",
+    "isNew": false,
+    "collections": [
+      "essentials"
+    ],
+    "tags": [
+      "fitted",
+      "rib",
+      "basic"
+    ],
+    "description": "A fitted tee in stretch rib cotton. Short sleeves and a slightly cropped length.",
+    "details": [
+      "Stretch rib cotton",
+      "Fitted, slightly cropped",
+      "Crew neck",
+      "Machine wash cold"
+    ],
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#F4F4F6",
+        "family": "white"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Lilac",
+        "hex": "#D6C9FF",
+        "family": "purple"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "White": {
+        "XS": 10,
+        "S": 1,
+        "M": 8,
+        "L": 7,
+        "XL": 9
+      },
+      "Black": {
+        "XS": 9,
+        "S": 13,
+        "M": 3,
+        "L": 17,
+        "XL": 14
+      },
+      "Lilac": {
+        "XS": 13,
+        "S": 7,
+        "M": 17,
+        "L": 11,
+        "XL": 7
+      }
+    }
+  },
+  {
+    "id": "oversized-sweatshirt",
+    "name": "Oversized Sweatshirt",
+    "gender": "women",
+    "type": "Sweatshirts",
+    "art": "sweat",
+    "price": 1299,
+    "rating": 4.7,
+    "reviewCount": 404,
+    "popularity": 77,
+    "trending": 26,
+    "featured": 15,
+    "createdAt": "2026-09-01",
+    "isNew": false,
+    "collections": [
+      "essentials"
+    ],
+    "tags": [
+      "oversized",
+      "fleece",
+      "crew neck"
+    ],
+    "description": "An oversized crew with dropped shoulders and a long body. Wear it alone or over a shirt.",
+    "details": [
+      "330 GSM fleece",
+      "Oversized fit",
+      "Dropped shoulders",
+      "Ribbed trims"
+    ],
+    "colors": [
+      {
+        "name": "Cream",
+        "hex": "#EDE3CF",
+        "family": "neutral"
+      },
+      {
+        "name": "Charcoal",
+        "hex": "#3C3C4A",
+        "family": "grey"
+      },
+      {
+        "name": "Lavender",
+        "hex": "#C2B0FA",
+        "family": "purple"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Cream": {
+        "XS": 16,
+        "S": 16,
+        "M": 11,
+        "L": 1,
+        "XL": 7
+      },
+      "Charcoal": {
+        "XS": 8,
+        "S": 5,
+        "M": 11,
+        "L": 11,
+        "XL": 10
+      },
+      "Lavender": {
+        "XS": 11,
+        "S": 8,
+        "M": 3,
+        "L": 11,
+        "XL": 5
+      }
+    }
+  },
+  {
+    "id": "satin-bomber",
+    "name": "Satin Bomber",
+    "gender": "women",
+    "type": "Jackets",
+    "art": "bomber",
+    "price": 2799,
+    "rating": 4.8,
+    "reviewCount": 50,
+    "popularity": 58,
+    "trending": 62,
+    "featured": 16,
+    "createdAt": "2026-11-15",
+    "isNew": true,
+    "collections": [
+      "move"
+    ],
+    "tags": [
+      "bomber",
+      "satin",
+      "statement"
+    ],
+    "description": "A glossy satin bomber with a padded lining and ribbed trims. The statement layer of the season.",
+    "details": [
+      "Satin shell, padded lining",
+      "Relaxed fit",
+      "Ribbed collar, cuffs and hem",
+      "Two-way zip"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Electric Purple",
+        "hex": "#7B2FF7",
+        "family": "purple"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Black": {
+        "XS": 1,
+        "S": 2,
+        "M": 10,
+        "L": 8,
+        "XL": 17
+      },
+      "Electric Purple": {
+        "XS": 12,
+        "S": 16,
+        "M": 9,
+        "L": 14,
+        "XL": 3
+      }
+    }
+  },
+  {
+    "id": "parachute-pants",
+    "name": "Parachute Pants",
+    "gender": "women",
+    "type": "Bottoms",
+    "art": "cargo",
+    "price": 1599,
+    "rating": 4.4,
+    "reviewCount": 346,
+    "popularity": 89,
+    "trending": 97,
+    "featured": 17,
+    "createdAt": "2026-10-20",
+    "isNew": true,
+    "collections": [
+      "move"
+    ],
+    "tags": [
+      "parachute",
+      "nylon",
+      "toggle"
+    ],
+    "description": "Light nylon pants with a drawcord waist and toggle hems you can cinch or leave loose.",
+    "details": [
+      "Crinkle nylon",
+      "Relaxed wide fit",
+      "Drawcord waist",
+      "Toggle hems"
+    ],
+    "colors": [
+      {
+        "name": "Stone",
+        "hex": "#B9AD94",
+        "family": "neutral"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Lavender",
+        "hex": "#C2B0FA",
+        "family": "purple"
+      }
+    ],
+    "sizes": [
+      "28",
+      "30",
+      "32",
+      "34",
+      "36"
+    ],
+    "stock": {
+      "Stone": {
+        "28": 12,
+        "30": 8,
+        "32": 9,
+        "34": 8,
+        "36": 8
+      },
+      "Black": {
+        "28": 9,
+        "30": 9,
+        "32": 5,
+        "34": 3,
+        "36": 17
+      },
+      "Lavender": {
+        "28": 5,
+        "30": 13,
+        "32": 3,
+        "34": 9,
+        "36": 14
+      }
+    }
+  },
+  {
+    "id": "rib-knit-tee",
+    "name": "Rib Knit Tee",
+    "gender": "women",
+    "type": "T-Shirts",
+    "art": "tee",
+    "price": 799,
+    "compareAt": 999,
+    "rating": 4.3,
+    "reviewCount": 226,
+    "popularity": 78,
+    "trending": 54,
+    "featured": 18,
+    "createdAt": "2026-03-28",
+    "isNew": false,
+    "collections": [],
+    "tags": [
+      "rib",
+      "fitted"
+    ],
+    "description": "A soft rib tee with a scoop neck and a close fit.",
+    "details": [
+      "Modal-cotton rib",
+      "Close fit",
+      "Scoop neck",
+      "Hand wash recommended"
+    ],
+    "colors": [
+      {
+        "name": "Sand",
+        "hex": "#D9C7A6",
+        "family": "neutral"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Sand": {
+        "XS": 3,
+        "S": 15,
+        "M": 9,
+        "L": 4,
+        "XL": 5
+      },
+      "Black": {
+        "XS": 4,
+        "S": 14,
+        "M": 8,
+        "L": 17,
+        "XL": 2
+      }
+    }
+  },
+  {
+    "id": "platform-sneakers",
+    "name": "Platform Sneakers",
+    "gender": "women",
+    "type": "Footwear",
+    "art": "platform",
+    "price": 2699,
+    "rating": 4.4,
+    "reviewCount": 178,
+    "popularity": 42,
+    "trending": 92,
+    "featured": 19,
+    "createdAt": "2026-10-28",
+    "isNew": true,
+    "collections": [],
+    "tags": [
+      "sneakers",
+      "platform",
+      "shoes"
+    ],
+    "description": "Leather court sneakers on a 4 cm platform sole.",
+    "details": [
+      "Leather upper",
+      "4 cm platform",
+      "Padded collar",
+      "Runs half a size large"
+    ],
+    "colors": [
+      {
+        "name": "White",
+        "hex": "#F4F4F6",
+        "family": "white"
+      },
+      {
+        "name": "Lilac",
+        "hex": "#D6C9FF",
+        "family": "purple"
+      }
+    ],
+    "sizes": [
+      "UK 6",
+      "UK 7",
+      "UK 8",
+      "UK 9",
+      "UK 10"
+    ],
+    "stock": {
+      "White": {
+        "UK 6": 0,
+        "UK 7": 4,
+        "UK 8": 5,
+        "UK 9": 9,
+        "UK 10": 8
+      },
+      "Lilac": {
+        "UK 6": 11,
+        "UK 7": 14,
+        "UK 8": 1,
+        "UK 9": 17,
+        "UK 10": 12
+      }
+    }
+  },
+  {
+    "id": "bucket-hat",
+    "name": "Bucket Hat",
+    "gender": "unisex",
+    "type": "Accessories",
+    "art": "bucket",
+    "price": 699,
+    "rating": 4.7,
+    "reviewCount": 457,
+    "popularity": 64,
+    "trending": 42,
+    "featured": 20,
+    "createdAt": "2026-06-30",
+    "isNew": false,
+    "collections": [],
+    "tags": [
+      "hat",
+      "bucket"
+    ],
+    "description": "A soft cotton bucket hat with a short, structured brim.",
+    "details": [
+      "Cotton twill",
+      "Short brim",
+      "Stitched crown",
+      "One size fits most"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "Lavender",
+        "hex": "#C2B0FA",
+        "family": "purple"
+      }
+    ],
+    "sizes": [
+      "One Size"
+    ],
+    "stock": {
+      "Black": {
+        "One Size": 1
+      },
+      "Lavender": {
+        "One Size": 3
+      }
+    }
+  },
+  {
+    "id": "canvas-tote",
+    "name": "Canvas Tote",
+    "gender": "unisex",
+    "type": "Accessories",
+    "art": "tote",
+    "price": 799,
+    "rating": 4.6,
+    "reviewCount": 75,
+    "popularity": 79,
+    "trending": 52,
+    "featured": 21,
+    "createdAt": "2026-02-11",
+    "isNew": false,
+    "collections": [
+      "essentials"
+    ],
+    "tags": [
+      "bag",
+      "tote",
+      "canvas"
+    ],
+    "description": "A heavy canvas tote that fits a laptop, a hoodie and lunch.",
+    "details": [
+      "16 oz cotton canvas",
+      "Inside zip pocket",
+      "Reinforced handles",
+      "40 x 38 cm"
+    ],
+    "colors": [
+      {
+        "name": "Off-White",
+        "hex": "#F1EEE6",
+        "family": "white"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      }
+    ],
+    "sizes": [
+      "One Size"
+    ],
+    "stock": {
+      "Off-White": {
+        "One Size": 6
+      },
+      "Black": {
+        "One Size": 6
+      }
+    }
+  },
+  {
+    "id": "denim-trucker",
+    "name": "Denim Trucker Jacket",
+    "gender": "women",
+    "type": "Jackets",
+    "art": "jacket",
+    "price": 2499,
+    "compareAt": 3199,
+    "rating": 4.6,
+    "reviewCount": 188,
+    "popularity": 66,
+    "trending": 49,
+    "featured": 22,
+    "createdAt": "2026-04-04",
+    "isNew": false,
+    "collections": [],
+    "tags": [
+      "denim",
+      "jacket",
+      "trucker"
+    ],
+    "description": "A classic trucker jacket in mid-weight denim, cut slightly boxy.",
+    "details": [
+      "100% cotton denim",
+      "Boxy fit",
+      "Chest flap pockets",
+      "Shank buttons"
+    ],
+    "colors": [
+      {
+        "name": "Indigo",
+        "hex": "#3F5C96",
+        "family": "blue"
+      },
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Indigo": {
+        "XS": 2,
+        "S": 16,
+        "M": 15,
+        "L": 10,
+        "XL": 16
+      },
+      "Black": {
+        "XS": 15,
+        "S": 9,
+        "M": 5,
+        "L": 3,
+        "XL": 13
+      }
+    }
+  },
+  {
+    "id": "graphic-longsleeve",
+    "name": "Graphic Long Sleeve",
+    "gender": "unisex",
+    "type": "T-Shirts",
+    "art": "longsleeve",
+    "price": 1099,
+    "rating": 4.2,
+    "reviewCount": 269,
+    "popularity": 47,
+    "trending": 66,
+    "featured": 23,
+    "createdAt": "2026-10-10",
+    "isNew": true,
+    "collections": [],
+    "tags": [
+      "long sleeve",
+      "graphic"
+    ],
+    "description": "A long-sleeve tee with a sleeve print and a relaxed body.",
+    "details": [
+      "220 GSM cotton",
+      "Relaxed fit",
+      "Sleeve print",
+      "Ribbed cuffs"
+    ],
+    "colors": [
+      {
+        "name": "Black",
+        "hex": "#1F1F25",
+        "family": "black"
+      },
+      {
+        "name": "White",
+        "hex": "#F4F4F6",
+        "family": "white"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Black": {
+        "XS": 3,
+        "S": 0,
+        "M": 11,
+        "L": 17,
+        "XL": 3
+      },
+      "White": {
+        "XS": 16,
+        "S": 2,
+        "M": 13,
+        "L": 5,
+        "XL": 12
+      }
+    }
+  }
+]

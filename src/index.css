@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* SHOPNOW design tokens: black, off-white, lavender and electric purple. */
+@theme {
+  --color-ink: #0F0F14;
+  --color-ink-2: #34343F;
+  --color-muted: #6B6B7B;
+  --color-paper: #F8F6F1;
+  --color-line: #E6E2EE;
+  --color-lav-50: #F6F2FF;
+  --color-lav-100: #ECE4FF;
+  --color-lav-200: #DCCFFF;
+  --color-lav-300: #C2B0FA;
+  --color-lav-400: #A88BF5;
+  --color-electric: #7B2FF7;
+  --color-electric-600: #6420D9;
+  --color-success: #15803D;
+  --color-danger: #C62828;
+  --color-warn: #B45309;
+
+  --font-display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --shadow-card: 0 18px 40px -18px rgb(40 20 90 / 0.28);
+  --shadow-pop: 0 24px 60px -20px rgb(15 15 20 / 0.35);
+}
+
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  ::selection { background: var(--color-lav-300); color: var(--color-ink); }
+  :focus-visible { outline: 2px solid var(--color-electric); outline-offset: 3px; border-radius: 8px; }
+  button { cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+  img, svg { display: block; }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1320px];
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  @media (min-width: 768px) {
+    .container-x { padding-left: 2rem; padding-right: 2rem; }
+  }
+  .display { font-family: var(--font-display); letter-spacing: -0.035em; line-height: 0.95; font-weight: 800; }
+  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.2em] text-electric; }
+
+  /* CTA: scale and arrow movement, 150ms */
+  .btn {
+    @apply inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold whitespace-nowrap select-none;
+    transition: transform 150ms var(--ease-soft), background-color 150ms, color 150ms, box-shadow 150ms;
+  }
+  .btn:hover:not(:disabled) { transform: scale(1.03); }
+  .btn:active:not(:disabled) { transform: scale(0.97); }
+  .btn .arrow { transition: transform 150ms var(--ease-soft); }
+  .btn:hover .arrow { transform: translateX(4px); }
+  .btn-dark { @apply bg-ink text-white hover:bg-electric; }
+  .btn-light { @apply bg-white text-ink hover:bg-lav-100; }
+  .btn-line { @apply border border-ink/15 bg-white/60 text-ink backdrop-blur hover:border-ink; }
+  .btn-electric { @apply bg-electric text-white hover:bg-electric-600; }
+  .btn:disabled { @apply opacity-50; }
+
+  .chip {
+    @apply inline-flex h-9 items-center gap-1.5 rounded-full border border-line bg-white px-3.5 text-[13px] font-medium text-ink-2;
+    transition: background-color 200ms, border-color 200ms, color 200ms;
+  }
+  .chip:hover { @apply border-ink/40; }
+  .chip[aria-pressed="true"] { @apply border-ink bg-ink text-white; }
+
+  .icon-btn {
+    @apply relative grid size-11 place-items-center rounded-full text-ink;
+    transition: background-color 200ms;
+  }
+  .icon-btn:hover { @apply bg-lav-100; }
+
+  .art-bg { background: linear-gradient(180deg, #F2EFF8 0%, #E6E1F0 100%); }
+  .art-bg-alt { background: radial-gradient(90% 80% at 50% 30%, #F6F2FF 0%, #DCCFFF 100%); }
+
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  .skeleton {
+    background: linear-gradient(90deg, #ECE8F3 25%, #F7F5FB 50%, #ECE8F3 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.2s linear infinite;
+  }
+}
+
+@keyframes shimmer { to { background-position: -200% 0; } }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes ping-soft { 0% { transform: scale(0.7); opacity: 0.8; } 100% { transform: scale(1.5); opacity: 0; } }
+@keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(3px); } 30%, 50%, 70% { transform: translateX(-5px); } 40%, 60% { transform: translateX(5px); } }
+
+.animate-marquee { animation: marquee 32s linear infinite; }
+.animate-ping-soft { animation: ping-soft 2.2s ease-out infinite; }
+.animate-shake { animation: shake 0.45s both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

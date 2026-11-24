@@ -1,0 +1,71 @@
+[
+  {
+    "id": "city-layers",
+    "name": "City Layers",
+    "caption": "A soft hoodie, utility cargos and a retro runner for everyday errands.",
+    "figure": "m",
+    "items": [
+      {
+        "productId": "everyday-hoodie",
+        "color": 1,
+        "slot": "top"
+      },
+      {
+        "productId": "cargo-pants",
+        "color": 0,
+        "slot": "bottom"
+      },
+      {
+        "productId": "retro-runner",
+        "color": 0,
+        "slot": "feet"
+      }
+    ]
+  },
+  {
+    "id": "lavender-hour",
+    "name": "Lavender Hour",
+    "caption": "Cropped fleece over wide-leg denim, finished with a platform sole.",
+    "figure": "f",
+    "items": [
+      {
+        "productId": "cropped-hoodie",
+        "color": 0,
+        "slot": "top"
+      },
+      {
+        "productId": "wide-leg-jeans",
+        "color": 0,
+        "slot": "bottom"
+      },
+      {
+        "productId": "platform-sneakers",
+        "color": 0,
+        "slot": "feet"
+      }
+    ]
+  },
+  {
+    "id": "night-shift",
+    "name": "Night Shift",
+    "caption": "Track jacket, tech joggers and a cap. Built for late plans.",
+    "figure": "m",
+    "items": [
+      {
+        "productId": "track-jacket",
+        "color": 0,
+        "slot": "top"
+      },
+      {
+        "productId": "tech-joggers",
+        "color": 1,
+        "slot": "bottom"
+      },
+      {
+        "productId": "dad-cap",
+        "color": 2,
+        "slot": "head"
+      }
+    ]
+  }
+]
