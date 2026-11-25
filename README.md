@@ -27,7 +27,7 @@ npm run typecheck  # TypeScript check
 | 01 | Announcement bar | `src/components/layout/AnnouncementBar.tsx` |
 | – | Navigation and mega menu | `src/components/layout/Navbar.tsx`, `MobileMenu.tsx` |
 | 02 | Hero | `src/components/sections/Hero.tsx` |
-| 03 | Shopping benefits | `src/components/sections/Benefits.tsx` |
+| 03 | Shop highlights (category rail, service strip, promo tiles) | `src/components/sections/ShopHighlights.tsx` |
 | 04 | Shop by category | `src/components/sections/Categories.tsx` |
 | 05 | Explore products (tabs, filters, sorting) | `src/components/sections/Explore.tsx` |
 | 06 | Featured collection | `src/components/sections/Featured.tsx` |
@@ -91,4 +91,4 @@ All timings follow the plan and are kept in `src/lib/motion.ts`. For example: he
 - Meta description, Open Graph tags and `ClothingStore` JSON-LD are in `index.html`.
 
 ## Out of scope (by design)
-Backend, database, login, separate product pages, payment, checkout and shipping, order management, admin and external APIs. The checkout button and footer info links show a notice instead.
+Backend, database, login, separate product pages, payment, checkout and shipping, order management, admin and external APIs. Checkout is a demo: it empties the bag and shows a confirmation that states no payment was taken. Footer "Client Care" links open information dialogs.

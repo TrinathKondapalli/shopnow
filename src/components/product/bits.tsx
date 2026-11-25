@@ -65,8 +65,8 @@ export function WishButton({
       aria-label={on ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
       className={cn(
         variant === 'flat'
-          ? 'grid size-[30px] place-items-center rounded-[15px] bg-white text-ink transition-colors duration-200 hover:text-electric-alt'
-          : 'grid size-[32px] place-items-center rounded-full bg-white/90 text-ink shadow-[0_2px_8px_rgba(0,0,0,0.08)] backdrop-blur transition-all duration-200 hover:bg-white hover:scale-105',
+          ? 'grid size-9 place-items-center rounded-full bg-white text-ink transition-colors duration-200 hover:text-electric-alt'
+          : 'grid size-9 place-items-center rounded-full bg-white/90 text-ink shadow-[0_2px_8px_rgba(0,0,0,0.08)] backdrop-blur transition-all duration-200 hover:bg-white hover:scale-105',
         on && 'text-purple',
         className,
       )}

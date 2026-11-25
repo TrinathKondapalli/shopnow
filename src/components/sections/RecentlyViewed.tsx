@@ -19,7 +19,8 @@ export function RecentlyViewed() {
   return (
     <section id="recent" className="relative scroll-mt-16 md:scroll-mt-20 overflow-hidden bg-[#F9F2EC]" aria-labelledby="recent-title">
       <div className="relative mx-auto w-full max-w-[1648px] px-4 pb-[69px] pt-14 sm:px-8 lg:pt-[95.7px] xl:px-[70.6px]">
-        {/* Outline count decoration 121:729 */}
+        {/* Outline count decoration 121:729 (only once there is something to count) */}
+        {items.length > 0 && (
         <div
           className="pointer-events-none absolute right-2 top-[-9.36px] select-none whitespace-nowrap text-[150px] font-extrabold italic leading-normal tracking-[-6px] text-transparent sm:text-[220px] lg:text-[293px] lg:tracking-[-11.72px] xl:left-[1198.06px] xl:right-auto"
           style={{ WebkitTextStroke: '1px #8B4DFF' }}
@@ -27,6 +28,7 @@ export function RecentlyViewed() {
         >
           {countStr}
         </div>
+        )}
 
         {/* Header 121:730-121:732 */}
         <div className="relative flex flex-wrap items-end justify-between gap-6 xl:pl-[5.3px]">
@@ -59,7 +61,7 @@ export function RecentlyViewed() {
         <div className="relative mt-10 h-[1.5px] w-full bg-ink lg:mt-[77.2px]" aria-hidden="true" />
 
         {items.length === 0 ? (
-          <div className="relative flex flex-col items-start gap-6 py-8 md:h-[159.4px] md:flex-row md:items-start md:gap-0 md:py-0 md:pl-[39.4px] md:pr-[19px]">
+          <div className="relative flex flex-col items-start gap-6 py-8 md:min-h-[159.4px] md:flex-row md:pb-8 md:items-start md:gap-0 md:py-0 md:pl-[39.4px] md:pr-[19px]">
             {/* icon/history 121:735 */}
             <span className="relative block size-[56px] shrink-0 text-electric-alt md:mt-[46.3px] md:size-[66px]">
               <span className="absolute inset-[12.5%]">

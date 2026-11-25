@@ -1,8 +1,9 @@
-import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import type { CartLine, ExploreState, Toast } from '../types';
 import { DEFAULT_EXPLORE, LOOKS, getProduct, stockFor } from '../lib/catalog';
 import { usePersistentState } from '../lib/storage';
 import { scrollToId } from '../lib/utils';
+import { exploreToHash, hashToExplore, hashToProduct, productHash } from '../lib/url';
 
 export const FREE_SHIPPING_AT = 999;
 export const SHIPPING_FEE = 99;
@@ -11,6 +12,7 @@ const MAX_RECENT_VIEWED = 10;
 const MAX_RECENT_SEARCHES = 6;
 
 type Panel = 'cart' | 'wishlist' | null;
+export type InfoType = 'size-guide' | 'shipping' | 'returns' | 'care' | 'faq';
 export type AddResult = { ok: boolean; added: number; reason?: 'out-of-stock' | 'limited' };
 
 interface Totals { count: number; subtotal: number; discount: number; shipping: number; total: number; toFreeShipping: number }
@@ -22,6 +24,7 @@ interface ShopContextValue {
   addToCart: (productId: string, color: number, size: string, qty: number, lookId?: string) => AddResult;
   setLineQty: (key: string, qty: number) => void;
   removeLine: (key: string) => void;
+  clearCart: () => void;
   variantInCart: (productId: string, color: number, size: string) => number;
   // wishlist
   wishlist: string[];
@@ -46,6 +49,9 @@ interface ShopContextValue {
   setSearchOpen: (v: boolean) => void;
   mobileMenuOpen: boolean;
   setMobileMenuOpen: (v: boolean) => void;
+  info: InfoType | null;
+  openInfo: (t: InfoType) => void;
+  closeInfo: () => void;
   // explore grid
   explore: ExploreState;
   setExplore: (patch: Partial<ExploreState>) => void;
@@ -98,6 +104,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const [panel, setPanel] = useState<Panel>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [info, setInfo] = useState<InfoType | null>(null);
   const [explore, setExploreState] = useState<ExploreState>(DEFAULT_EXPLORE);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const toastId = useRef(0);
@@ -147,11 +154,25 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   }, [wishlist, setWishlist]);
   const removeWish = useCallback((id: string) => setWishlist((prev) => prev.filter((x) => x !== id)), [setWishlist]);
 
-  const openQuickView = useCallback((productId: string, color = 0) => {
+  const showProduct = useCallback((productId: string, color = 0) => {
     setQuickView({ productId, color });
     setRecentlyViewed((prev) => [productId, ...prev.filter((x) => x !== productId)].slice(0, MAX_RECENT_VIEWED));
   }, [setRecentlyViewed]);
-  const closeQuickView = useCallback(() => setQuickView(null), []);
+
+  const openQuickView = useCallback((productId: string, color = 0) => {
+    showProduct(productId, color);
+    const target = productHash(productId, color);
+    if (window.location.hash === target) return;
+    // One history entry per open product: the back button closes it.
+    if (window.history.state?.qv) window.history.replaceState({ qv: 1 }, '', target);
+    else window.history.pushState({ qv: 1 }, '', target);
+  }, [showProduct]);
+
+  const closeQuickView = useCallback(() => {
+    setQuickView(null);
+    if (window.history.state?.qv) window.history.back();
+    else if (hashToProduct(window.location.hash)) window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  }, []);
 
   const addRecentSearch = useCallback((q: string) => {
     const t = q.trim();
@@ -166,6 +187,33 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     window.requestAnimationFrame(() => scrollToId('shop'));
   }, []);
 
+  // Links: #p/<id> opens a product, #shop?… restores filters.
+  useEffect(() => {
+    const fromLink = hashToProduct(window.location.hash);
+    if (fromLink) showProduct(fromLink.productId, fromLink.color);
+    const filters = hashToExplore(window.location.hash);
+    if (filters) {
+      setExploreState({ ...DEFAULT_EXPLORE, ...filters });
+      window.setTimeout(() => scrollToId('shop'), 250);
+    }
+    const onPop = () => {
+      const p = hashToProduct(window.location.hash);
+      setQuickView(p);
+      const f = hashToExplore(window.location.hash);
+      if (f) setExploreState({ ...DEFAULT_EXPLORE, ...f });
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []); // run once on load
+
+  useEffect(() => {
+    const h = window.location.hash;
+    // Leave product links and in-page anchors (e.g. #reviews) alone.
+    if (h && !h.startsWith('#shop')) return;
+    const next = exploreToHash(explore);
+    if (next !== h) window.history.replaceState(window.history.state, '', window.location.pathname + window.location.search + next);
+  }, [explore]);
+
   const dismissToast = useCallback((id: number) => setToasts((t) => t.filter((x) => x.id !== id)), []);
   const toast = useCallback<ShopContextValue['toast']>((t) => {
     const id = ++toastId.current;
@@ -176,7 +224,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const totals = useMemo(() => computeTotals(cart), [cart]);
 
   const value: ShopContextValue = {
-    cart, totals, addToCart, setLineQty, removeLine, variantInCart,
+    cart, totals, addToCart, setLineQty, removeLine, clearCart: () => setCart([]), variantInCart,
     wishlist, isWished, toggleWish, removeWish,
     recentlyViewed, clearRecentlyViewed: () => setRecentlyViewed([]),
     recentSearches, addRecentSearch,
@@ -185,6 +233,7 @@ export function ShopProvider({ children }: { children: ReactNode }) {
     quickView, openQuickView, closeQuickView,
     panel, openPanel: (p) => { setPanel(p); setMobileMenuOpen(false); }, closePanel: () => setPanel(null),
     searchOpen, setSearchOpen, mobileMenuOpen, setMobileMenuOpen,
+    info, openInfo: setInfo, closeInfo: () => setInfo(null),
     explore, setExplore, shopWith,
     toasts, toast, dismissToast,
   };

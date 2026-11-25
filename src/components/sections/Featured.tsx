@@ -199,6 +199,8 @@ export function Featured() {
           >
             <AnimatePresence mode="wait">
               <motion.img
+                loading="lazy"
+                decoding="async"
                 key={current.drop}
                 src={current.photo}
                 alt={current.alt}
@@ -321,7 +323,7 @@ export function Featured() {
                   id="featured-title"
                   className="mt-[33.27px] ml-[0.077em] whitespace-nowrap text-[clamp(52px,6.25vw,103px)] font-bold leading-[0.9515em] text-ink"
                 >
-                  <span className="block tracking-[-0.044em]">{current.titleMain}</span>
+                  <span className="block tracking-[-0.044em]">{current.titleMain}</span>{' '}
                   <span className="-mt-[0.1097em] -ml-[0.0194em] block italic tracking-[-0.045em] text-purple">{current.titleAccent}</span>
                 </h2>
 
@@ -404,6 +406,8 @@ function MiniProductCard({ product, color, image, index }: { product: Product; c
         <span className="relative block aspect-[239.5/232.6] overflow-hidden">
           {image ? (
             <img
+              loading="lazy"
+              decoding="async"
               src={image}
               alt={product.name}
               className="h-full w-full object-cover transition-transform duration-500 ease-soft group-hover:scale-[1.04]"

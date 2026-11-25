@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight, Heart, ShoppingBag, Trash2 } from 'lucide-react';
-import { getProduct, isSoldOut } from '../../lib/catalog';
-import { scrollToId } from '../../lib/utils';
+import type { Product } from '../../types';
+import { colorStock, getProduct, isSoldOut, stockFor } from '../../lib/catalog';
+import { cn, scrollToId } from '../../lib/utils';
 import { EASE } from '../../lib/motion';
 import { useShop } from '../../store/ShopProvider';
 import { ProductImage } from '../product/ProductImage';
@@ -15,7 +17,7 @@ export function WishlistDrawer() {
 }
 
 function WishlistPanel({ onClose }: { onClose: () => void }) {
-  const { wishlist, removeWish, openQuickView, toast } = useShop();
+  const { wishlist } = useShop();
   const items = wishlist.map(getProduct).filter((p): p is NonNullable<typeof p> => !!p);
 
   return (
@@ -36,47 +38,88 @@ function WishlistPanel({ onClose }: { onClose: () => void }) {
       ) : (
         <ul>
           <AnimatePresence initial={false}>
-            {items.map((p) => {
-              const soldOut = isSoldOut(p);
-              return (
-                <motion.li
-                  key={p.id}
-                  layout
-                  initial={{ opacity: 0, x: 24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 40, height: 0 }}
-                  transition={{ duration: 0.3, ease: EASE }}
-                  className="overflow-hidden border-b border-line"
-                >
-                  <div className="grid grid-cols-[84px_1fr] gap-4 py-4">
-                    <button type="button" onClick={() => openQuickView(p.id)} className="h-[100px] overflow-hidden rounded-xl art-bg" aria-label={`View ${p.name}`}>
-                      <ProductImage product={p} inset="p-2" />
-                    </button>
-                    <div className="flex min-w-0 flex-col">
-                      <p className="font-semibold leading-snug">{p.name}</p>
-                      <p className="text-xs text-muted">{p.type} · {p.colors.length} colours</p>
-                      <Price product={p} className="mt-1 text-sm" />
-                      <div className="mt-auto flex items-center justify-between gap-2 pt-2">
-                        <button type="button" disabled={soldOut} onClick={() => openQuickView(p.id)} className="btn btn-dark h-9 px-4 text-xs">
-                          <ShoppingBag size={14} /> {soldOut ? 'Sold out' : 'Select size'}
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => { removeWish(p.id); toast({ title: 'Removed from wishlist', description: p.name, tone: 'info' }); }}
-                          className="inline-flex items-center gap-1 text-xs font-medium text-muted hover:text-danger"
-                          aria-label={`Remove ${p.name} from wishlist`}
-                        >
-                          <Trash2 size={14} /> Remove
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </motion.li>
-              );
-            })}
+            {items.map((p) => (
+              <motion.li
+                key={p.id}
+                layout
+                initial={{ opacity: 0, x: 24 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 40, height: 0 }}
+                transition={{ duration: 0.3, ease: EASE }}
+                className="overflow-hidden border-b border-line"
+              >
+                <WishRow product={p} />
+              </motion.li>
+            ))}
           </AnimatePresence>
         </ul>
       )}
     </Drawer>
+  );
+}
+
+/** One saved product: pick a size and move it straight to the bag. */
+function WishRow({ product: p }: { product: Product }) {
+  const { removeWish, openQuickView, addToCart, toast, openPanel } = useShop();
+  // Use the first colour that still has stock.
+  const color = Math.max(0, p.colors.findIndex((_, i) => colorStock(p, i) > 0));
+  const oneSize = p.sizes.length === 1;
+  const [size, setSize] = useState(oneSize ? p.sizes[0] : '');
+  const [missing, setMissing] = useState(false);
+  const soldOut = isSoldOut(p);
+
+  const move = () => {
+    if (!size) { setMissing(true); return; }
+    const r = addToCart(p.id, color, size, 1);
+    if (!r.ok) { toast({ title: 'That size is sold out', description: `${p.name} · ${size}`, tone: 'error' }); return; }
+    removeWish(p.id);
+    toast({ title: 'Moved to bag', description: `${p.name} · ${p.colors[color].name} · ${size}`, action: { label: 'View bag', onClick: () => openPanel('cart') } });
+  };
+
+  return (
+    <div className="grid grid-cols-[84px_1fr] gap-4 py-4">
+      <button type="button" onClick={() => openQuickView(p.id, color)} className="h-[100px] overflow-hidden rounded-xl art-bg" aria-label={`View ${p.name}`}>
+        <ProductImage product={p} color={color} inset="p-2" />
+      </button>
+      <div className="flex min-w-0 flex-col">
+        <div className="flex items-start justify-between gap-2">
+          <p className="font-semibold leading-snug">{p.name}</p>
+          <button
+            type="button"
+            onClick={() => { removeWish(p.id); toast({ title: 'Removed from wishlist', description: p.name, tone: 'info' }); }}
+            className="-mr-2 -mt-1 grid size-9 shrink-0 place-items-center rounded-full text-muted hover:bg-lav-50 hover:text-danger"
+            aria-label={`Remove ${p.name} from wishlist`}
+          >
+            <Trash2 size={15} />
+          </button>
+        </div>
+        <p className="text-xs text-muted">{p.type} · {p.colors[color].name}</p>
+        <Price product={p} className="mt-1 text-sm" />
+        {soldOut ? (
+          <p className="mt-auto pt-2 text-xs font-semibold text-muted">Sold out</p>
+        ) : (
+          <div className="mt-auto flex items-center gap-2 pt-2">
+            {!oneSize && (
+              <select
+                value={size}
+                onChange={(e) => { setSize(e.target.value); setMissing(false); }}
+                aria-label={`Size for ${p.name}`}
+                aria-invalid={missing}
+                className={cn('h-9 min-w-0 flex-1 rounded-full border bg-white px-3 text-xs font-medium', missing ? 'border-danger text-danger' : 'border-line')}
+              >
+                <option value="">{missing ? 'Pick a size' : 'Size'}</option>
+                {p.sizes.map((s) => {
+                  const out = stockFor(p, color, s) === 0;
+                  return <option key={s} value={s} disabled={out}>{s}{out ? ' (sold out)' : ''}</option>;
+                })}
+              </select>
+            )}
+            <button type="button" onClick={move} className="btn btn-dark h-9 shrink-0 px-4 text-xs">
+              <ShoppingBag size={14} /> Move to bag
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

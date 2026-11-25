@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight, Lock, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
+import { ArrowRight, CircleCheck, Lock, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react';
 import { LOOKS, getProduct, stockFor } from '../../lib/catalog';
 import { cn, inr, scrollToId } from '../../lib/utils';
 import { EASE } from '../../lib/motion';
@@ -14,7 +15,9 @@ export function CartDrawer() {
 }
 
 function CartPanel({ onClose }: { onClose: () => void }) {
-  const { cart, totals, setLineQty, removeLine, toast, openQuickView } = useShop();
+  const { cart, totals, setLineQty, removeLine, clearCart, openQuickView } = useShop();
+  const [placed, setPlaced] = useState<{ count: number; total: number } | null>(null);
+  const placeOrder = () => { setPlaced({ count: totals.count, total: totals.total }); clearCart(); };
   const progress = Math.min(1, (totals.subtotal - totals.discount) / FREE_SHIPPING_AT);
 
   const top = totals.count > 0 && (
@@ -40,17 +43,28 @@ function CartPanel({ onClose }: { onClose: () => void }) {
       <button
         type="button"
         className="btn btn-dark mt-2 h-13 w-full"
-        onClick={() => toast({ title: 'Order Confirmed', description: 'Thank you for your order! Your pieces are reserved.', tone: 'success' })}
+        onClick={placeOrder}
       >
         <Lock size={16} /> Checkout · {inr(totals.total)}
       </button>
+      <p className="text-center text-xs text-muted">Demo store: no payment is taken.</p>
       <button type="button" onClick={onClose} className="w-full py-2 text-center text-sm font-semibold underline underline-offset-4">Continue shopping</button>
     </div>
   );
 
   return (
     <Drawer title="Your bag" count={totals.count} onClose={onClose} top={top} footer={footer} returnFocusTo="[data-bag-target]">
-      {cart.length === 0 ? (
+      {placed && cart.length === 0 ? (
+        <div className="flex h-full flex-col items-center justify-center gap-4 py-16 text-center" role="status">
+          <span className="grid size-16 place-items-center rounded-full bg-lav-100 text-success"><CircleCheck size={30} /></span>
+          <p className="display text-2xl">Thanks for shopping with us</p>
+          <p className="max-w-xs text-sm text-muted">
+            Your demo order of {placed.count} {placed.count === 1 ? 'item' : 'items'} ({inr(placed.total)}) is complete.
+            This is a demo store, so no payment was taken and nothing will be shipped.
+          </p>
+          <button type="button" className="btn btn-dark mt-2" onClick={() => { onClose(); scrollToId('shop'); }}>Continue shopping <ArrowRight size={16} className="arrow" /></button>
+        </div>
+      ) : cart.length === 0 ? (
         <div className="flex h-full flex-col items-center justify-center gap-4 py-16 text-center">
           <span className="grid size-16 place-items-center rounded-full bg-lav-100 text-electric"><ShoppingBag size={28} /></span>
           <p className="display text-2xl">Your bag is empty</p>

@@ -11,8 +11,7 @@ export function Toaster() {
   const { toasts, dismissToast } = useShop();
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-[100] flex flex-col items-center gap-2 p-4 sm:items-start"
-      style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))', paddingLeft: 'max(1rem, env(safe-area-inset-left))' }}
+      className="pointer-events-none fixed inset-x-0 top-0 z-[110] flex flex-col items-center gap-2 p-4 pt-[max(1rem,env(safe-area-inset-top))] sm:top-auto sm:bottom-0 sm:items-start sm:pt-4 sm:pb-[max(1rem,env(safe-area-inset-bottom))] sm:pl-[max(1rem,env(safe-area-inset-left))]"
       role="status"
       aria-live="polite"
     >
@@ -23,7 +22,7 @@ export function Toaster() {
             <motion.div
               key={t.id}
               layout
-              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              initial={{ opacity: 0, y: 12, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, x: -40 }}
               transition={{ duration: DUR.toast, ease: EASE }}

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import type React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, ChevronRight, Gem, Headphones, LayoutGrid, RefreshCw, ShieldCheck, Star } from 'lucide-react';
+import { ArrowRight, ChevronRight, Gem, LayoutGrid, RefreshCw, Star } from 'lucide-react';
 import type { ExploreState } from '../../types';
 import { PRODUCTS, REVIEWS, discountPct } from '../../lib/catalog';
 import { fadeUp } from '../../lib/motion';
@@ -34,8 +34,6 @@ export function ShopHighlights() {
   const TRUST = [
     { icon: Gem, title: 'Best prices', sub: 'every day' },
     { icon: RefreshCw, title: 'Easy returns', sub: 'within 7 days' },
-    { icon: ShieldCheck, title: '100% secure', sub: 'payments' },
-    { icon: Headphones, title: '24/7 customer', sub: 'support' },
     { icon: Star, title: `Rated ${rating}/5`, sub: 'by our shoppers' },
   ];
 
@@ -76,7 +74,7 @@ export function ShopHighlights() {
         {/* Service strip */}
         <ul className="grid grid-cols-2 gap-y-4 rounded-xl border border-lav-200 bg-lav-100 px-4 py-4 sm:grid-cols-3 lg:flex lg:items-center lg:justify-between lg:px-10 lg:py-5">
           {TRUST.map(({ icon: Icon, title, sub }, i) => (
-            <li key={title} className={cn('flex items-center gap-3 lg:flex-1 lg:justify-center', i > 0 && 'lg:border-l lg:border-lav-300', i === 4 && 'max-sm:col-span-2')}>
+            <li key={title} className={cn('flex items-center gap-3 lg:flex-1 lg:justify-center', i > 0 && 'lg:border-l lg:border-lav-300', i === 2 && 'max-sm:col-span-2')}>
               <Icon size={36} strokeWidth={1.7} className="shrink-0 text-purple" aria-hidden="true" />
               <span className="text-[14px] font-medium leading-tight text-ink xl:text-[17px]">{title}<br />{sub}</span>
             </li>
@@ -114,9 +112,9 @@ export function ShopHighlights() {
             className="bg-[linear-gradient(110deg,#FAF5F0_0%,#F3EDFF_60%,#E6DCFF_100%)] text-ink"
             img="/figma/featured/drop-02.jpg"
             imgPos="50% 40%"
-            title={<>Join the Club<br /><span className="text-purple">&amp; Save More</span></>}
-            text={<>Early access, drops<br />and member-only deals</>}
-            cta="Join now"
+            title={<>Get Early<br /><span className="text-purple">Access</span></>}
+            text={<>First look at new drops<br />and sales by email</>}
+            cta="Sign up"
             ctaClass="bg-ink text-white hover:bg-ink-hover"
             onClick={() => scrollToId('newsletter')}
           />

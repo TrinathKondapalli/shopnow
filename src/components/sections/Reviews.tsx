@@ -35,7 +35,7 @@ export function Reviews() {
           >
             <p className="display text-7xl">{avg.toFixed(1)}</p>
             <Stars value={avg} size={18} className="mt-3" />
-            <p className="mt-2 text-sm text-white/60">Based on {REVIEWS.length} reviews</p>
+            <p className="mt-2 text-sm text-white/60">Average of our {REVIEWS.length} latest reviews</p>
             <ul className="mt-6 space-y-2">
               {dist.map((d) => (
                 <li key={d.n} className="flex items-center gap-3 text-sm">

@@ -3,7 +3,7 @@ import type React from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowRight, Camera, ChevronDown, Heart, House, Layers, LayoutGrid, Menu, Search,
-  Shirt, ShoppingCart, Sparkles, Tag, UserRound,
+  Shirt, ShoppingCart, Sparkles, Tag,
 } from 'lucide-react';
 import type { ExploreState, ProductType } from '../../types';
 import { PRODUCT_TYPES, getProduct } from '../../lib/catalog';
@@ -55,7 +55,7 @@ const MORE_LINKS: { label: string; target: string }[] = [
 ];
 
 export function Navbar() {
-  const { shopWith, setSearchOpen, openPanel, setMobileMenuOpen, totals, wishlist, addRecentSearch, toast } = useShop();
+  const { shopWith, setSearchOpen, openPanel, setMobileMenuOpen, totals, wishlist, addRecentSearch } = useShop();
   const [open, setOpen] = useState<MenuId | null>(null);
   const [query, setQuery] = useState('');
   const closeTimer = useRef<number | undefined>(undefined);
@@ -84,14 +84,12 @@ export function Navbar() {
     shopWith({ query: q });
   };
 
-  const signIn = () => toast({ title: 'Sign in is coming soon', description: 'Your bag and wishlist are saved on this device for now.', tone: 'info' });
-
   const mega = open === 'men' || open === 'women' || open === 'collections' ? MEGA[open] : null;
   const feature = mega ? getProduct(mega.feature.productId) : undefined;
 
   return (
     <>
-      {/* Main row: logo, search, offers, sign in, wishlist, cart (sticky) */}
+      {/* Main row: logo, search, wishlist, cart (sticky) */}
       <header className="sticky top-0 z-40 border-b border-line bg-white/95 backdrop-blur-md">
         <div className="container-x flex h-16 items-center gap-3 sm:gap-5 lg:h-[104px] lg:gap-8">
           <button
@@ -126,36 +124,12 @@ export function Navbar() {
           <div className="ml-auto flex shrink-0 items-center gap-1 sm:gap-2 lg:gap-5">
             <button
               type="button"
-              onClick={() => pick({ tab: 'new' })}
-              className="relative hidden items-center gap-3 rounded-xl border-2 border-lav-200 bg-white px-4 py-2 text-left transition-colors hover:border-purple xl:flex"
-            >
-              <span className="absolute -top-2.5 right-3 rounded-full bg-purple px-2 py-0.5 text-[11px] font-bold leading-none text-white">New</span>
-              <Sparkles size={28} strokeWidth={1.8} className="text-purple" aria-hidden="true" />
-              <span className="text-[16px] font-bold leading-[1.1] text-ink">Fresh<br />Drops</span>
-            </button>
-
-            <span className="hidden h-9 w-0.5 bg-line xl:block" aria-hidden="true" />
-
-            <button
-              type="button"
-              onClick={signIn}
-              className="group hidden h-12 items-center gap-2.5 rounded-full bg-purple pl-4 pr-5 text-[16px] font-semibold text-white shadow-[0_8px_20px_-10px_rgba(106,30,213,0.8)] transition-colors hover:bg-electric-600 lg:flex"
-            >
-              <UserRound size={22} strokeWidth={2} aria-hidden="true" />
-              Sign in
-              <ArrowRight size={18} className="transition-transform duration-150 group-hover:translate-x-1" aria-hidden="true" />
-            </button>
-
-            <button
-              type="button"
               className="grid size-10 place-items-center rounded-full text-ink transition-colors hover:bg-lav-100 hover:text-purple md:hidden"
               onClick={() => setSearchOpen(true)}
               aria-label="Search products"
             >
               <Search size={22} />
             </button>
-
-            <span className="hidden h-12 w-px bg-line lg:block" aria-hidden="true" />
 
             <HeaderAction
               label="Wishlist"
@@ -221,7 +195,7 @@ export function Navbar() {
               ))}
               <li><NavItem icon={Tag} onClick={() => pick({ tab: 'sale' })} onMouseEnter={scheduleClose}>Offers Zone</NavItem></li>
               <li><NavItem icon={Sparkles} onClick={() => pick({ tab: 'new' })} onMouseEnter={scheduleClose}>New Arrivals</NavItem></li>
-              <li className="hidden min-[1440px]:block"><NavItem icon={Camera} onClick={() => jump('looks')} onMouseEnter={scheduleClose}>Shop the Look</NavItem></li>
+              <li className="hidden min-[1600px]:block"><NavItem icon={Camera} onClick={() => jump('looks')} onMouseEnter={scheduleClose}>Shop the Look</NavItem></li>
               <li>
                 <NavItem icon={LayoutGrid} expanded={open === 'more'} onClick={() => toggle('more')} onMouseEnter={() => openMenu('more')} chevron>
                   More

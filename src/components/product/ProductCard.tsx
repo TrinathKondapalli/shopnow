@@ -87,7 +87,7 @@ export function ProductCard({ product, rank, compact, className }: Props) {
         <button
           type="button"
           onClick={(e) => { e.stopPropagation(); openQuickView(product.id, color); }}
-          className="absolute inset-x-3 bottom-3 flex h-11 items-center justify-center gap-2 rounded-[1px] bg-ink text-sm font-semibold text-white transition-[opacity,transform,background-color] duration-300 ease-out hover:bg-ink-hover focus-visible:translate-y-0 focus-visible:opacity-100 md:translate-y-3 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100"
+          className="absolute inset-x-3 bottom-3 hidden h-11 translate-y-3 items-center justify-center gap-2 rounded-[1px] bg-ink text-sm font-semibold text-white opacity-0 transition-[opacity,transform,background-color] duration-300 ease-out hover:bg-ink-hover focus-visible:translate-y-0 focus-visible:opacity-100 group-hover:translate-y-0 group-hover:opacity-100 [@media(hover:hover)]:flex"
           aria-label={`Quick view ${product.name}`}
         >
           <Eye size={16} /> Quick view
@@ -97,7 +97,7 @@ export function ProductCard({ product, rank, compact, className }: Props) {
       <div className={cn('relative px-[6.4px] pb-[10.5px] pt-[6.1px] leading-[normal]')}>
         <p className="text-[12.5px] text-ink">{product.type}</p>
         {!compact && (
-          <div className="absolute right-[13.9px] top-[16.6px] flex gap-[7px]" role="group" aria-label="Colours">
+          <div className="absolute right-[13.9px] top-[8px] flex gap-[7px] sm:top-[16.6px]" role="group" aria-label="Colours">
             {product.colors.map((c, i) => (
               <button
                 key={c.name}
@@ -107,7 +107,7 @@ export function ProductCard({ product, rank, compact, className }: Props) {
                 aria-pressed={i === color}
                 title={c.name}
                 className={cn(
-                  'size-[14px] rounded-full outline-offset-2 transition-[outline-color] duration-150',
+                  'relative size-[14px] rounded-full outline-offset-2 transition-[outline-color] duration-150 after:absolute after:-inset-[7px]',
                   needsOutline(c.hex) && 'border border-[#2A2A2A]',
                   picked && i === color ? 'outline outline-1 outline-ink' : 'outline-transparent',
                 )}
@@ -116,7 +116,7 @@ export function ProductCard({ product, rank, compact, className }: Props) {
             ))}
           </div>
         )}
-        <h3 className={cn('mt-[0.4px] text-[16.5px] font-semibold tracking-[-0.0825px]', !compact && 'pr-[64px]')}>
+        <h3 className={cn('mt-[0.4px] text-[16.5px] font-semibold tracking-[-0.0825px]', !compact && 'sm:pr-[64px]')}>
           <button type="button" onClick={() => openQuickView(product.id, color)} className="text-left text-ink transition-colors hover:text-electric-alt">
             {product.name}
           </button>

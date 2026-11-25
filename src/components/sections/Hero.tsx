@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import type React from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight, ChevronLeft, ChevronRight, ShieldCheck, Tag, Truck } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { ExploreState } from '../../types';
 import { PRODUCTS, discountPct } from '../../lib/catalog';
 import { EASE } from '../../lib/motion';
@@ -47,12 +47,6 @@ const HERO_SLIDES: HeroSlide[] = [
     line: 'Tech layers for after hours.',
     patch: { collection: 'move' },
   },
-];
-
-const FEATURES = [
-  { icon: Tag, title: 'Best deals', sub: '& offers' },
-  { icon: ShieldCheck, title: 'Secure', sub: 'shopping' },
-  { icon: Truck, title: 'Fast', sub: 'delivery' },
 ];
 
 /** 01 Hero banner: campaign carousel with brand copy, photo and offer badge. Auto-rotates every 5s. */
@@ -124,17 +118,6 @@ export function Hero() {
               </motion.div>
             </AnimatePresence>
 
-            <ul className="mt-6 flex items-center lg:mt-[1.8vw]">
-              {FEATURES.map(({ icon: Icon, title, sub }, i) => (
-                <li key={title} className={cn('flex items-center gap-2.5', i > 0 && 'ml-4 border-l border-ink/25 pl-4 xl:ml-6 xl:pl-6')}>
-                  <Icon size={30} strokeWidth={1.7} className="shrink-0 text-purple" aria-hidden="true" />
-                  <span className="text-[14px] font-medium leading-tight text-ink sm:text-[15px] lg:text-[clamp(14px,1.1vw,18px)]">
-                    {title}<br />{sub}
-                  </span>
-                </li>
-              ))}
-            </ul>
-
             <button
               type="button"
               onClick={() => shopWith(current.patch)}
@@ -154,7 +137,7 @@ export function Hero() {
         <ArrowButton side="right" onClick={() => go(1)} label="Next slide"><ChevronRight size={26} strokeWidth={2.2} /></ArrowButton>
 
         {/* Dots */}
-        <div className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2.5 max-md:top-[232px] max-md:bottom-auto sm:max-md:top-[312px]">
+        <div className="absolute bottom-1 left-1/2 z-20 flex -translate-x-1/2 items-center max-md:top-[220px] max-md:bottom-auto sm:max-md:top-[300px]">
           {HERO_SLIDES.map((s, i) => (
             <button
               key={s.id}
@@ -162,11 +145,15 @@ export function Hero() {
               onClick={() => setSlide(i)}
               aria-label={`Show slide ${i + 1} of ${HERO_SLIDES.length}`}
               aria-current={slide === i}
-              className={cn(
-                'h-3 rounded-full border-2 border-white shadow transition-all duration-300',
-                slide === i ? 'w-8 bg-white' : 'w-3 bg-white/30 hover:bg-white/70',
-              )}
-            />
+              className="group grid h-9 place-items-center px-1.5"
+            >
+              <span
+                className={cn(
+                  'block h-3 rounded-full border-2 border-white shadow transition-all duration-300',
+                  slide === i ? 'w-8 bg-white' : 'w-3 bg-white/30 group-hover:bg-white/70',
+                )}
+              />
+            </button>
           ))}
         </div>
       </div>

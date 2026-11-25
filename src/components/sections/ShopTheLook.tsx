@@ -97,6 +97,8 @@ export function ShopTheLook() {
                   {photo ? (
                     <>
                       <img
+                        loading="lazy"
+                        decoding="async"
                         src={photo.src}
                         alt={`${look.name} outfit: ${look.caption}`}
                         className="pointer-events-none absolute inset-0 h-full w-full object-cover"

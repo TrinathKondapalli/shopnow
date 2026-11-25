@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { Check, ChevronDown, ChevronLeft, ChevronRight, LoaderCircle, Minus, Plus, Ruler, Truck, X } from 'lucide-react';
+import { Check, ChevronDown, ChevronLeft, ChevronRight, LoaderCircle, Minus, Plus, Ruler, Share2, Truck, X } from 'lucide-react';
+import { productHash } from '../../lib/url';
 import type { Product } from '../../types';
 import { LOW_STOCK, getProduct, stockFor } from '../../lib/catalog';
 import { cn } from '../../lib/utils';
@@ -34,7 +35,8 @@ export function QuickView() {
 type AddState = 'idle' | 'adding' | 'added';
 
 function QuickViewDialog({ product: p, initialColor, onClose }: { product: Product; initialColor: number; onClose: () => void }) {
-  const { addToCart, variantInCart, toast, openPanel } = useShop();
+  const { addToCart, variantInCart, toast, openPanel, openInfo: openInfoDialog } = useShop();
+  const hasSizeGuide = p.type !== 'Footwear' && p.type !== 'Accessories';
   const ref = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   const oneSize = p.sizes.length === 1;
@@ -53,7 +55,22 @@ function QuickViewDialog({ product: p, initialColor, onClose }: { product: Produ
   const available = Math.max(0, stock - inBag);
   const maxQty = Math.max(1, available);
 
-  const pickColor = (i: number) => { setColor(i); setQty(1); };
+  // Photos: show the gallery only when there is more than one distinct image. Illustrated products always have 3 views.
+  const photos = p.colors[color].images ?? [];
+  const multiView = photos.length === 0 || new Set(photos).size > 1;
+
+  const share = async () => {
+    const url = window.location.origin + window.location.pathname + productHash(p.id, color);
+    try {
+      if (navigator.share) { await navigator.share({ title: `${p.name} | SHOPNOW`, url }); return; }
+      await navigator.clipboard.writeText(url);
+      toast({ title: 'Link copied', description: p.name });
+    } catch (e) {
+      if ((e as Error).name !== 'AbortError') toast({ title: 'Could not share', description: url, tone: 'error' });
+    }
+  };
+
+  const pickColor = (i: number) => { setColor(i); setQty(1); setView(0); };
   const pickSize = (s: string) => { setSize(s); setSizeError(false); setQty(1); };
 
   const add = () => {
@@ -110,11 +127,15 @@ function QuickViewDialog({ product: p, initialColor, onClose }: { product: Produ
                 <ProductImage product={p} color={color} view={VIEWS[view].id} inset="p-[10%]" />
               </motion.div>
             </AnimatePresence>
-            <button type="button" onClick={() => setView((v) => (v + 2) % 3)} className="icon-btn absolute left-3 top-1/2 size-10 -translate-y-1/2 bg-white/90 shadow-sm" aria-label="Previous image"><ChevronLeft size={18} /></button>
-            <button type="button" onClick={() => setView((v) => (v + 1) % 3)} className="icon-btn absolute right-3 top-1/2 size-10 -translate-y-1/2 bg-white/90 shadow-sm" aria-label="Next image"><ChevronRight size={18} /></button>
-            <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-medium">{VIEWS[view].label} · {view + 1}/3</span>
+            {multiView && (
+              <>
+                <button type="button" onClick={() => setView((v) => (v + 2) % 3)} className="icon-btn absolute left-3 top-1/2 size-10 -translate-y-1/2 bg-white/90 shadow-sm" aria-label="Previous image"><ChevronLeft size={18} /></button>
+                <button type="button" onClick={() => setView((v) => (v + 1) % 3)} className="icon-btn absolute right-3 top-1/2 size-10 -translate-y-1/2 bg-white/90 shadow-sm" aria-label="Next image"><ChevronRight size={18} /></button>
+                <span className="absolute bottom-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-medium">{VIEWS[view].label} · {view + 1}/3</span>
+              </>
+            )}
           </div>
-          <div className="grid grid-cols-3 gap-3" role="group" aria-label="Product images">
+          <div className={cn('grid grid-cols-3 gap-3', !multiView && 'hidden')} role="group" aria-label="Product images">
             {VIEWS.map((v, i) => (
               <button key={v.id} type="button" onClick={() => setView(i)} aria-pressed={view === i} aria-label={`Show ${v.label.toLowerCase()} image`} className={cn('aspect-[4/3] overflow-hidden rounded-xl border-2 transition-colors', view === i ? 'border-ink' : 'border-transparent hover:border-ink/30', i === 1 ? 'art-bg-alt' : 'art-bg')}>
                 <ProductImage product={p} color={color} view={v.id} inset="p-2" />
@@ -129,7 +150,12 @@ function QuickViewDialog({ product: p, initialColor, onClose }: { product: Produ
             <p className="text-sm text-muted">{p.type} · {p.gender === 'unisex' ? 'Unisex' : p.gender === 'men' ? 'Men' : 'Women'}</p>
             <h2 id="qv-title" className="display mt-1 text-[clamp(1.8rem,3.5vw,2.4rem)]">{p.name}</h2>
             <div className="mt-2 flex items-center gap-2 text-sm text-muted"><Stars value={p.rating} /> {p.rating} · {p.reviewCount} reviews</div>
-            <Price product={p} className="mt-3 text-xl" />
+            <div className="mt-3 flex items-center justify-between gap-3">
+              <Price product={p} className="text-xl" />
+              <button type="button" onClick={share} className="inline-flex h-9 items-center gap-1.5 rounded-full border border-line px-3 text-xs font-semibold transition-colors hover:border-ink">
+                <Share2 size={14} /> Share
+              </button>
+            </div>
           </div>
           <p className="text-[15px] leading-relaxed text-ink-2">{p.description}</p>
 
@@ -145,7 +171,13 @@ function QuickViewDialog({ product: p, initialColor, onClose }: { product: Produ
           <div>
             <div className="mb-2 flex items-center justify-between text-sm">
               <span><span className="font-semibold">Size:</span> {size ?? <span className="text-muted">Select a size</span>}</span>
-              <span className="inline-flex items-center gap-1 text-muted"><Ruler size={14} /> True to size</span>
+              {hasSizeGuide ? (
+                <button type="button" onClick={() => openInfoDialog('size-guide')} className="inline-flex items-center gap-1 font-medium text-ink underline underline-offset-4 hover:text-electric">
+                  <Ruler size={14} /> Size guide
+                </button>
+              ) : (
+                <span className="inline-flex items-center gap-1 text-muted"><Ruler size={14} /> True to size</span>
+              )}
             </div>
             <div className={cn('flex flex-wrap gap-2', sizeError && 'animate-shake')} role="radiogroup" aria-label="Size">
               {p.sizes.map((s) => {
@@ -176,7 +208,8 @@ function QuickViewDialog({ product: p, initialColor, onClose }: { product: Produ
             </p>
           </div>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* On phones the buy row stays pinned to the bottom of the sheet while scrolling */}
+          <div className="sticky bottom-0 z-10 -mx-5 flex items-center gap-2 border-t border-line bg-white px-5 py-3 sm:gap-3 md:static md:mx-0 md:border-0 md:p-0">
             <div className="flex h-13 shrink-0 items-center rounded-full border border-line" role="group" aria-label="Quantity">
               <button type="button" onClick={() => setQty((q) => Math.max(1, q - 1))} disabled={qty <= 1} className="grid size-11 place-items-center rounded-full disabled:opacity-30 sm:size-12" aria-label="Decrease quantity"><Minus size={16} /></button>
               <output className="w-8 text-center font-semibold tabular-nums" aria-live="polite">{qty}</output>

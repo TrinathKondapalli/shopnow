@@ -50,6 +50,8 @@ export function Explore() {
       <div className="relative mx-auto max-w-[1648px] px-5 pb-16 pt-12 md:px-10 md:pt-16 lg:pt-[17.8px] xl:pb-[27.9px] xl:pl-[80px] xl:pr-[62px]">
         {/* Decoration / Concrete: 510.7 x 279 at the top-right of the frame */}
         <img
+          loading="lazy"
+          decoding="async"
           src="/figma/explore/decoration-concrete.png"
           alt=""
           aria-hidden="true"

@@ -17,6 +17,7 @@ import { QuickView } from './components/overlays/QuickView';
 import { CartDrawer } from './components/overlays/CartDrawer';
 import { WishlistDrawer } from './components/overlays/WishlistDrawer';
 import { Toaster } from './components/overlays/Toaster';
+import { InfoDialog } from './components/overlays/InfoDialog';
 
 /** The SHOPNOW landing page: 12 sections in order, plus four overlays. */
 export default function App() {
@@ -47,6 +48,7 @@ export default function App() {
       <QuickView />
       <WishlistDrawer />
       <CartDrawer />
+      <InfoDialog />
       <Toaster />
     </>
   );

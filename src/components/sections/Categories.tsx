@@ -60,7 +60,7 @@ export function Categories() {
 
         {/* Category cards (Figma 104:315): overlapping, stepped layout on desktop */}
         <div
-          className="@container mt-10 grid grid-cols-1 gap-8 px-5 sm:grid-cols-2 md:px-10 lg:relative lg:mt-[3px] lg:block lg:px-0 lg:[height:var(--h)]"
+          className="@container mt-8 grid grid-cols-2 gap-x-4 gap-y-7 px-5 sm:mt-10 sm:gap-8 md:px-10 lg:relative lg:mt-[3px] lg:block lg:px-0 lg:[height:var(--h)]"
           // Women card: image 422.3 + gap 2.3 scale with width; the 106px label does not.
           style={{ '--h': `calc(${(422.295 / FRAME_W) * 100}cqw + ${AREA_H - 422.295}px)` } as React.CSSProperties}
         >
@@ -92,15 +92,15 @@ export function Categories() {
                 style={{ '--lg': `${c.labelGap}px`, '--lx': pct(c.labelX, c.w), '--lw': pct(c.labelW, c.w) } as React.CSSProperties}
               >
                 <span className="flex w-full items-center justify-between">
-                  <h3 className="text-[34px] font-bold leading-[50px] tracking-[-0.004em] whitespace-nowrap text-ink xl:text-[41px]">{c.label}</h3>
+                  <h3 className="mt-2 text-[21px] font-bold leading-tight tracking-[-0.004em] whitespace-nowrap text-ink sm:mt-0 sm:text-[34px] sm:leading-[50px] xl:text-[41px]">{c.label}</h3>
                   <span className="relative size-5 shrink-0 text-ink transition-colors duration-300 group-hover:text-purple" aria-hidden="true">
                     <span className="absolute inset-[29.17%]">
                       <span className="absolute inset-[-8%]"><MaskIcon src={`${DIR}/icon-arrow-up-right.svg`} /></span>
                     </span>
                   </span>
                 </span>
-                <span className="text-[17px] leading-[30px] whitespace-nowrap text-ink-2">{c.text}</span>
-                <span className="text-[16px] leading-[26px] whitespace-nowrap text-[#716F73]">{countFor(c.patch)} styles</span>
+                <span className="mt-0.5 text-[13.5px] leading-snug text-ink-2 sm:mt-0 sm:text-[17px] sm:leading-[30px] sm:whitespace-nowrap">{c.text}</span>
+                <span className="text-[13px] leading-6 whitespace-nowrap text-[#716F73] sm:text-[16px] sm:leading-[26px]">{countFor(c.patch)} styles</span>
               </span>
             </motion.button>
           ))}

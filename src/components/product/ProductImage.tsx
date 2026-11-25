@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { PhotoCrop, Product } from '../../types';
 import { cn } from '../../lib/utils';
 import { Garment, type GarmentView } from '../art/Garment';
@@ -24,6 +25,7 @@ export function ProductImage({ product, color = 0, view = 'front', className, in
   const front = (crop && c.photos?.[crop]) || c.images?.[0];
   // A product with a front photo never falls back to illustration for its other views.
   const photo = view === 'front' ? front : c.images?.[VIEW_INDEX[view]] ?? front;
+  const [loaded, setLoaded] = useState(false);
   if (photo) {
     return (
       <img
@@ -31,7 +33,9 @@ export function ProductImage({ product, color = 0, view = 'front', className, in
         alt={`${product.name} in ${c.name}`}
         loading="lazy"
         decoding="async"
-        className={cn('h-full w-full object-cover', className)}
+        onLoad={() => setLoaded(true)}
+        onError={() => setLoaded(true)}
+        className={cn('h-full w-full object-cover', !loaded && 'skeleton', className)}
       />
     );
   }
