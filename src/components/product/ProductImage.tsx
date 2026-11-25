@@ -1,4 +1,4 @@
-import type { Product } from '../../types';
+import type { PhotoCrop, Product } from '../../types';
 import { cn } from '../../lib/utils';
 import { Garment, type GarmentView } from '../art/Garment';
 
@@ -11,15 +11,19 @@ interface Props {
   className?: string;
   /** Padding around illustrated art; photos always fill the frame. */
   inset?: string;
+  /** Preferred art-directed crop for the front photo; falls back to images[0]. */
+  crop?: PhotoCrop;
 }
 
 /**
  * Shows a real photo when one is set for this colour and view in products.json,
  * otherwise the illustrated garment.
  */
-export function ProductImage({ product, color = 0, view = 'front', className, inset = 'p-[12%]' }: Props) {
+export function ProductImage({ product, color = 0, view = 'front', className, inset = 'p-[12%]', crop }: Props) {
   const c = product.colors[color] ?? product.colors[0];
-  const photo = c.images?.[VIEW_INDEX[view]];
+  const front = (crop && c.photos?.[crop]) || c.images?.[0];
+  // A product with a front photo never falls back to illustration for its other views.
+  const photo = view === 'front' ? front : c.images?.[VIEW_INDEX[view]] ?? front;
   if (photo) {
     return (
       <img

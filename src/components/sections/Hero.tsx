@@ -1,150 +1,267 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
-import { ArrowRight, Sparkles } from 'lucide-react';
-import { LOOKS, getProduct } from '../../lib/catalog';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { DUR, EASE } from '../../lib/motion';
-import { inr, scrollToId } from '../../lib/utils';
+import { scrollToId } from '../../lib/utils';
 import { useShop } from '../../store/ShopProvider';
-import { Mannequin } from '../art/Mannequin';
-import { ProductImage } from '../product/ProductImage';
 
-const HEADLINE = ['Style', 'Your', 'Everyday'];
+const ICON_ARROW = '/figma/hero/icon-arrow.svg';
 
-/** 02. Hero: lavender campaign with mask reveal (800ms) and sequential headline reveal (700ms). */
+interface HeroSlide {
+  id: string;
+  num: string;
+  photo: string;
+  alt: string;
+  label: string;
+  eyebrow: string;
+  collection: string;
+}
+
+const HERO_SLIDES: HeroSlide[] = [
+  {
+    id: '01',
+    num: '01',
+    photo: '/figma/hero/hero-bg.png',
+    alt: 'Two models in a lavender hoodie and a black hoodie with cargo pants, against purple concrete',
+    label: 'AW’24\nNEW\nSEASON',
+    eyebrow: 'New season drop',
+    collection: 'move',
+  },
+  {
+    id: '02',
+    num: '02',
+    photo: '/figma/featured/drop-03.jpg',
+    alt: 'Model in cropped lavender jacket and wide-leg trousers by concrete monolith',
+    label: 'SS’26\nDROP\n02',
+    eyebrow: 'Summer capsule',
+    collection: 'essential',
+  },
+  {
+    id: '03',
+    num: '03',
+    photo: '/figma/featured/drop-05.jpg',
+    alt: 'Model in reflective black track jacket and utility cargo joggers at night',
+    label: 'NIGHT\nLAB\n26',
+    eyebrow: 'After hours',
+    collection: 'active',
+  },
+];
+
+/**
+ * 01 Hero (Figma 104:269). Full-bleed campaign photograph (1648 × 928 frame) with the
+ * navigation overlaid on top, copy on the left and a vertical 3-slide indicator on the right.
+ * Auto-rotates across slides 01, 02, and 03 every 5 seconds, pausing on hover/focus.
+ */
 export function Hero() {
-  const { shopWith, openQuickView } = useShop();
-  const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const yBack = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
-  const yFront = useTransform(scrollYProgress, [0, 1], ['0%', '-8%']);
-  const him = LOOKS[0];
-  const her = LOOKS[1];
-  const chip = getProduct('cropped-hoodie')!;
+  const { shopWith } = useShop();
+  const [slide, setSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const current = HERO_SLIDES[slide];
+
+  // 5 seconds auto-rotation with pause on hover/focus
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = window.setInterval(() => {
+      setSlide((s) => (s + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [isPaused, slide]);
 
   return (
-    <section ref={ref} id="top" className="relative overflow-hidden" aria-labelledby="hero-title">
-      <div className="container-x grid items-center gap-10 pt-8 pb-16 md:pt-12 lg:grid-cols-[1fr_1.08fr] lg:gap-6 lg:pb-24">
-        <div className="relative z-10">
+    <section
+      id="top"
+      className="relative overflow-hidden bg-[#FBF7F2] lg:h-[clamp(720px,56.31vw,928px)]"
+      aria-labelledby="hero-title"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => setIsPaused(false)}
+    >
+      {/* Campaign photography cross-fade */}
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={current.photo}
+          src={current.photo}
+          alt={current.alt}
+          className="pointer-events-none h-[420px] w-full object-cover object-[78%_50%] sm:h-[520px] lg:absolute lg:inset-0 lg:h-full lg:object-right"
+          initial={{ opacity: 0, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.65, ease: EASE }}
+        />
+      </AnimatePresence>
+
+      {/* Editorial text backdrop gradient: guarantees 100% readability of headline & copy on all slides */}
+      <div
+        className="pointer-events-none absolute inset-0 z-[5] hidden lg:block bg-gradient-to-r from-[#FBF7F2] via-[#FBF7F2]/95 via-45% to-transparent"
+        aria-hidden="true"
+      />
+
+      {/* Campaign indicator (Figma 104:275): count, 327px track, purple progress */}
+      <div
+        className="absolute right-[35px] top-[20.74%] z-20 hidden h-[380px] w-[66px] text-white lg:block select-none"
+        aria-label="Campaign slides"
+      >
+        <div className="flex items-center gap-[5px] text-[18px] leading-none whitespace-nowrap">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={current.num}
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 4 }}
+              transition={{ duration: 0.25 }}
+              className="font-semibold"
+            >
+              {current.num}
+            </motion.span>
+          </AnimatePresence>
+          <span className="font-medium text-white/60">/ 03</span>
+        </div>
+
+        {/* 327px vertical track with animated purple progress segment */}
+        <div className="relative mt-4 h-[327px] w-[66px]">
+          {/* Background guide rail */}
+          <span className="absolute left-[43px] top-0 h-[327px] w-[1.5px] bg-white/30" />
+
+          {/* Active purple indicator segment that glides across 01 -> 02 -> 03 */}
+          <motion.span
+            className="absolute left-[42.75px] h-[74px] w-[2px] bg-purple-bright shadow-[0_0_8px_rgba(139,77,255,0.85)]"
+            animate={{ top: `${slide * 126.5}px` }}
+            transition={{ type: 'spring', stiffness: 280, damping: 28 }}
+          />
+
+          {/* Clickable hit areas for direct slide jumping */}
+          {HERO_SLIDES.map((s, idx) => (
+            <button
+              key={s.id}
+              type="button"
+              onClick={() => setSlide(idx)}
+              className="group absolute left-0 flex h-[109px] w-full items-center justify-end pr-2 focus-visible:outline-none"
+              style={{ top: `${idx * 109}px` }}
+              aria-label={`Switch to slide ${s.num}`}
+            >
+              <span
+                className={`size-2.5 rounded-full transition-all duration-200 ${
+                  slide === idx ? 'bg-purple-bright scale-125' : 'bg-white/40 hover:bg-white'
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Mobile Slide Indicator */}
+      <div className="absolute right-4 top-20 z-20 flex items-center gap-1.5 rounded-full bg-black/40 px-3 py-1 font-mono text-xs text-white backdrop-blur-md lg:hidden">
+        <span className="font-bold text-lav-300">{current.num}</span>
+        <span className="text-white/60">/ 03</span>
+      </div>
+
+      {/* Campaign label (Figma 104:276) */}
+      <div
+        className="pointer-events-none absolute right-[17.4px] top-[77.76%] z-20 hidden w-[120px] text-center text-[18.7px] font-medium leading-[25.6px] tracking-[1.16px] text-white lg:block select-none"
+        aria-hidden="true"
+      >
+        <AnimatePresence mode="wait">
           <motion.p
-            className="eyebrow inline-flex items-center gap-2 rounded-full bg-lav-100 px-3 py-1.5 text-electric-600"
-            initial={{ opacity: 0, y: 16 }}
+            key={current.id}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.3 }}
+            className="whitespace-pre-line"
+          >
+            {current.label}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+
+      {/* Hero content (Figma 104:290): 56px vertical rhythm */}
+      <div className="container-x relative z-10 pt-12 pb-12 lg:absolute lg:inset-x-0 lg:top-[24.24%] lg:p-0 lg:pl-[76px]">
+        <div className="flex flex-col items-start gap-8 lg:gap-[56px]">
+          <motion.div
+            className="flex items-center gap-6"
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: DUR.pageEntrance, ease: EASE }}
           >
-            <Sparkles size={13} /> New season drop
-          </motion.p>
+            <span className="h-[2.5px] w-11 bg-purple" aria-hidden="true" />
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={current.eyebrow}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.25 }}
+                className="text-[15px] font-semibold uppercase leading-none tracking-[0.145em] text-ink lg:text-[17.5px]"
+              >
+                {current.eyebrow}
+              </motion.p>
+            </AnimatePresence>
+          </motion.div>
 
-          <h1 id="hero-title" className="display mt-6 text-[clamp(3.4rem,10vw,8.4rem)]">
-            {HEADLINE.map((w, i) => (
-              <span key={w} className="block overflow-hidden pb-[0.06em]">
-                <motion.span
-                  className={i === 2 ? 'block text-electric' : 'block'}
-                  initial={{ y: '105%' }}
-                  animate={{ y: '0%' }}
-                  transition={{ duration: DUR.heroHeadline, ease: EASE, delay: 0.15 + i * 0.12 }}
-                >
-                  {w}
-                </motion.span>
-              </span>
-            ))}
+          {/* Headline: Generous padding & proper line-height so descenders of 'y' are NEVER cut */}
+          <h1 id="hero-title" className="font-bold whitespace-nowrap select-none">
+            <span className="block overflow-hidden pb-1 -mb-1">
+              <motion.span
+                className="block text-[clamp(3.5rem,7.65vw,126px)] leading-[0.92] tracking-[-0.062em] text-ink"
+                initial={{ y: '105%' }}
+                animate={{ y: '0%' }}
+                transition={{ duration: DUR.heroHeadline, ease: EASE, delay: 0.15 }}
+              >
+                Style your
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden pb-6 -mb-6 pr-4">
+              <motion.span
+                className="block text-[clamp(3.75rem,8.19vw,135px)] italic leading-[0.98] tracking-[-0.07em] text-purple"
+                initial={{ y: '105%' }}
+                animate={{ y: '0%' }}
+                transition={{ duration: DUR.heroHeadline, ease: EASE, delay: 0.28 }}
+              >
+                everyday.
+              </motion.span>
+            </span>
           </h1>
 
           <motion.p
-            className="mt-6 max-w-md text-lg leading-relaxed text-ink-2"
-            initial={{ opacity: 0, y: 20 }}
+            className="max-w-[462px] text-[18px] leading-[1.3] tracking-[-0.013em] text-ink-2 lg:text-[21.5px] lg:leading-[28px]"
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: DUR.pageEntrance, ease: EASE, delay: 0.55 }}
+            transition={{ duration: DUR.pageEntrance, ease: EASE, delay: 0.45 }}
           >
-            Discover fashion that moves with you. Streetwear and everyday essentials for him and her.
+            Discover streetwear and everyday essentials designed for comfort, versatility and attitude.
           </motion.p>
 
           <motion.div
-            className="mt-8 flex flex-wrap gap-3"
+            className="flex flex-wrap items-center gap-8 pt-2 lg:gap-[46px]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: DUR.pageEntrance, ease: EASE, delay: 0.68 }}
+            transition={{ duration: DUR.pageEntrance, ease: EASE, delay: 0.6 }}
           >
-            <button type="button" className="btn btn-dark h-14 px-7 text-[15px]" onClick={() => shopWith({ collection: 'move' })}>
-              Explore Collection <ArrowRight size={18} className="arrow" />
+            {/* Button / Primary (Figma 96:26) */}
+            <button
+              type="button"
+              className="group flex h-14 w-full items-center justify-center gap-5 whitespace-nowrap bg-ink pl-[41px] pr-[42px] text-[18px] font-medium text-white transition-[background-color,opacity] duration-[180ms] ease-soft hover:bg-ink-hover active:opacity-[0.88] sm:w-[292px] lg:h-16 lg:text-[20px]"
+              onClick={() => shopWith({ collection: current.collection })}
+            >
+              Explore collection
+              <span className="relative size-[22px] shrink-0 transition-transform duration-[180ms] ease-soft group-hover:translate-x-[5px]" aria-hidden="true">
+                <span className="absolute inset-[20.83%_16.67%]">
+                  <span className="absolute inset-[-5.36%_-4.69%]">
+                    <img src={ICON_ARROW} alt="" className="block size-full max-w-none" />
+                  </span>
+                </span>
+              </span>
             </button>
-            <button type="button" className="btn btn-line h-14 px-7 text-[15px]" onClick={() => scrollToId('looks')}>
-              Shop the Look
+
+            {/* Link / Text (Figma 96:39) */}
+            <button type="button" className="group relative flex flex-col items-start gap-[5px]" onClick={() => scrollToId('looks')}>
+              <span className="text-[18px] font-medium leading-none text-ink lg:text-[20px]">Shop the look</span>
+              <span className="relative h-[1.5px] w-full bg-ink">
+                <span className="absolute inset-0 origin-left scale-x-0 bg-purple transition-transform duration-200 group-hover:scale-x-100" />
+              </span>
             </button>
           </motion.div>
-
-          <motion.ul
-            className="mt-10 flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: DUR.pageEntrance, delay: 0.85 }}
-          >
-            <li>Free shipping above ₹999</li>
-            <li>7-day easy returns</li>
-            <li>Sizes XS to XL</li>
-          </motion.ul>
         </div>
-
-        {/* Campaign panel: mask reveal */}
-        <motion.div
-          className="relative h-[480px] overflow-hidden rounded-[32px] md:h-[600px]"
-          style={{ background: 'radial-gradient(120% 90% at 70% 20%, #F3EDFF 0%, #CDBBFF 55%, #9B6BFF 100%)' }}
-          initial={{ clipPath: 'inset(100% 0% 0% 0% round 32px)' }}
-          animate={{ clipPath: 'inset(0% 0% 0% 0% round 32px)' }}
-          transition={{ duration: DUR.heroMask, ease: EASE, delay: 0.1 }}
-        >
-          <motion.p
-            style={{ y: yBack }}
-            className="display pointer-events-none absolute inset-x-0 top-[8%] select-none text-center text-[clamp(5rem,15vw,11rem)] leading-none text-white/40"
-            aria-hidden="true"
-          >
-            MOVE
-          </motion.p>
-          <motion.div style={{ y: yFront }} className="absolute inset-x-0 bottom-0 flex h-[90%] items-end justify-center">
-            <motion.div
-              className="relative h-[92%] w-auto -mr-[6%]"
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.9, ease: EASE, delay: 0.55 }}
-            >
-              <Mannequin look={her} className="h-full w-auto drop-shadow-[0_30px_30px_rgba(42,26,94,0.25)]" />
-            </motion.div>
-            <motion.div
-              className="relative h-full w-auto"
-              initial={{ opacity: 0, x: 30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.9, ease: EASE, delay: 0.7 }}
-            >
-              <Mannequin look={him} className="h-full w-auto drop-shadow-[0_30px_30px_rgba(42,26,94,0.3)]" />
-            </motion.div>
-          </motion.div>
-
-          <motion.button
-            type="button"
-            onClick={() => openQuickView(chip.id)}
-            className="absolute left-4 top-4 flex items-center gap-3 rounded-2xl bg-white/90 p-2 pr-4 text-left shadow-[var(--shadow-card)] backdrop-blur md:left-6 md:top-6"
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: EASE, delay: 1.05 }}
-            whileHover={{ y: -3 }}
-          >
-            <span className="size-12 overflow-hidden rounded-xl art-bg"><ProductImage product={chip} inset="p-1.5" /></span>
-            <span className="text-sm leading-tight">
-              <span className="block text-[11px] font-semibold uppercase tracking-wider text-electric">Just dropped</span>
-              <span className="block font-semibold">{chip.name}</span>
-              <span className="text-muted">{inr(chip.price)}</span>
-            </span>
-          </motion.button>
-
-          <motion.div
-            className="absolute bottom-5 right-5 rounded-2xl bg-ink px-4 py-3 text-white shadow-[var(--shadow-pop)]"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, ease: EASE, delay: 1.2 }}
-          >
-            <span className="block text-[11px] uppercase tracking-wider text-lav-300">Mid-season</span>
-            <span className="display text-2xl">Up to 30% off</span>
-          </motion.div>
-        </motion.div>
       </div>
     </section>
   );

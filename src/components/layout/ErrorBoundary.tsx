@@ -1,0 +1,90 @@
+import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { AlertTriangle, RefreshCw } from 'lucide-react';
+
+interface Props {
+  children: ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+  error: Error | null;
+}
+
+/**
+ * Enterprise production Error Boundary.
+ * Catches unhandled runtime exceptions gracefully and displays
+ * a sleek, brand-aligned fallback UI rather than a white screen crash.
+ */
+export class ErrorBoundary extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    // In production, log to telemetry (e.g. Sentry / Datadog)
+    if (import.meta.env.DEV) {
+      console.error('Unhandled store error:', error, errorInfo);
+    }
+  }
+
+  handleReload = () => {
+    window.location.reload();
+  };
+
+  handleReset = () => {
+    this.setState({ hasError: false, error: null });
+    window.location.href = '/';
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#FAF5F0] px-6 text-center text-ink selection:bg-purple selection:text-white">
+          <div className="mx-auto max-w-md">
+            <span className="display text-3xl tracking-[-0.05em] text-ink">
+              SHOP<span className="text-purple">NOW</span>
+            </span>
+
+            <div className="mt-8 grid size-16 place-items-center rounded-full bg-purple/10 text-purple mx-auto">
+              <AlertTriangle size={32} />
+            </div>
+
+            <h1 className="mt-6 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              Something went wrong
+            </h1>
+
+            <p className="mt-3 text-sm leading-relaxed text-[#504D4F]">
+              An unexpected error interrupted your shopping experience. Refreshing the storefront usually resolves this immediately.
+            </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <button
+                type="button"
+                onClick={this.handleReload}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-ink-hover"
+              >
+                <RefreshCw size={16} />
+                <span>Reload storefront</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={this.handleReset}
+                className="inline-flex items-center justify-center rounded-full border border-line bg-white px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-neutral-100"
+              >
+                Return to home
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}

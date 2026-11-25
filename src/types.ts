@@ -11,7 +11,12 @@ export interface ProductColor {
   family: ColorFamily;
   /** Optional real photos for this colour: [front, alternate, detail]. When empty, the illustrated garment is shown. */
   images?: string[];
+  /** Optional art-directed crops of the front photo, per layout (see ProductImage `crop`). */
+  photos?: Partial<Record<PhotoCrop, string>>;
 }
+
+/** grid: landscape product grid · portrait: carousel cards · square: mini cards · thumb: list rows. */
+export type PhotoCrop = 'grid' | 'portrait' | 'square' | 'thumb';
 
 export interface Product {
   id: string;

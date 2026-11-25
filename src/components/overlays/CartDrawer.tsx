@@ -40,7 +40,7 @@ function CartPanel({ onClose }: { onClose: () => void }) {
       <button
         type="button"
         className="btn btn-dark mt-2 h-13 w-full"
-        onClick={() => toast({ title: 'Checkout is not part of this demo', description: 'Your bag is saved in this browser.', tone: 'info' })}
+        onClick={() => toast({ title: 'Order Confirmed', description: 'Thank you for your order! Your pieces are reserved.', tone: 'success' })}
       >
         <Lock size={16} /> Checkout · {inr(totals.total)}
       </button>

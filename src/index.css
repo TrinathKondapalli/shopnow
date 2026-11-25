@@ -1,29 +1,33 @@
 @import "tailwindcss";
 
-/* SHOPNOW design tokens: black, off-white, lavender and electric purple. */
+/* SHOPNOW design tokens: warm background, deep ink black, signature purple and electric accents. */
 @theme {
-  --color-ink: #0F0F14;
-  --color-ink-2: #34343F;
-  --color-muted: #6B6B7B;
-  --color-paper: #F8F6F1;
-  --color-line: #E6E2EE;
-  --color-lav-50: #F6F2FF;
-  --color-lav-100: #ECE4FF;
-  --color-lav-200: #DCCFFF;
+  --color-ink: #0A0A0A;
+  --color-ink-2: #3D3B42;
+  --color-ink-hover: #2A2433;
+  --color-muted: #6D6C77;
+  --color-paper: #FAF5F0;
+  --color-line: #EBE5E1;
+  --color-lav-50: #FAF5F0;
+  --color-lav-100: #F3EDFF;
+  --color-lav-200: #E6DCFF;
   --color-lav-300: #C2B0FA;
   --color-lav-400: #A88BF5;
-  --color-electric: #7B2FF7;
-  --color-electric-600: #6420D9;
+  --color-purple: #6A1ED5;
+  --color-purple-bright: #8B4DFF;
+  --color-electric: #6A1ED5;
+  --color-electric-600: #5414B3;
+  --color-electric-alt: #7609F0;
   --color-success: #15803D;
   --color-danger: #C62828;
   --color-warn: #B45309;
 
-  --font-display: "Bricolage Grotesque", "Arial Black", system-ui, sans-serif;
+  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-card: 0 18px 40px -18px rgb(40 20 90 / 0.28);
-  --shadow-pop: 0 24px 60px -20px rgb(15 15 20 / 0.35);
+  --shadow-card: 0 18px 40px -18px rgb(40 20 90 / 0.16);
+  --shadow-pop: 0 24px 60px -20px rgb(10 10 10 / 0.3);
 }
 
 @layer base {
@@ -32,8 +36,8 @@
     @apply bg-paper font-sans text-ink antialiased;
     font-feature-settings: "cv11", "ss01";
   }
-  ::selection { background: var(--color-lav-300); color: var(--color-ink); }
-  :focus-visible { outline: 2px solid var(--color-electric); outline-offset: 3px; border-radius: 8px; }
+  ::selection { background: #E6DCFF; color: var(--color-ink); }
+  :focus-visible { outline: 2px solid var(--color-purple-bright); outline-offset: 3px; border-radius: 4px; }
   button { cursor: pointer; }
   button:disabled { cursor: not-allowed; }
   img, svg { display: block; }
@@ -41,46 +45,57 @@
 
 @layer components {
   .container-x {
-    @apply mx-auto w-full max-w-[1320px];
-    padding-left: max(1rem, env(safe-area-inset-left));
-    padding-right: max(1rem, env(safe-area-inset-right));
+    @apply mx-auto w-full max-w-[1648px];
+    padding-left: max(1.25rem, env(safe-area-inset-left));
+    padding-right: max(1.25rem, env(safe-area-inset-right));
   }
   @media (min-width: 768px) {
-    .container-x { padding-left: 2rem; padding-right: 2rem; }
+    .container-x { padding-left: 2.5rem; padding-right: 2.5rem; }
   }
-  .display { font-family: var(--font-display); letter-spacing: -0.035em; line-height: 0.95; font-weight: 800; }
-  .eyebrow { @apply text-[11px] font-semibold uppercase tracking-[0.2em] text-electric; }
+  @media (min-width: 1280px) {
+    .container-x { padding-left: 4.75rem; padding-right: 4.75rem; }
+  }
+  .display { font-family: var(--font-display); letter-spacing: -0.04em; line-height: 1; font-weight: 700; }
+  .eyebrow { @apply text-[14px] font-semibold uppercase tracking-[0.18em] text-electric; }
 
-  /* CTA: scale and arrow movement, 150ms */
+  /* CTA: scale and arrow movement */
   .btn {
-    @apply inline-flex h-12 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold whitespace-nowrap select-none;
-    transition: transform 150ms var(--ease-soft), background-color 150ms, color 150ms, box-shadow 150ms;
+    @apply inline-flex h-13 items-center justify-center gap-3 rounded-[2px] px-7 text-[15px] font-medium whitespace-nowrap select-none;
+    transition: transform 150ms var(--ease-soft), background-color 180ms, color 180ms, box-shadow 180ms;
   }
-  .btn:hover:not(:disabled) { transform: scale(1.03); }
-  .btn:active:not(:disabled) { transform: scale(0.97); }
-  .btn .arrow { transition: transform 150ms var(--ease-soft); }
-  .btn:hover .arrow { transform: translateX(4px); }
-  .btn-dark { @apply bg-ink text-white hover:bg-electric; }
-  .btn-light { @apply bg-white text-ink hover:bg-lav-100; }
-  .btn-line { @apply border border-ink/15 bg-white/60 text-ink backdrop-blur hover:border-ink; }
-  .btn-electric { @apply bg-electric text-white hover:bg-electric-600; }
+  .btn:hover:not(:disabled) { transform: translateY(-1px); }
+  .btn:active:not(:disabled) { transform: translateY(0); opacity: 0.88; }
+  .btn .arrow { transition: transform 180ms var(--ease-soft); }
+  .btn:hover .arrow { transform: translateX(5px); }
+  .btn-dark { @apply bg-ink text-white hover:bg-ink-hover; }
+  .btn-light { @apply bg-white text-ink border border-line hover:border-ink; }
+  .btn-line { @apply border border-ink/20 bg-white/70 text-ink backdrop-blur hover:border-ink; }
+  .btn-electric { @apply bg-purple text-white hover:bg-electric-600; }
   .btn:disabled { @apply opacity-50; }
 
   .chip {
-    @apply inline-flex h-9 items-center gap-1.5 rounded-full border border-line bg-white px-3.5 text-[13px] font-medium text-ink-2;
-    transition: background-color 200ms, border-color 200ms, color 200ms;
+    @apply inline-flex h-9 items-center gap-1.5 rounded-[100px] border border-[#cfc8c5] bg-white px-3.5 text-[13px] font-medium text-ink;
+    transition: background-color 180ms, border-color 180ms, color 180ms;
   }
-  .chip:hover { @apply border-ink/40; }
+  .chip:hover { @apply border-ink; }
   .chip[aria-pressed="true"] { @apply border-ink bg-ink text-white; }
 
   .icon-btn {
     @apply relative grid size-11 place-items-center rounded-full text-ink;
-    transition: background-color 200ms;
+    transition: background-color 150ms, color 150ms;
   }
-  .icon-btn:hover { @apply bg-lav-100; }
+  .icon-btn:hover { @apply bg-lav-100 text-purple; }
 
-  .art-bg { background: linear-gradient(180deg, #F2EFF8 0%, #E6E1F0 100%); }
-  .art-bg-alt { background: radial-gradient(90% 80% at 50% 30%, #F6F2FF 0%, #DCCFFF 100%); }
+  /* Figma SVG icon rendered as a mask so it inherits currentColor (hover states). */
+  .figma-icon {
+    display: block; width: 100%; height: 100%;
+    background-color: currentColor;
+    -webkit-mask: var(--icon) center / 100% 100% no-repeat;
+    mask: var(--icon) center / 100% 100% no-repeat;
+  }
+
+  .art-bg { background: linear-gradient(180deg, #F0EAE4 0%, #E3DCD5 100%); }
+  .art-bg-alt { background: radial-gradient(90% 80% at 50% 30%, #F5EDFF 0%, #D8C5FF 100%); }
 
   .no-scrollbar { scrollbar-width: none; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -94,10 +109,16 @@
 
 @keyframes shimmer { to { background-position: -200% 0; } }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-@keyframes ping-soft { 0% { transform: scale(0.7); opacity: 0.8; } 100% { transform: scale(1.5); opacity: 0; } }
+@keyframes marquee-up { 0% { transform: translateY(0%); } 100% { transform: translateY(-50%); } }
+@keyframes marquee-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0%); } }
+@keyframes ping-soft { 0% { transform: scale(0.8); opacity: 0.8; } 100% { transform: scale(1.6); opacity: 0; } }
 @keyframes shake { 10%, 90% { transform: translateX(-1px); } 20%, 80% { transform: translateX(3px); } 30%, 50%, 70% { transform: translateX(-5px); } 40%, 60% { transform: translateX(5px); } }
 
 .animate-marquee { animation: marquee 32s linear infinite; }
+.animate-marquee-up { animation: marquee-up 32s linear infinite; }
+.animate-marquee-down { animation: marquee-down 32s linear infinite; }
+.animate-marquee-up:hover,
+.animate-marquee-down:hover { animation-play-state: paused; }
 .animate-ping-soft { animation: ping-soft 2.2s ease-out infinite; }
 .animate-shake { animation: shake 0.45s both; }
 

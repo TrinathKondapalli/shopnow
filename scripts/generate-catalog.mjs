@@ -83,6 +83,46 @@ const DEFS = [
     'A long-sleeve tee with a sleeve print and a relaxed body.', ['220 GSM cotton', 'Relaxed fit', 'Sleeve print', 'Ribbed cuffs']],
 ];
 
+// Product photography exported from the Figma landing page (public/figma/products).
+// Keyed by product id → colour index. `images[0]` is the general photo; `photos` holds
+// the exact crop each section uses in the design (see ProductImage's `crop` prop).
+const P = '/figma/products/';
+const PHOTOS = {
+  'essential-tee': { 0: { grid: 'essential-tee.png' } },
+  'everyday-hoodie': { 0: { grid: 'everyday-hoodie.png', square: 'everyday-hoodie-featured.png' }, 1: { thumb: 'everyday-hoodie-look.png' } },
+  'cargo-pants': { 0: { grid: 'cargo-pants.png', square: 'cargo-pants-featured.png', thumb: 'cargo-pants-look.png' } },
+  'zip-overshirt': { 0: { grid: 'zip-overshirt.png', square: 'zip-overshirt-featured.png', portrait: 'zip-overshirt-trending.png' } },
+  'boxy-graphic-tee': { 0: { grid: 'boxy-graphic-tee.png' } },
+  'relaxed-jeans': { 0: { grid: 'relaxed-jeans.png' } },
+  'track-jacket': { 0: { grid: 'track-jacket.png', portrait: 'track-jacket-trending.png', thumb: 'track-jacket.png' } },
+  'heavyweight-crew': { 0: { grid: 'heavyweight-crew.png' } },
+  'parachute-pants': { 0: { portrait: 'parachute-pants.png' } },
+  'platform-sneakers': { 0: { portrait: 'platform-sneakers.png', thumb: 'platform-sneakers.png' } },
+  'tech-joggers': { 0: { portrait: 'tech-joggers.png', thumb: 'tech-joggers.png' }, 1: { portrait: 'tech-joggers.png', thumb: 'tech-joggers.png' } },
+  'retro-runner': { 0: { thumb: 'retro-runner-look.png' } },
+  'cropped-hoodie': { 0: { thumb: 'cropped-hoodie-look.jpg', grid: 'cropped-hoodie-look.jpg' } },
+  'wide-leg-jeans': { 0: { thumb: 'wide-leg-jeans-look.jpg', grid: 'wide-leg-jeans-look.jpg' }, 1: { thumb: 'wide-leg-jeans-look.jpg', grid: 'wide-leg-jeans-look.jpg' } },
+  'dad-cap': { 0: { thumb: 'dad-cap-look.jpg', grid: 'dad-cap-look.jpg' }, 1: { thumb: 'dad-cap-look.jpg', grid: 'dad-cap-look.jpg' }, 2: { thumb: 'dad-cap-look.jpg', grid: 'dad-cap-look.jpg' } },
+  'fitted-baby-tee': { 0: { grid: 'fitted-baby-tee.jpg' }, 1: { grid: 'fitted-baby-tee.jpg' }, 2: { grid: 'fitted-baby-tee.jpg' } },
+  'oversized-sweatshirt': { 0: { grid: 'oversized-sweatshirt.jpg' }, 1: { grid: 'oversized-sweatshirt.jpg' }, 2: { grid: 'oversized-sweatshirt.jpg' } },
+  'satin-bomber': { 0: { grid: 'satin-bomber.jpg' }, 1: { grid: 'satin-bomber.jpg' } },
+  'rib-knit-tee': { 0: { grid: 'rib-knit-tee.jpg' }, 1: { grid: 'rib-knit-tee.jpg' } },
+  'zip-utility-hoodie': { 0: { grid: 'zip-utility-hoodie.jpg' }, 1: { grid: 'zip-utility-hoodie.jpg' } },
+  'bucket-hat': { 0: { grid: 'bucket-hat.jpg' }, 1: { grid: 'bucket-hat.jpg' } },
+  'canvas-tote': { 0: { grid: 'canvas-tote.jpg' }, 1: { grid: 'canvas-tote.jpg' } },
+  'denim-trucker': { 0: { grid: 'denim-trucker.jpg' }, 1: { grid: 'denim-trucker.jpg' } },
+  'graphic-longsleeve': { 0: { grid: 'graphic-longsleeve.jpg' }, 1: { grid: 'graphic-longsleeve.jpg' } },
+};
+function withPhotos(id, colors) {
+  return colors.map((c, i) => {
+    const crops = PHOTOS[id]?.[i];
+    if (!crops) return c;
+    const photos = Object.fromEntries(Object.entries(crops).map(([k, f]) => [k, P + f]));
+    const main = photos.grid ?? photos.portrait ?? photos.square ?? photos.thumb;
+    return { ...c, images: [main], photos };
+  });
+}
+
 function hash(s) { let h = 2166136261; for (const ch of s) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
 function rng(seed) { let a = seed; return () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
 
@@ -107,7 +147,7 @@ const products = DEFS.map(([id, name, gender, type, art, price, compareAt, colou
     trending: Math.round((isNew ? 55 : 20) + r() * 45),
     featured: i,
     createdAt, isNew, collections, tags, description, details,
-    colors, sizes, stock,
+    colors: withPhotos(id, colors), sizes, stock,
   };
 });
 

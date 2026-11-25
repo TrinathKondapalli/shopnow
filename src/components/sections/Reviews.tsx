@@ -7,18 +7,32 @@ import { useShop } from '../../store/ShopProvider';
 import { ProductImage } from '../product/ProductImage';
 import { SectionHeader, Stars } from '../product/bits';
 
-/** 10. Customer reviews: rating summary computed from the reviews data, plus review cards. */
+/** 10. Customer reviews: rating summary computed from reviews, plus infinite opposite-direction vertical marquee. */
 export function Reviews() {
-  const { openQuickView } = useShop();
   const avg = REVIEWS.reduce((s, r) => s + r.rating, 0) / REVIEWS.length;
   const dist = [5, 4, 3, 2, 1].map((n) => ({ n, count: REVIEWS.filter((r) => r.rating === n).length }));
 
+  // Column 1 (indices 0..3) moving upwards, Column 2 (indices 4..7) moving downwards
+  const col1 = REVIEWS.slice(0, 4);
+  const col2 = REVIEWS.slice(4, 8);
+
+  // Duplicated for a seamless 50% infinite translation loop
+  const col1Loop = [...col1, ...col1];
+  const col2Loop = [...col2, ...col2];
+
   return (
-    <section id="reviews" className="py-20 md:py-28" aria-labelledby="reviews-title">
+    <section id="reviews" className="scroll-mt-16 md:scroll-mt-20 py-20 md:py-28 overflow-hidden" aria-labelledby="reviews-title">
       <div className="container-x">
         <SectionHeader eyebrow="Customer reviews" title="Worn, washed and rated" id="reviews-title" />
-        <div className="grid gap-6 lg:grid-cols-[320px_1fr]">
-          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} className="h-fit rounded-3xl bg-ink p-7 text-white lg:sticky lg:top-24">
+        <div className="grid gap-6 lg:grid-cols-[320px_1fr] items-start">
+          {/* Rating Summary Card (sticky on desktop) */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true }}
+            className="h-fit rounded-3xl bg-ink p-7 text-white lg:sticky lg:top-24 z-10"
+          >
             <p className="display text-7xl">{avg.toFixed(1)}</p>
             <Stars value={avg} size={18} className="mt-3" />
             <p className="mt-2 text-sm text-white/60">Based on {REVIEWS.length} reviews</p>
@@ -39,46 +53,74 @@ export function Reviews() {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-xs text-white/40">Sample reviews for this demo store.</p>
           </motion.div>
 
-          <div className="columns-1 gap-5 md:columns-2 [&>*]:mb-5">
-            {REVIEWS.map((r, i) => {
-              const p = getProduct(r.productId);
-              return (
-                <motion.article
-                  key={r.id}
-                  className="break-inside-avoid rounded-3xl border border-line bg-white p-6"
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="show"
-                  viewport={{ once: true, margin: '0px 0px -8% 0px' }}
-                  custom={i % 2}
-                >
-                  <div className="flex items-center justify-between">
-                    <Stars value={r.rating} />
-                    <Quote size={22} className="text-lav-300" />
-                  </div>
-                  <h3 className="mt-4 font-semibold">{r.title}</h3>
-                  <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{r.body}</p>
-                  <div className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4">
-                    <div>
-                      <p className="flex items-center gap-1.5 text-sm font-semibold">{r.name} <BadgeCheck size={15} className="text-electric" aria-label="Verified buyer" /></p>
-                      <p className="text-xs text-muted">{r.city} · {formatDate(r.date)}</p>
-                    </div>
-                    {p && (
-                      <button type="button" onClick={() => openQuickView(p.id)} className="flex items-center gap-2 rounded-full bg-lav-50 py-1 pl-1 pr-3 text-xs font-medium hover:bg-lav-100">
-                        <span className="size-8 overflow-hidden rounded-full art-bg"><ProductImage product={p} inset="p-1" /></span>
-                        <span className="max-w-[120px] truncate">{p.name} · {r.size}</span>
-                      </button>
-                    )}
-                  </div>
-                </motion.article>
-              );
-            })}
+          {/* Dual-column infinite vertical marquee with top and bottom fade gradient */}
+          <div
+            className="relative h-[620px] md:h-[660px] overflow-hidden"
+            style={{
+              maskImage: 'linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)',
+            }}
+          >
+            <div className="grid h-full grid-cols-1 gap-5 md:grid-cols-2">
+              {/* Column 1: moves UPWARDS */}
+              <div className="overflow-hidden">
+                <div className="animate-marquee-up flex flex-col gap-5">
+                  {col1Loop.map((r, i) => (
+                    <ReviewCard key={`col1-${r.id}-${i}`} r={r} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 2: moves DOWNWARDS */}
+              <div className="overflow-hidden">
+                <div className="animate-marquee-down flex flex-col gap-5">
+                  {col2Loop.map((r, i) => (
+                    <ReviewCard key={`col2-${r.id}-${i}`} r={r} />
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function ReviewCard({ r }: { r: (typeof REVIEWS)[number] }) {
+  const { openQuickView } = useShop();
+  const p = getProduct(r.productId);
+
+  return (
+    <article className="rounded-3xl border border-line bg-white p-6 shadow-sm transition-[box-shadow,transform] duration-200 hover:shadow-md hover:-translate-y-0.5">
+      <div className="flex items-center justify-between">
+        <Stars value={r.rating} />
+        <Quote size={22} className="text-lav-300" />
+      </div>
+      <h3 className="mt-4 font-semibold text-ink">{r.title}</h3>
+      <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{r.body}</p>
+      <div className="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4">
+        <div>
+          <p className="flex items-center gap-1.5 text-sm font-semibold text-ink">
+            {r.name} <BadgeCheck size={15} className="text-electric" aria-label="Verified buyer" />
+          </p>
+          <p className="text-xs text-muted">{r.city} · {formatDate(r.date)}</p>
+        </div>
+        {p && (
+          <button
+            type="button"
+            onClick={() => openQuickView(p.id)}
+            className="flex items-center gap-2 rounded-full bg-lav-50 py-1 pl-1 pr-3 text-xs font-medium text-ink transition-colors hover:bg-lav-100"
+          >
+            <span className="size-8 overflow-hidden rounded-full art-bg">
+              <ProductImage product={p} inset="p-1" />
+            </span>
+            <span className="max-w-[120px] truncate">{p.name} · {r.size}</span>
+          </button>
+        )}
+      </div>
+    </article>
   );
 }

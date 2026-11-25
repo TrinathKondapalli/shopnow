@@ -32,7 +32,13 @@
       {
         "name": "Off-White",
         "hex": "#F1EEE6",
-        "family": "white"
+        "family": "white",
+        "images": [
+          "/figma/products/essential-tee.png"
+        ],
+        "photos": {
+          "grid": "/figma/products/essential-tee.png"
+        }
       },
       {
         "name": "Black",
@@ -110,12 +116,25 @@
       {
         "name": "Lavender",
         "hex": "#C2B0FA",
-        "family": "purple"
+        "family": "purple",
+        "images": [
+          "/figma/products/everyday-hoodie.png"
+        ],
+        "photos": {
+          "grid": "/figma/products/everyday-hoodie.png",
+          "square": "/figma/products/everyday-hoodie-featured.png"
+        }
       },
       {
         "name": "Charcoal",
         "hex": "#3C3C4A",
-        "family": "grey"
+        "family": "grey",
+        "images": [
+          "/figma/products/everyday-hoodie-look.png"
+        ],
+        "photos": {
+          "thumb": "/figma/products/everyday-hoodie-look.png"
+        }
       },
       {
         "name": "Sand",
@@ -188,7 +207,15 @@
       {
         "name": "Olive",
         "hex": "#62684A",
-        "family": "green"
+        "family": "green",
+        "images": [
+          "/figma/products/cargo-pants.png"
+        ],
+        "photos": {
+          "grid": "/figma/products/cargo-pants.png",
+          "square": "/figma/products/cargo-pants-featured.png",
+          "thumb": "/figma/products/cargo-pants-look.png"
+        }
       },
       {
         "name": "Black",
@@ -265,7 +292,15 @@
       {
         "name": "Midnight",
         "hex": "#1F2447",
-        "family": "blue"
+        "family": "blue",
+        "images": [
+          "/figma/products/zip-overshirt.png"
+        ],
+        "photos": {
+          "grid": "/figma/products/zip-overshirt.png",
+          "square": "/figma/products/zip-overshirt-featured.png",
+          "portrait": "/figma/products/zip-overshirt-trending.png"
+        }
       },
       {
         "name": "Olive",
@@ -341,7 +376,13 @@
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/boxy-graphic-tee.png"
+        ],
+        "photos": {
+          "grid": "/figma/products/boxy-graphic-tee.png"
+        }
       },
       {
         "name": "Electric Purple",
@@ -417,7 +458,13 @@
       {
         "name": "Indigo",
         "hex": "#3F5C96",
-        "family": "blue"
+        "family": "blue",
+        "images": [
+          "/figma/products/relaxed-jeans.png"
+        ],
+        "photos": {
+          "grid": "/figma/products/relaxed-jeans.png"
+        }
       },
       {
         "name": "Washed Blue",
@@ -494,7 +541,15 @@
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/track-jacket.png"
+        ],
+        "photos": {
+          "grid": "/figma/products/track-jacket.png",
+          "portrait": "/figma/products/track-jacket-trending.png",
+          "thumb": "/figma/products/track-jacket.png"
+        }
       },
       {
         "name": "Lavender",
@@ -570,7 +625,13 @@
       {
         "name": "Heather Grey",
         "hex": "#9C9CA8",
-        "family": "grey"
+        "family": "grey",
+        "images": [
+          "/figma/products/heavyweight-crew.png"
+        ],
+        "photos": {
+          "grid": "/figma/products/heavyweight-crew.png"
+        }
       },
       {
         "name": "Black",
@@ -648,7 +709,13 @@
       {
         "name": "White",
         "hex": "#F4F4F6",
-        "family": "white"
+        "family": "white",
+        "images": [
+          "/figma/products/retro-runner-look.png"
+        ],
+        "photos": {
+          "thumb": "/figma/products/retro-runner-look.png"
+        }
       },
       {
         "name": "Black",
@@ -724,17 +791,38 @@
       {
         "name": "Slate",
         "hex": "#4A4C5C",
-        "family": "grey"
+        "family": "grey",
+        "images": [
+          "/figma/products/dad-cap-look.jpg"
+        ],
+        "photos": {
+          "thumb": "/figma/products/dad-cap-look.jpg",
+          "grid": "/figma/products/dad-cap-look.jpg"
+        }
       },
       {
         "name": "Navy",
         "hex": "#222B55",
-        "family": "blue"
+        "family": "blue",
+        "images": [
+          "/figma/products/dad-cap-look.jpg"
+        ],
+        "photos": {
+          "thumb": "/figma/products/dad-cap-look.jpg",
+          "grid": "/figma/products/dad-cap-look.jpg"
+        }
       },
       {
         "name": "Lavender",
         "hex": "#C2B0FA",
-        "family": "purple"
+        "family": "purple",
+        "images": [
+          "/figma/products/dad-cap-look.jpg"
+        ],
+        "photos": {
+          "thumb": "/figma/products/dad-cap-look.jpg",
+          "grid": "/figma/products/dad-cap-look.jpg"
+        }
       }
     ],
     "sizes": [
@@ -785,12 +873,26 @@
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/tech-joggers.png"
+        ],
+        "photos": {
+          "portrait": "/figma/products/tech-joggers.png",
+          "thumb": "/figma/products/tech-joggers.png"
+        }
       },
       {
         "name": "Stone",
         "hex": "#B9AD94",
-        "family": "neutral"
+        "family": "neutral",
+        "images": [
+          "/figma/products/tech-joggers.png"
+        ],
+        "photos": {
+          "portrait": "/figma/products/tech-joggers.png",
+          "thumb": "/figma/products/tech-joggers.png"
+        }
       }
     ],
     "sizes": [
@@ -848,12 +950,24 @@
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/zip-utility-hoodie.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/zip-utility-hoodie.jpg"
+        }
       },
       {
         "name": "Olive",
         "hex": "#62684A",
-        "family": "green"
+        "family": "green",
+        "images": [
+          "/figma/products/zip-utility-hoodie.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/zip-utility-hoodie.jpg"
+        }
       }
     ],
     "sizes": [
@@ -912,7 +1026,14 @@
       {
         "name": "Lavender",
         "hex": "#C2B0FA",
-        "family": "purple"
+        "family": "purple",
+        "images": [
+          "/figma/products/cropped-hoodie-look.jpg"
+        ],
+        "photos": {
+          "thumb": "/figma/products/cropped-hoodie-look.jpg",
+          "grid": "/figma/products/cropped-hoodie-look.jpg"
+        }
       },
       {
         "name": "Cream",
@@ -988,12 +1109,26 @@
       {
         "name": "Indigo",
         "hex": "#3F5C96",
-        "family": "blue"
+        "family": "blue",
+        "images": [
+          "/figma/products/wide-leg-jeans-look.jpg"
+        ],
+        "photos": {
+          "thumb": "/figma/products/wide-leg-jeans-look.jpg",
+          "grid": "/figma/products/wide-leg-jeans-look.jpg"
+        }
       },
       {
         "name": "Washed Blue",
         "hex": "#7FA0CC",
-        "family": "blue"
+        "family": "blue",
+        "images": [
+          "/figma/products/wide-leg-jeans-look.jpg"
+        ],
+        "photos": {
+          "thumb": "/figma/products/wide-leg-jeans-look.jpg",
+          "grid": "/figma/products/wide-leg-jeans-look.jpg"
+        }
       }
     ],
     "sizes": [
@@ -1053,17 +1188,35 @@
       {
         "name": "White",
         "hex": "#F4F4F6",
-        "family": "white"
+        "family": "white",
+        "images": [
+          "/figma/products/fitted-baby-tee.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/fitted-baby-tee.jpg"
+        }
       },
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/fitted-baby-tee.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/fitted-baby-tee.jpg"
+        }
       },
       {
         "name": "Lilac",
         "hex": "#D6C9FF",
-        "family": "purple"
+        "family": "purple",
+        "images": [
+          "/figma/products/fitted-baby-tee.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/fitted-baby-tee.jpg"
+        }
       }
     ],
     "sizes": [
@@ -1130,17 +1283,35 @@
       {
         "name": "Cream",
         "hex": "#EDE3CF",
-        "family": "neutral"
+        "family": "neutral",
+        "images": [
+          "/figma/products/oversized-sweatshirt.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/oversized-sweatshirt.jpg"
+        }
       },
       {
         "name": "Charcoal",
         "hex": "#3C3C4A",
-        "family": "grey"
+        "family": "grey",
+        "images": [
+          "/figma/products/oversized-sweatshirt.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/oversized-sweatshirt.jpg"
+        }
       },
       {
         "name": "Lavender",
         "hex": "#C2B0FA",
-        "family": "purple"
+        "family": "purple",
+        "images": [
+          "/figma/products/oversized-sweatshirt.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/oversized-sweatshirt.jpg"
+        }
       }
     ],
     "sizes": [
@@ -1207,12 +1378,24 @@
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/satin-bomber.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/satin-bomber.jpg"
+        }
       },
       {
         "name": "Electric Purple",
         "hex": "#7B2FF7",
-        "family": "purple"
+        "family": "purple",
+        "images": [
+          "/figma/products/satin-bomber.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/satin-bomber.jpg"
+        }
       }
     ],
     "sizes": [
@@ -1272,7 +1455,13 @@
       {
         "name": "Stone",
         "hex": "#B9AD94",
-        "family": "neutral"
+        "family": "neutral",
+        "images": [
+          "/figma/products/parachute-pants.png"
+        ],
+        "photos": {
+          "portrait": "/figma/products/parachute-pants.png"
+        }
       },
       {
         "name": "Black",
@@ -1347,12 +1536,24 @@
       {
         "name": "Sand",
         "hex": "#D9C7A6",
-        "family": "neutral"
+        "family": "neutral",
+        "images": [
+          "/figma/products/rib-knit-tee.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/rib-knit-tee.jpg"
+        }
       },
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/rib-knit-tee.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/rib-knit-tee.jpg"
+        }
       }
     ],
     "sizes": [
@@ -1410,7 +1611,14 @@
       {
         "name": "White",
         "hex": "#F4F4F6",
-        "family": "white"
+        "family": "white",
+        "images": [
+          "/figma/products/platform-sneakers.png"
+        ],
+        "photos": {
+          "portrait": "/figma/products/platform-sneakers.png",
+          "thumb": "/figma/products/platform-sneakers.png"
+        }
       },
       {
         "name": "Lilac",
@@ -1472,12 +1680,24 @@
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/bucket-hat.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/bucket-hat.jpg"
+        }
       },
       {
         "name": "Lavender",
         "hex": "#C2B0FA",
-        "family": "purple"
+        "family": "purple",
+        "images": [
+          "/figma/products/bucket-hat.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/bucket-hat.jpg"
+        }
       }
     ],
     "sizes": [
@@ -1525,12 +1745,24 @@
       {
         "name": "Off-White",
         "hex": "#F1EEE6",
-        "family": "white"
+        "family": "white",
+        "images": [
+          "/figma/products/canvas-tote.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/canvas-tote.jpg"
+        }
       },
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/canvas-tote.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/canvas-tote.jpg"
+        }
       }
     ],
     "sizes": [
@@ -1577,12 +1809,24 @@
       {
         "name": "Indigo",
         "hex": "#3F5C96",
-        "family": "blue"
+        "family": "blue",
+        "images": [
+          "/figma/products/denim-trucker.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/denim-trucker.jpg"
+        }
       },
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/denim-trucker.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/denim-trucker.jpg"
+        }
       }
     ],
     "sizes": [
@@ -1639,12 +1883,24 @@
       {
         "name": "Black",
         "hex": "#1F1F25",
-        "family": "black"
+        "family": "black",
+        "images": [
+          "/figma/products/graphic-longsleeve.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/graphic-longsleeve.jpg"
+        }
       },
       {
         "name": "White",
         "hex": "#F4F4F6",
-        "family": "white"
+        "family": "white",
+        "images": [
+          "/figma/products/graphic-longsleeve.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/graphic-longsleeve.jpg"
+        }
       }
     ],
     "sizes": [

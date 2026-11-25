@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight, Heart, Menu, Search, ShoppingBag } from 'lucide-react';
+import type React from 'react';
+import { ArrowRight, Menu } from 'lucide-react';
 import type { ExploreState, ProductType } from '../../types';
 import { getProduct } from '../../lib/catalog';
 import { cn, scrollToId } from '../../lib/utils';
 import { DUR, EASE } from '../../lib/motion';
-import { useScrolledPast } from '../../hooks/useScrollY';
 import { useShop } from '../../store/ShopProvider';
 import { ProductImage } from '../product/ProductImage';
 
@@ -50,10 +50,32 @@ const NAV: { id: MenuId | 'sale'; label: string }[] = [
 
 export function Navbar() {
   const { shopWith, setSearchOpen, openPanel, setMobileMenuOpen, totals, wishlist } = useShop();
-  const scrolled = useScrolledPast(24);
+  const [scrolledPastHero, setScrolledPastHero] = useState(false);
   const [open, setOpen] = useState<MenuId | null>(null);
   const closeTimer = useRef<number | undefined>(undefined);
   const navRef = useRef<HTMLDivElement>(null);
+
+  // Detect when scroll leaves the Hero section (#top)
+  useEffect(() => {
+    const checkScroll = () => {
+      const hero = document.getElementById('top');
+      if (hero) {
+        const heroBottom = hero.getBoundingClientRect().bottom;
+        // When hero bottom reaches near the navbar (<= 64px), switch to white background
+        setScrolledPastHero(heroBottom <= 64);
+      } else {
+        setScrolledPastHero(window.scrollY > 500);
+      }
+    };
+
+    checkScroll();
+    window.addEventListener('scroll', checkScroll, { passive: true });
+    window.addEventListener('resize', checkScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', checkScroll);
+      window.removeEventListener('resize', checkScroll);
+    };
+  }, []);
 
   const openMenu = (id: MenuId) => { window.clearTimeout(closeTimer.current); setOpen(id); };
   const scheduleClose = () => { window.clearTimeout(closeTimer.current); closeTimer.current = window.setTimeout(() => setOpen(null), 140); };
@@ -70,28 +92,52 @@ export function Navbar() {
 
   const panel = open ? MEGA[open] : null;
   const feature = panel ? getProduct(panel.feature.productId) : undefined;
+  const isSolid = scrolledPastHero || open;
 
   return (
     <header
       ref={navRef}
       className={cn(
-        'sticky top-0 z-40 border-b transition-[background-color,box-shadow,border-color] duration-[250ms]',
-        scrolled || open ? 'border-line bg-white/90 shadow-[0_10px_30px_-20px_rgba(15,15,20,0.35)] backdrop-blur-xl' : 'border-transparent bg-paper',
+        'sticky top-0 z-40 transition-[background-color,box-shadow,border-color] duration-300 lg:-mb-[64px]',
+        isSolid
+          ? 'border-b border-line bg-white/95 shadow-[0_4px_20px_-8px_rgba(0,0,0,0.08)] backdrop-blur-md'
+          : 'border-b border-transparent bg-transparent shadow-none',
       )}
       onMouseLeave={scheduleClose}
     >
-      <div className={cn('container-x flex items-center gap-4 transition-[height] duration-[250ms]', scrolled ? 'h-16' : 'h-[72px]')}>
-        <button type="button" className="icon-btn -ml-2 lg:hidden" onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
-          <Menu size={22} />
-        </button>
-        <a href="#top" onClick={(e) => { e.preventDefault(); scrollToId('top'); }} className="display text-[26px] tracking-[-0.05em]" aria-label="SHOPNOW home">
-          SHOP<span className="text-electric">NOW</span>
-        </a>
+      <div className="container-x flex h-14 sm:h-16 md:h-[64px] items-center justify-between gap-4">
+        {/* Left: Mobile hamburger & Brand Logo */}
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            className="grid size-9 place-items-center rounded-full text-ink transition-colors hover:bg-black/5 lg:hidden"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <Menu size={20} />
+          </button>
+          <a
+            href="#top"
+            onClick={(e) => { e.preventDefault(); scrollToId('top'); }}
+            className="text-[21px] sm:text-[24px] md:text-[25px] font-black leading-none tracking-[-0.03em] select-none"
+            aria-label="SHOPNOW home"
+          >
+            <span className="text-ink">SHOP</span><span className="text-purple">NOW</span>
+          </a>
+        </div>
 
-        <nav className="ml-10 hidden h-full items-stretch lg:flex" aria-label="Main">
+        {/* Center: Clean & Streamlined Navigation links */}
+        <nav className="hidden h-full items-center gap-7 lg:flex" aria-label="Main">
           {NAV.map((item) => item.id === 'sale' ? (
-            <button key={item.id} type="button" onClick={() => pick({ tab: 'sale' })} onMouseEnter={scheduleClose} className="relative px-4 text-[14.5px] font-medium text-electric">
-              {item.label}
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => pick({ tab: 'sale' })}
+              onMouseEnter={scheduleClose}
+              className="group relative flex h-full items-center text-[15px] font-semibold tracking-[-0.01em] text-purple transition-colors"
+            >
+              <span>{item.label}</span>
+              <span className="absolute bottom-3 inset-x-0 h-[2px] origin-left scale-x-0 bg-purple transition-transform duration-150 group-hover:scale-x-100" />
             </button>
           ) : (
             <button
@@ -101,24 +147,45 @@ export function Navbar() {
               aria-haspopup="true"
               onMouseEnter={() => openMenu(item.id as MenuId)}
               onClick={() => setOpen((o) => (o === item.id ? null : (item.id as MenuId)))}
-              className="group relative px-4 text-[14.5px] font-medium"
+              className={cn(
+                'group relative flex h-full items-center text-[15px] font-semibold tracking-[-0.01em] transition-colors duration-150 hover:text-purple',
+                open === item.id ? 'text-purple' : 'text-ink',
+              )}
             >
-              {item.label}
-              <span className={cn('absolute inset-x-4 bottom-0 h-0.5 origin-left bg-ink transition-transform duration-200', open === item.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100')} />
+              <span>{item.label}</span>
+              <span className={cn('absolute bottom-3 inset-x-0 h-[2px] origin-left bg-purple transition-transform duration-150', open === item.id ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100')} />
             </button>
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-0.5">
-          <button type="button" className="icon-btn" onClick={() => setSearchOpen(true)} aria-label="Search products">
-            <Search size={21} strokeWidth={1.8} />
+        {/* Right: Actions (Search, Wishlist, Bag) */}
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+          <button
+            type="button"
+            className="relative grid size-9 sm:size-10 place-items-center rounded-full text-ink transition-colors duration-150 hover:bg-black/5 hover:text-purple"
+            onClick={() => setSearchOpen(true)}
+            aria-label="Search products"
+          >
+            <FigmaIcon src="/figma/hero/icon-search.svg" inset="14.58%" bleed="-5%" />
           </button>
-          <button type="button" className="icon-btn" onClick={() => openPanel('wishlist')} aria-label={`Wishlist, ${wishlist.length} items`} data-wishlist-target>
-            <Heart size={21} strokeWidth={1.8} />
+          <button
+            type="button"
+            className="relative grid size-9 sm:size-10 place-items-center rounded-full text-ink transition-colors duration-150 hover:bg-black/5 hover:text-purple"
+            onClick={() => openPanel('wishlist')}
+            aria-label={`Wishlist, ${wishlist.length} items`}
+            data-wishlist-target
+          >
+            <FigmaIcon src="/figma/hero/icon-wishlist.svg" inset="12.5% 8.33%" bleed="-4.72% -4.25%" />
             {wishlist.length > 0 && <Badge n={wishlist.length} />}
           </button>
-          <button type="button" className="icon-btn" onClick={() => openPanel('cart')} aria-label={`Shopping bag, ${totals.count} items`} data-bag-target>
-            <ShoppingBag size={21} strokeWidth={1.8} />
+          <button
+            type="button"
+            className="relative grid size-9 sm:size-10 place-items-center rounded-full text-ink transition-colors duration-150 hover:bg-black/5 hover:text-purple"
+            onClick={() => openPanel('cart')}
+            aria-label={`Shopping bag, ${totals.count} items`}
+            data-bag-target
+          >
+            <FigmaIcon src="/figma/hero/icon-bag.svg" inset="8.33% 12.5%" bleed="-4.25% -4.72%" />
             {totals.count > 0 && <Badge n={totals.count} />}
           </button>
         </div>
@@ -168,6 +235,19 @@ export function Navbar() {
         )}
       </AnimatePresence>
     </header>
+  );
+}
+
+/** 28px outline icon from Figma (Icon Button 96:104), masked so hover can recolour it. */
+function FigmaIcon({ src, inset, bleed }: { src: string; inset: string; bleed: string }) {
+  return (
+    <span className="relative size-[24px] overflow-hidden" aria-hidden="true">
+      <span className="absolute" style={{ inset }}>
+        <span className="absolute" style={{ inset: bleed }}>
+          <span className="figma-icon" style={{ '--icon': `url(${src})` } as React.CSSProperties} />
+        </span>
+      </span>
+    </span>
   );
 }
 

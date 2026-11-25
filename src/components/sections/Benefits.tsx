@@ -11,23 +11,23 @@ const ITEMS = [
 /** 03. Shopping benefits: shipping, easy returns, quality. */
 export function Benefits() {
   return (
-    <section aria-labelledby="benefits-title" className="border-y border-line bg-white">
+    <section id="benefits" aria-labelledby="benefits-title" className="scroll-mt-16 md:scroll-mt-20 border-y border-[#EBE5E1] bg-[#FAF5F0]">
       <h2 id="benefits-title" className="sr-only">Why shop with SHOPNOW</h2>
       <div className="container-x grid gap-px sm:grid-cols-3">
         {ITEMS.map(({ icon: Icon, title, text }, i) => (
           <motion.div
             key={title}
-            className="flex items-start gap-4 py-6 sm:px-6 sm:py-8 sm:first:pl-0"
+            className="flex items-start gap-4 py-8 sm:px-6 sm:py-10 sm:first:pl-0"
             variants={fadeUp}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '0px 0px -10% 0px' }}
             custom={i}
           >
-            <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-lav-100 text-electric-600"><Icon size={22} strokeWidth={1.8} /></span>
+            <span className="grid size-12 shrink-0 place-items-center rounded-[3px] bg-white border border-[#EBE5E1] text-purple shadow-xs"><Icon size={22} strokeWidth={1.8} /></span>
             <div>
-              <h3 className="font-semibold">{title}</h3>
-              <p className="mt-1 text-sm leading-relaxed text-muted">{text}</p>
+              <h3 className="font-['Inter'] font-semibold text-ink text-[16.5px]">{title}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-[#6D6C77]">{text}</p>
             </div>
           </motion.div>
         ))}

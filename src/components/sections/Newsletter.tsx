@@ -24,7 +24,7 @@ export function Newsletter() {
   };
 
   return (
-    <section id="newsletter" className="pb-20 md:pb-28" aria-labelledby="news-title">
+    <section id="newsletter" className="scroll-mt-16 md:scroll-mt-20 pb-20 md:pb-28" aria-labelledby="news-title">
       <div className="container-x">
         <div className="relative overflow-hidden rounded-[32px] bg-electric px-6 py-14 text-white md:px-16 md:py-20">
           <div className="pointer-events-none absolute -right-20 -top-24 size-80 rounded-full bg-lav-300/40 blur-3xl" aria-hidden="true" />
@@ -49,8 +49,8 @@ export function Newsletter() {
                 ) : (
                   <motion.form key="form" onSubmit={submit} noValidate initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                     <label htmlFor="news-email" className="sr-only">Email address</label>
-                    <div className={cn('flex flex-col gap-2 rounded-[28px] bg-white p-2 sm:flex-row sm:rounded-full', error && 'animate-shake ring-2 ring-[#FFB4B4]')}>
-                      <div className="flex flex-1 items-center gap-2 pl-4 text-ink">
+                    <div className={cn('flex flex-col gap-2 rounded-[28px] bg-white p-2 sm:flex-row sm:items-center sm:rounded-full', error && 'animate-shake ring-2 ring-[#FFB4B4]')}>
+                      <div className="flex flex-1 items-center gap-3 pl-4 text-ink">
                         <Mail size={18} className="shrink-0 text-muted" />
                         <input
                           id="news-email"
@@ -66,8 +66,20 @@ export function Newsletter() {
                           className="h-12 w-full bg-transparent text-[15px] outline-none placeholder:text-muted"
                         />
                       </div>
-                      <button type="submit" className="btn btn-dark h-12" disabled={status === 'loading'}>
-                        {status === 'loading' ? <><LoaderCircle size={18} className="animate-spin" /> Subscribing</> : <>Subscribe <ArrowRight size={16} className="arrow" /></>}
+                      <button
+                        type="submit"
+                        className="btn btn-dark !rounded-full h-12 px-7 text-[15px] font-semibold transition-all duration-200"
+                        disabled={status === 'loading'}
+                      >
+                        {status === 'loading' ? (
+                          <>
+                            <LoaderCircle size={18} className="animate-spin" /> Subscribing
+                          </>
+                        ) : (
+                          <>
+                            Subscribe <ArrowRight size={16} className="arrow" />
+                          </>
+                        )}
                       </button>
                     </div>
                     <p id="news-error" className="mt-3 min-h-5 pl-4 text-sm font-medium text-[#FFE0E0]" aria-live="polite">{error}</p>
