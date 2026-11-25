@@ -23,7 +23,9 @@ export function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const top = el.getBoundingClientRect().top + window.scrollY - 72;
+  // Offset by the sticky header so the target isn't hidden underneath it.
+  const header = document.querySelector('header')?.getBoundingClientRect().height ?? 72;
+  const top = el.getBoundingClientRect().top + window.scrollY - header - 8;
   window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
 }
 

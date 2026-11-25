@@ -3,7 +3,7 @@ import { Navbar } from './components/layout/Navbar';
 import { MobileMenu } from './components/layout/MobileMenu';
 import { BackToTop, Footer } from './components/layout/Footer';
 import { Hero } from './components/sections/Hero';
-import { Benefits } from './components/sections/Benefits';
+import { ShopHighlights } from './components/sections/ShopHighlights';
 import { Categories } from './components/sections/Categories';
 import { Explore } from './components/sections/Explore';
 import { Featured } from './components/sections/Featured';
@@ -29,7 +29,7 @@ export default function App() {
       <Navbar />
       <main>
         <Hero />
-        <Benefits />
+        <ShopHighlights />
         <Categories />
         <Explore />
         <Featured />

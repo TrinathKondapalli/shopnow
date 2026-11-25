@@ -1,61 +1,40 @@
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import type { ExploreState } from '../../types';
+import { Headphones, ShieldCheck, Truck, UserRound } from 'lucide-react';
 import { useShop } from '../../store/ShopProvider';
 
-const MESSAGES: { text: string; cta: string; patch: Partial<ExploreState> }[] = [
-  { text: 'Free shipping on orders above ₹999', cta: 'Shop now', patch: {} },
-  { text: 'New season drop: Made for Every Move is live', cta: 'Explore', patch: { collection: 'move' } },
-  { text: 'Mid-season sale: up to 30% off selected styles', cta: 'Shop sale', patch: { tab: 'sale' } },
+const PERKS = [
+  { icon: Truck, text: 'Free shipping above ₹999' },
+  { icon: ShieldCheck, text: 'Secure & safe payments' },
+  { icon: Headphones, text: '24/7 customer support' },
 ];
 
-/** 01. Promotional announcement that rotates every 5 seconds. */
+/** Utility bar above the header: service promises on the left, greeting on the right. */
 export function AnnouncementBar() {
-  const { shopWith } = useShop();
-  const [i, setI] = useState(0);
-  const [paused, setPaused] = useState(false);
-  useEffect(() => {
-    if (paused) return;
-    const t = window.setInterval(() => setI((n) => (n + 1) % MESSAGES.length), 5000);
-    return () => window.clearInterval(t);
-  }, [paused]);
-  const m = MESSAGES[i];
-  const go = (d: number) => setI((n) => (n + d + MESSAGES.length) % MESSAGES.length);
-
+  const { toast } = useShop();
   return (
-    <div
-      className="relative z-50 bg-ink text-white"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
-      role="region"
-      aria-label="Announcements"
-    >
-      <div className="container-x flex h-10 items-center justify-between gap-2 text-[13px]">
-        <button type="button" onClick={() => go(-1)} className="grid size-8 place-items-center rounded-full text-white/70 hover:text-white" aria-label="Previous announcement">
-          <ChevronLeft size={16} />
-        </button>
-        <div className="relative h-full flex-1 overflow-hidden" aria-live="polite">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.p
-              key={i}
-              initial={{ y: 14, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -14, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 flex items-center justify-center gap-2 truncate"
+    <div className="relative z-50 bg-ink text-white" role="region" aria-label="Store information">
+      <div className="container-x flex h-10 items-center justify-center gap-6 text-[13px] font-medium md:h-12 md:justify-between md:text-[15px]">
+        <ul className="flex items-center">
+          {PERKS.map(({ icon: Icon, text }, i) => (
+            <li
+              key={text}
+              className={
+                i === 0
+                  ? 'flex items-center gap-2.5'
+                  : 'hidden items-center gap-2.5 border-l border-white/25 pl-8 ml-8 md:flex xl:pl-10 xl:ml-10'
+              }
             >
-              <span className="truncate">{m.text}</span>
-              <button type="button" onClick={() => shopWith(m.patch)} className="shrink-0 font-semibold text-lav-300 underline underline-offset-4 hover:text-white">
-                {m.cta}
-              </button>
-            </motion.p>
-          </AnimatePresence>
-        </div>
-        <button type="button" onClick={() => go(1)} className="grid size-8 place-items-center rounded-full text-white/70 hover:text-white" aria-label="Next announcement">
-          <ChevronRight size={16} />
+              <Icon size={20} strokeWidth={1.8} className="text-lav-300" aria-hidden="true" />
+              {text}
+            </li>
+          ))}
+        </ul>
+        <button
+          type="button"
+          onClick={() => toast({ title: 'Welcome to SHOPNOW', description: 'Accounts are coming soon. Your bag and wishlist are saved on this device.', tone: 'info' })}
+          className="hidden items-center gap-2.5 transition-colors hover:text-lav-300 md:flex"
+        >
+          Welcome to SHOPNOW
+          <UserRound size={20} strokeWidth={1.8} aria-hidden="true" />
         </button>
       </div>
     </div>
