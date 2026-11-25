@@ -29,8 +29,8 @@ const HERO_SLIDES: HeroSlide[] = [
   {
     id: '02',
     num: '02',
-    photo: '/figma/featured/drop-03.jpg',
-    alt: 'Model in cropped lavender jacket and wide-leg trousers by concrete monolith',
+    photo: '/figma/hero/hero-slide-02.png',
+    alt: 'Two models in modern lilac jacket and oversized lavender sweatshirt against brutalist purple concrete architecture',
     label: 'SS’26\nDROP\n02',
     eyebrow: 'Summer capsule',
     collection: 'essential',
@@ -38,8 +38,8 @@ const HERO_SLIDES: HeroSlide[] = [
   {
     id: '03',
     num: '03',
-    photo: '/figma/featured/drop-05.jpg',
-    alt: 'Model in reflective black track jacket and utility cargo joggers at night',
+    photo: '/figma/hero/hero-slide-03.png',
+    alt: 'Models in technical streetwear and violet zip overshirt against purple monolithic architecture',
     label: 'NIGHT\nLAB\n26',
     eyebrow: 'After hours',
     collection: 'active',
@@ -90,11 +90,6 @@ export function Hero() {
         />
       </AnimatePresence>
 
-      {/* Editorial text backdrop gradient: guarantees 100% readability of headline & copy on all slides */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[5] hidden lg:block bg-gradient-to-r from-[#FBF7F2] via-[#FBF7F2]/95 via-45% to-transparent"
-        aria-hidden="true"
-      />
 
       {/* Campaign indicator (Figma 104:275): count, 327px track, purple progress */}
       <div
