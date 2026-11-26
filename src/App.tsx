@@ -2,6 +2,7 @@ import { AnnouncementBar } from './components/layout/AnnouncementBar';
 import { Navbar } from './components/layout/Navbar';
 import { MobileMenu } from './components/layout/MobileMenu';
 import { BackToTop, Footer } from './components/layout/Footer';
+import { TopHeroBanner } from './components/sections/TopHeroBanner';
 import { Hero } from './components/sections/Hero';
 import { ShopHighlights } from './components/sections/ShopHighlights';
 import { Categories } from './components/sections/Categories';
@@ -29,6 +30,7 @@ export default function App() {
       <AnnouncementBar />
       <Navbar />
       <main>
+        <TopHeroBanner />
         <Hero />
         <ShopHighlights />
         <Categories />
