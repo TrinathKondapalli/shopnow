@@ -31,7 +31,6 @@ export function ProductImage({ product, color = 0, view = 'front', className, in
       <img
         src={photo}
         alt={`${product.name} in ${c.name}`}
-        loading="lazy"
         decoding="async"
         onLoad={() => setLoaded(true)}
         onError={() => setLoaded(true)}

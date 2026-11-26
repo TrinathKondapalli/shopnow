@@ -90,9 +90,9 @@ const DROPS: DropConfig[] = [
     description: 'Stretch fabrics, satin layers and cushioned soles. Pieces that keep up from the morning commute to the late show.',
     collection: 'move',
     picks: [
-      { id: 'everyday-hoodie', color: 0 },
-      { id: 'cargo-pants', color: 0 },
-      { id: 'zip-overshirt', color: 0 },
+      { id: 'everyday-hoodie', color: 0, image: `${A}/drop-04-hoodie.jpg` },
+      { id: 'cargo-pants', color: 0, image: `${A}/drop-04-pants.jpg` },
+      { id: 'zip-overshirt', color: 0, image: `${A}/drop-04-jacket.jpg` },
     ],
   },
   {
@@ -199,7 +199,6 @@ export function Featured() {
           >
             <AnimatePresence mode="wait">
               <motion.img
-                loading="lazy"
                 decoding="async"
                 key={current.drop}
                 src={current.photo}
@@ -321,10 +320,10 @@ export function Featured() {
                 {/* Title (114:561 / 114:562) */}
                 <h2
                   id="featured-title"
-                  className="mt-[33.27px] ml-[0.077em] whitespace-nowrap text-[clamp(52px,6.25vw,103px)] font-bold leading-[0.9515em] text-ink"
+                  className="mt-[33.27px] ml-[0.077em] whitespace-nowrap text-[clamp(52px,6.25vw,103px)] font-bold leading-[1.05] text-ink select-none"
                 >
                   <span className="block tracking-[-0.044em]">{current.titleMain}</span>{' '}
-                  <span className="-mt-[0.1097em] -ml-[0.0194em] block italic tracking-[-0.045em] text-purple">{current.titleAccent}</span>
+                  <span className="-mt-[0.05em] -ml-[0.0194em] block italic tracking-[-0.045em] text-purple pb-1 drop-shadow-[0_2px_10px_rgba(106,30,213,0.12)]">{current.titleAccent}</span>
                 </h2>
 
                 {/* Description (114:563) */}
@@ -406,7 +405,6 @@ function MiniProductCard({ product, color, image, index }: { product: Product; c
         <span className="relative block aspect-[239.5/232.6] overflow-hidden">
           {image ? (
             <img
-              loading="lazy"
               decoding="async"
               src={image}
               alt={product.name}

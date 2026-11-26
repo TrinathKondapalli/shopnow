@@ -1,233 +1,343 @@
-import { useEffect, useMemo, useState } from 'react';
-import type React from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import type { ExploreState } from '../../types';
-import { PRODUCTS, discountPct } from '../../lib/catalog';
-import { EASE } from '../../lib/motion';
-import { cn } from '../../lib/utils';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { DUR, EASE } from '../../lib/motion';
+import { scrollToId } from '../../lib/utils';
 import { useShop } from '../../store/ShopProvider';
+
+const ICON_ARROW = '/figma/hero/icon-arrow.svg';
 
 interface HeroSlide {
   id: string;
+  num: string;
   photo: string;
   alt: string;
-  /** Horizontal focal point of the models inside the photo. */
-  focus: string;
-  tagline: string;
-  line: string;
-  patch: Partial<ExploreState>;
+  label: string;
+  shortLabel: string;
+  eyebrow: string;
+  collection: string;
 }
 
 const HERO_SLIDES: HeroSlide[] = [
   {
     id: '01',
+    num: '01',
     photo: '/figma/hero/hero-bg.png',
-    alt: 'Two models in a lavender hoodie and a black hoodie with cargo pants, against purple concrete',
-    focus: '78%',
-    tagline: 'Style your everyday.',
-    line: 'Everything you need. One place.',
-    patch: { collection: 'move' },
+    alt: 'Indian streetwear models in lavender hoodie and black hoodie with cargo pants, against brutalist purple concrete architecture',
+    label: 'AW’24\nNEW\nSEASON',
+    shortLabel: 'AW’24',
+    eyebrow: 'New season drop',
+    collection: 'move',
   },
   {
     id: '02',
+    num: '02',
     photo: '/figma/hero/hero-slide-02.png',
-    alt: 'Two models in a lilac jacket and an oversized lavender sweatshirt against purple concrete architecture',
-    focus: '76%',
-    tagline: 'Summer capsule is live.',
-    line: 'Lilac layers. Easy fits.',
-    patch: { tab: 'new' },
+    alt: 'Indian streetwear models in tailored lilac jacket and oversized lavender sweatshirt against purple concrete architecture',
+    label: 'SS’26\nDROP\n02',
+    shortLabel: 'SS’26',
+    eyebrow: 'Summer capsule',
+    collection: 'essential',
   },
   {
     id: '03',
+    num: '03',
     photo: '/figma/hero/hero-slide-03.png',
-    alt: 'Models in technical streetwear and a violet hoodie against purple monolithic architecture',
-    focus: '74%',
-    tagline: 'Made for every move.',
-    line: 'Tech layers for after hours.',
-    patch: { collection: 'move' },
+    alt: 'Indian streetwear models in technical violet zip overshirt and black hoodie against purple monolithic architecture',
+    label: 'NIGHT\nLAB\n26',
+    shortLabel: 'NIGHT LAB',
+    eyebrow: 'After hours',
+    collection: 'active',
   },
 ];
 
-/** 01 Hero banner: campaign carousel with brand copy, photo and offer badge. Auto-rotates every 5s. */
+/**
+ * 01 Hero (Figma 104:269). Full-bleed campaign photograph (1648 × 928 frame) with
+ * editorial copy on the left and a vertical interactive 3-slide campaign selector on the right.
+ * Auto-rotates across slides 01, 02, and 03 every 5 seconds, pausing on hover/focus.
+ */
 export function Hero() {
   const { shopWith } = useShop();
   const [slide, setSlide] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const current = HERO_SLIDES[slide];
-  const maxOff = useMemo(() => Math.max(...PRODUCTS.map(discountPct)), []);
-  const go = (d: number) => setSlide((s) => (s + d + HERO_SLIDES.length) % HERO_SLIDES.length);
 
+  // 5 seconds auto-rotation with pause on hover/focus
   useEffect(() => {
-    if (paused) return;
-    const t = window.setInterval(() => setSlide((s) => (s + 1) % HERO_SLIDES.length), 5000);
-    return () => window.clearInterval(t);
-  }, [paused, slide]);
+    if (isPaused) return;
+    const timer = window.setInterval(() => {
+      setSlide((s) => (s + 1) % HERO_SLIDES.length);
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [isPaused, slide]);
+
+  const go = (delta: number) => {
+    setSlide((s) => (s + delta + HERO_SLIDES.length) % HERO_SLIDES.length);
+  };
 
   return (
     <section
       id="top"
-      className="relative bg-white pt-0 lg:pt-3"
-      aria-roledescription="carousel"
+      className="relative overflow-hidden bg-[#FBF7F2] lg:h-[clamp(720px,56.31vw,928px)]"
       aria-labelledby="hero-title"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocus={() => setIsPaused(true)}
+      onBlur={() => setIsPaused(false)}
     >
-      <div className="relative overflow-hidden bg-[linear-gradient(90deg,#FBF7F2_0%,#FBF7F2_40%,#F3EDFF_72%,#E6DCFF_100%)] md:h-[420px] lg:h-[clamp(400px,30vw,500px)]">
-        {/* Photo: stacked on mobile, right half on tablet, centred band on desktop with soft faded edges */}
-        <div className="relative h-[260px] sm:h-[340px] md:absolute md:inset-0 md:h-auto">
-        <AnimatePresence initial={false}>
-          <motion.img
-            key={current.photo}
-            src={current.photo}
-            alt={current.alt}
-            className="pointer-events-none absolute inset-0 size-full object-cover [object-position:var(--focus)_30%] md:inset-y-0 md:left-auto md:right-0 md:w-[60%] md:[mask-image:linear-gradient(90deg,transparent_0%,#000_30%)] md:[object-position:100%_30%] lg:left-[33%] lg:right-auto lg:w-[40%] lg:[mask-image:linear-gradient(90deg,transparent_0%,#000_18%,#000_86%,transparent_100%)]"
-            style={{ '--focus': current.focus } as React.CSSProperties}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7, ease: EASE }}
-          />
-        </AnimatePresence>
-        </div>
+      {/* Campaign photography cross-fade: authentic Indian streetwear models */}
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={current.photo}
+          src={current.photo}
+          alt={current.alt}
+          className="pointer-events-none h-[420px] w-full object-cover object-[78%_50%] sm:h-[520px] lg:absolute lg:inset-0 lg:h-full lg:object-right"
+          initial={{ opacity: 0, scale: 1.03 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.98 }}
+          transition={{ duration: 0.65, ease: EASE }}
+        />
+      </AnimatePresence>
 
-        {/* Copy */}
-        <div className="container-x relative z-10 py-8 md:absolute md:inset-y-0 md:left-0 md:flex md:items-center md:py-0">
-          <div className="flex flex-col items-start md:pl-6 lg:pl-[2.5vw]">
-            <h1 id="hero-title" className="text-[64px] font-black leading-[0.9] tracking-[-0.06em] text-ink sm:text-[80px] lg:text-[clamp(72px,6.6vw,112px)]">
-              SHOP<span className="text-purple">NOW</span>
-            </h1>
+      {/* Campaign indicator (Figma 104:275): Clear 01, 02, 03 display so all 3 slides are directly visible and clickable */}
+      <div
+        className="absolute right-[35px] top-[18%] z-20 hidden w-[150px] rounded-2xl bg-black/45 p-4 text-white backdrop-blur-md border border-white/15 shadow-[0_12px_40px_rgba(0,0,0,0.5)] lg:block select-none"
+        aria-label="Campaign slides selector"
+      >
+        <div className="flex items-center justify-between border-b border-white/15 pb-3 font-mono text-[18px] leading-none whitespace-nowrap">
+          <div className="flex items-center gap-[5px]">
             <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={current.id}
-                initial={{ opacity: 0, y: 10 }}
+              <motion.span
+                key={current.num}
+                initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: EASE }}
+                exit={{ opacity: 0, y: 4 }}
+                transition={{ duration: 0.25 }}
+                className="text-[22px] font-black tracking-tight text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]"
               >
-                <p className="mt-3 text-[28px] font-extrabold italic leading-tight tracking-[-0.03em] text-purple sm:text-[32px] lg:text-[clamp(28px,2.65vw,44px)]">
-                  {current.tagline}
-                </p>
-                <p className="mt-3 flex items-center gap-3 text-[17px] font-bold italic text-ink sm:text-[19px] lg:mt-[0.9vw] lg:text-[clamp(17px,1.45vw,24px)]">
-                  <span className="h-0.5 w-10 bg-ink" aria-hidden="true" />
-                  {current.line}
-                  <span className="hidden h-0.5 w-10 bg-ink sm:block" aria-hidden="true" />
-                </p>
-              </motion.div>
+                {current.num}
+              </motion.span>
             </AnimatePresence>
-
-            <button
-              type="button"
-              onClick={() => shopWith(current.patch)}
-              className="group mt-6 flex h-[52px] items-center gap-3 rounded-full bg-purple px-9 text-[19px] font-bold text-white shadow-[0_14px_30px_-14px_rgba(106,30,213,0.9)] transition-colors hover:bg-electric-600 lg:mt-[1.6vw] xl:h-[58px] xl:px-11 xl:text-[22px]"
-            >
-              Shop now
-              <ArrowRight size={22} strokeWidth={2.4} className="transition-transform duration-150 group-hover:translate-x-1" aria-hidden="true" />
-            </button>
+            <span className="text-[17px] font-medium text-white/70">/ 03</span>
           </div>
+          <span className="text-[11px] font-sans font-bold uppercase tracking-wider text-purple-bright">Slides</span>
         </div>
 
-        {/* Offer badge */}
-        <OfferBadge pct={maxOff} onClick={() => shopWith({ tab: 'sale' })} />
+        {/* Vertical track showing all 3 slides explicitly: 01, 02, 03 */}
+        <div className="relative mt-4 h-[255px] w-full">
+          {/* Background vertical rail */}
+          <span className="absolute right-[12px] top-0 h-[240px] w-[1.5px] bg-white/25" />
 
-        {/* Arrows */}
-        <ArrowButton side="left" onClick={() => go(-1)} label="Previous slide"><ChevronLeft size={26} strokeWidth={2.2} /></ArrowButton>
-        <ArrowButton side="right" onClick={() => go(1)} label="Next slide"><ChevronRight size={26} strokeWidth={2.2} /></ArrowButton>
+          {/* Active glowing purple progress segment that glides across 01 -> 02 -> 03 */}
+          <motion.span
+            className="absolute right-[11.25px] h-[64px] w-[3px] rounded-full bg-purple-bright shadow-[0_0_12px_rgba(139,77,255,0.95)]"
+            animate={{ top: `${slide * 80}px` }}
+            transition={{ type: 'spring', stiffness: 280, damping: 28 }}
+          />
 
-        {/* Dots */}
-        <div className="absolute bottom-1 left-1/2 z-20 flex -translate-x-1/2 items-center max-md:top-[220px] max-md:bottom-auto sm:max-md:top-[300px]">
-          {HERO_SLIDES.map((s, i) => (
+          {/* Interactive buttons for all 3 slides: 01, 02, 03 */}
+          {HERO_SLIDES.map((s, idx) => {
+            const isActive = slide === idx;
+            return (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => setSlide(idx)}
+                className="group absolute right-0 flex h-[78px] w-full items-center justify-end gap-3.5 pr-1 focus-visible:outline-none"
+                style={{ top: `${idx * 80}px` }}
+                aria-label={`Switch to slide ${s.num}: ${s.shortLabel}`}
+                aria-current={isActive}
+              >
+                {/* Slide label and number */}
+                <div className="flex flex-col items-end text-right transition-transform duration-200 group-hover:-translate-x-1">
+                  <span
+                    className={`font-mono text-[16px] font-black tracking-wider transition-colors duration-200 ${
+                      isActive ? 'text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]' : 'text-white/70 group-hover:text-white'
+                    }`}
+                  >
+                    {s.num}
+                  </span>
+                  <span
+                    className={`text-[11px] font-semibold tracking-wider uppercase transition-colors duration-200 ${
+                      isActive ? 'text-lav-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]' : 'text-white/55 group-hover:text-white/85'
+                    }`}
+                  >
+                    {s.shortLabel}
+                  </span>
+                </div>
+
+                {/* Track indicator dot */}
+                <span
+                  className={`size-[11px] rounded-full border-2 transition-all duration-300 ${
+                    isActive
+                      ? 'scale-125 border-white bg-purple-bright shadow-[0_0_10px_#8B4DFF]'
+                      : 'border-white/40 bg-white/20 group-hover:border-white group-hover:bg-white/60'
+                  }`}
+                />
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Campaign label / Season in bottom-right corner (Figma 104:273) */}
+      <div
+        className="pointer-events-none absolute right-[35px] bottom-[30px] z-20 hidden text-right text-[15px] font-semibold uppercase leading-[1.3] tracking-[0.145em] text-white lg:block select-none"
+        aria-hidden="true"
+      >
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={current.id}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.3 }}
+            className="whitespace-pre-line drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]"
+          >
+            {current.label}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+
+      {/* Hero content (Figma 104:290): 56px vertical rhythm */}
+      <div className="container-x relative z-10 pt-10 pb-8 sm:pt-12 sm:pb-12 lg:absolute lg:inset-x-0 lg:top-[24.24%] lg:p-0 lg:pl-[76px]">
+        <div className="flex flex-col items-start gap-7 lg:gap-[52px]">
+          {/* Eyebrow with purple accent bar */}
+          <motion.div
+            className="flex items-center gap-5 sm:gap-6"
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: DUR.pageEntrance, ease: EASE }}
+          >
+            <span className="h-[2.5px] w-10 sm:w-11 bg-purple" aria-hidden="true" />
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={current.eyebrow}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.25 }}
+                className="text-[14px] font-semibold uppercase leading-none tracking-[0.145em] text-ink sm:text-[15px] lg:text-[17.5px]"
+              >
+                {current.eyebrow}
+              </motion.p>
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Headline: Generous padding & proper line-height (1.08) so descenders of 'y' are NEVER cut */}
+          <h1 id="hero-title" className="font-bold select-none leading-none">
+            <span className="block overflow-hidden pb-2 -mb-2">
+              <motion.span
+                className="block text-[clamp(3.5rem,7.65vw,126px)] leading-[0.95] tracking-[-0.062em] text-ink"
+                initial={{ y: '105%' }}
+                animate={{ y: '0%' }}
+                transition={{ duration: DUR.heroHeadline, ease: EASE, delay: 0.15 }}
+              >
+                Style your
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden pb-8 -mb-8 pr-6 pt-1">
+              <motion.span
+                className="block text-[clamp(3.75rem,8.19vw,135px)] italic leading-[1.08] tracking-[-0.07em] text-purple drop-shadow-[0_4px_16px_rgba(106,30,213,0.15)]"
+                initial={{ y: '105%' }}
+                animate={{ y: '0%' }}
+                transition={{ duration: DUR.heroHeadline, ease: EASE, delay: 0.28 }}
+              >
+                everyday.
+              </motion.span>
+            </span>
+          </h1>
+
+          {/* Description */}
+          <motion.p
+            className="max-w-[462px] text-[16px] leading-[1.4] tracking-[-0.013em] text-ink-2 sm:text-[18px] sm:leading-[1.3] lg:text-[21.5px] lg:leading-[28px]"
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: DUR.pageEntrance, ease: EASE, delay: 0.45 }}
+          >
+            Discover streetwear and everyday essentials designed for comfort, versatility and attitude.
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div
+            className="flex flex-wrap items-center gap-6 pt-1 sm:gap-8 sm:pt-2 lg:gap-[46px]"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: DUR.pageEntrance, ease: EASE, delay: 0.6 }}
+          >
+            {/* Button / Primary (Figma 96:26) */}
             <button
-              key={s.id}
               type="button"
-              onClick={() => setSlide(i)}
-              aria-label={`Show slide ${i + 1} of ${HERO_SLIDES.length}`}
-              aria-current={slide === i}
-              className="group grid h-9 place-items-center px-1.5"
+              className="group flex h-13 w-full items-center justify-center gap-4 whitespace-nowrap bg-ink px-8 text-[17px] font-medium text-white transition-[background-color,opacity] duration-[180ms] ease-soft hover:bg-ink-hover active:opacity-[0.88] sm:h-14 sm:w-[292px] sm:gap-5 sm:pl-[41px] sm:pr-[42px] sm:text-[18px] lg:h-16 lg:text-[20px]"
+              onClick={() => shopWith({ collection: current.collection })}
             >
-              <span
-                className={cn(
-                  'block h-3 rounded-full border-2 border-white shadow transition-all duration-300',
-                  slide === i ? 'w-8 bg-white' : 'w-3 bg-white/30 group-hover:bg-white/70',
-                )}
-              />
+              Explore collection
+              <span className="relative size-[20px] shrink-0 transition-transform duration-[180ms] ease-soft group-hover:translate-x-[5px] sm:size-[22px]" aria-hidden="true">
+                <span className="absolute inset-[20.83%_16.67%]">
+                  <span className="absolute inset-[-5.36%_-4.69%]">
+                    <img src={ICON_ARROW} alt="" className="block size-full max-w-none" />
+                  </span>
+                </span>
+              </span>
             </button>
-          ))}
+
+            {/* Link / Text (Figma 96:39) */}
+            <button
+              type="button"
+              className="group relative flex flex-col items-start gap-[5px]"
+              onClick={() => scrollToId('looks')}
+            >
+              <span className="text-[17px] font-medium leading-none text-ink sm:text-[18px] lg:text-[20px]">
+                Shop the look
+              </span>
+              <span className="relative h-[1.5px] w-full bg-ink">
+                <span className="absolute inset-0 origin-left scale-x-0 bg-purple transition-transform duration-200 group-hover:scale-x-100" />
+              </span>
+            </button>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Mobile/Tablet slide switcher bar: ensures slides 01, 02, 03 are fully accessible on smaller viewports */}
+      <div className="container-x relative z-20 flex items-center justify-between pb-6 pt-2 lg:hidden">
+        <div className="flex items-center gap-2">
+          {HERO_SLIDES.map((s, idx) => {
+            const isActive = slide === idx;
+            return (
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => setSlide(idx)}
+                aria-label={`Show slide ${s.num}`}
+                className={`flex h-8 items-center gap-1.5 rounded-full px-3 text-[13px] font-mono font-bold transition-all ${
+                  isActive ? 'bg-purple text-white shadow-sm' : 'border border-ink/20 bg-white/80 text-ink/70 hover:bg-white'
+                }`}
+              >
+                <span>{s.num}</span>
+                {isActive && <span className="text-[11px] font-sans font-medium uppercase">{s.shortLabel}</span>}
+              </button>
+            );
+          })}
+        </div>
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            aria-label="Previous slide"
+            className="grid size-8 place-items-center rounded-full border border-ink/20 bg-white/80 text-ink transition-colors hover:bg-white"
+          >
+            <ChevronLeft size={16} strokeWidth={2.4} />
+          </button>
+          <button
+            type="button"
+            onClick={() => go(1)}
+            aria-label="Next slide"
+            className="grid size-8 place-items-center rounded-full border border-ink/20 bg-white/80 text-ink transition-colors hover:bg-white"
+          >
+            <ChevronRight size={16} strokeWidth={2.4} />
+          </button>
         </div>
       </div>
     </section>
-  );
-}
-
-function ArrowButton({ side, onClick, label, children }: { side: 'left' | 'right'; onClick: () => void; label: string; children: React.ReactNode }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-label={label}
-      className={cn(
-        'absolute z-20 grid size-11 place-items-center rounded-full text-white shadow-[0_10px_24px_-10px_rgba(10,10,10,0.6)] transition-colors max-md:top-[108px] sm:max-md:top-[148px] md:top-1/2 md:size-[52px] md:-translate-y-1/2',
-        side === 'left' ? 'left-3 bg-ink/45 hover:bg-ink/70 md:left-5' : 'right-3 bg-purple hover:bg-electric-600 md:right-5',
-      )}
-    >
-      {children}
-    </button>
-  );
-}
-
-/** Tilted "Big offers / up to X% off" badge with confetti, shown on md+ at the right of the banner. */
-function OfferBadge({ pct, onClick }: { pct: number; onClick: () => void }) {
-  return (
-    <div className="absolute inset-y-0 left-[73%] right-[5%] z-10 hidden items-center justify-center text-[clamp(10px,0.9vw,15px)] lg:flex">
-      <Confetti />
-      <button type="button" onClick={onClick} className="group relative flex flex-col items-center" aria-label={`Big offers, up to ${pct}% off. Shop the sale`}>
-        <span className="relative -rotate-[6deg] bg-ink px-[0.35em] pb-[0.05em] pt-[0.12em] text-[4.5em] font-black italic leading-none tracking-[-0.04em] text-white shadow-[0.4rem_0.4rem_0_#8B4DFF]">
-          BIG
-        </span>
-        <span className="relative -mt-[0.1em] -rotate-[6deg] bg-ink px-[0.35em] py-[0.1em] text-[4.25em] font-black italic leading-none tracking-[-0.04em] text-lav-300 shadow-[0.4rem_0.4rem_0_#8B4DFF]">
-          OFFERS
-        </span>
-        <span className="relative -mt-[0.6em] flex -rotate-[6deg] flex-col items-center rounded-[1.9em] bg-purple px-[2em] pb-[1.2em] pt-[0.8em] text-white shadow-[0_18px_40px_-16px_rgba(106,30,213,0.9)]">
-          <span className="flex items-center gap-[0.4em] text-[1.85em] font-extrabold italic">
-            <span className="h-0.5 w-[0.9em] bg-white/70" aria-hidden="true" />UP TO<span className="h-0.5 w-[0.9em] bg-white/70" aria-hidden="true" />
-          </span>
-          <span className="flex items-baseline text-[5.8em] font-black italic leading-[0.9] tracking-[-0.05em]">
-            {pct}%<span className="ml-[0.1em] text-[0.55em] tracking-[-0.03em]">OFF</span>
-          </span>
-        </span>
-        <span className="relative -mt-[0.9em] flex -rotate-[6deg] items-center gap-[0.4em] rounded-full bg-lav-300 px-[1.6em] py-[0.7em] text-[1.3em] font-extrabold text-ink shadow-[0_10px_20px_-10px_rgba(10,10,10,0.5)] transition-transform group-hover:-translate-y-0.5">
-          Don’t miss out <ArrowRight className="size-[1.1em] transition-transform group-hover:translate-x-1" strokeWidth={2.6} />
-        </span>
-      </button>
-    </div>
-  );
-}
-
-function Confetti() {
-  const bits = [
-    { c: '#6A1ED5', l: '4%', t: '18%', r: -25, s: 'tri' },
-    { c: '#8B4DFF', l: '10%', t: '52%', r: 15, s: 'bar' },
-    { c: '#0A0A0A', l: '88%', t: '10%', r: 35, s: 'tri' },
-    { c: '#C2B0FA', l: '94%', t: '42%', r: -10, s: 'bar' },
-    { c: '#6A1ED5', l: '84%', t: '80%', r: 60, s: 'bar' },
-    { c: '#8B4DFF', l: '2%', t: '80%', r: 20, s: 'tri' },
-  ];
-  return (
-    <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-      {bits.map((b, i) => (
-        <span
-          key={i}
-          className="absolute"
-          style={{
-            left: b.l, top: b.t, transform: `rotate(${b.r}deg)`, background: b.c,
-            width: b.s === 'tri' ? 22 : 6, height: b.s === 'tri' ? 22 : 18,
-            clipPath: b.s === 'tri' ? 'polygon(0 0, 100% 50%, 0 100%)' : undefined,
-            borderRadius: b.s === 'bar' ? 2 : 0,
-          }}
-        />
-      ))}
-    </div>
   );
 }

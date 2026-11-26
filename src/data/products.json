@@ -548,7 +548,7 @@
         "photos": {
           "grid": "/figma/products/track-jacket.png",
           "portrait": "/figma/products/track-jacket-trending.png",
-          "thumb": "/figma/products/track-jacket.png"
+          "thumb": "/figma/products/track-jacket-look.png"
         }
       },
       {
@@ -879,7 +879,7 @@
         ],
         "photos": {
           "portrait": "/figma/products/tech-joggers.png",
-          "thumb": "/figma/products/tech-joggers.png"
+          "thumb": "/figma/products/tech-joggers-look.png"
         }
       },
       {
@@ -891,7 +891,7 @@
         ],
         "photos": {
           "portrait": "/figma/products/tech-joggers.png",
-          "thumb": "/figma/products/tech-joggers.png"
+          "thumb": "/figma/products/tech-joggers-look.png"
         }
       }
     ],
@@ -1617,7 +1617,7 @@
         ],
         "photos": {
           "portrait": "/figma/products/platform-sneakers.png",
-          "thumb": "/figma/products/platform-sneakers.png"
+          "thumb": "/figma/products/platform-sneakers-look.png"
         }
       },
       {
