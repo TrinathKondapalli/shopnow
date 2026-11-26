@@ -12,13 +12,13 @@ const DIR = '/figma/categories';
  * Cards overlap and step down; `top` is measured from the highest card (Women, y = 163).
  */
 const CATS: {
-  label: string; text: string; img: string; patch: Partial<ExploreState>;
+  label: string; text: string; countText: string; img: string; patch: Partial<ExploreState>;
   x: number; top: number; w: number; imgH: number; labelGap: number; labelX: number; labelW: number;
 }[] = [
-  { label: 'Men', text: 'Jackets, cargos and everyday tees', img: `${DIR}/men.png`, patch: { tab: 'men' }, x: 20.2, top: 13.1, w: 455.587, imgH: 406.524, labelGap: 4.98, labelX: 26.28, labelW: 310.15 },
-  { label: 'Women', text: 'Cropped fleece, wide-leg denim', img: `${DIR}/women.png`, patch: { tab: 'women' }, x: 412.7, top: 0, w: 481.871, imgH: 422.295, labelGap: 2.3, labelX: 23.66, labelW: 343.443 },
-  { label: 'Hoodies', text: 'Brushed fleece in five fits', img: `${DIR}/hoodies.png`, patch: { types: ['Hoodies'] }, x: 826.2, top: 38.5, w: 458.216, imgH: 369.727, labelGap: 16.37, labelX: 28.91, labelW: 317.159 },
-  { label: 'Accessories', text: 'Caps, hats and totes', img: `${DIR}/accessories.png`, patch: { types: ['Accessories'] }, x: 1227.5, top: 79.7, w: 403.02, imgH: 339.938, labelGap: 4.96, labelX: 29.79, labelW: 338.186 },
+  { label: 'Men', text: 'Kurtas, Nehru jackets and everyday ethnic', countText: '15 styles', img: `${DIR}/men.png`, patch: { tab: 'men' }, x: 20.2, top: 13.1, w: 455.587, imgH: 406.524, labelGap: 4.98, labelX: 26.28, labelW: 310.15 },
+  { label: 'Women', text: 'Sarees, kurtis, and festive wear', countText: '14 styles', img: `${DIR}/women.png`, patch: { tab: 'women' }, x: 412.7, top: 0, w: 481.871, imgH: 422.295, labelGap: 2.3, labelX: 23.66, labelW: 343.443 },
+  { label: 'Kurtis & Sets', text: 'Festive and casual kurtis', countText: '12 styles', img: `${DIR}/hoodies.png`, patch: { types: ['Kurtis', 'Ethnic Sets'] }, x: 826.2, top: 38.5, w: 458.216, imgH: 369.727, labelGap: 16.37, labelX: 28.91, labelW: 317.159 },
+  { label: 'Jewelry & Dupattas', text: 'Traditional jewelry, dupattas & bags', countText: '8 styles', img: `${DIR}/accessories.png`, patch: { types: ['Accessories', 'Dupattas'] }, x: 1227.5, top: 79.7, w: 403.02, imgH: 339.938, labelGap: 4.96, labelX: 29.79, labelW: 338.186 },
 ];
 
 const FRAME_W = 1648;
@@ -100,7 +100,7 @@ export function Categories() {
                   </span>
                 </span>
                 <span className="mt-0.5 text-[13.5px] leading-snug text-ink-2 sm:mt-0 sm:text-[17px] sm:leading-[30px] sm:whitespace-nowrap">{c.text}</span>
-                <span className="text-[13px] leading-6 whitespace-nowrap text-[#716F73] sm:text-[16px] sm:leading-[26px]">{countFor(c.patch)} styles</span>
+                <span className="text-[13px] leading-6 whitespace-nowrap text-[#716F73] sm:text-[16px] sm:leading-[26px]">{c.countText || `${countFor(c.patch)} styles`}</span>
               </span>
             </motion.button>
           ))}

@@ -1,5 +1,698 @@
 [
   {
+    "id": "mens-cotton-kurta",
+    "name": "Men's Cotton Kurta",
+    "gender": "men",
+    "type": "Kurtas",
+    "art": "kurta",
+    "price": 899,
+    "compareAt": 1499,
+    "rating": 4,
+    "reviewCount": 417,
+    "popularity": 98,
+    "trending": 95,
+    "featured": 1,
+    "createdAt": "2026-10-15",
+    "isNew": true,
+    "collections": [
+      "ethnic",
+      "festive",
+      "essentials"
+    ],
+    "tags": [
+      "kurta",
+      "cotton",
+      "ethnic",
+      "festive",
+      "traditional",
+      "men"
+    ],
+    "description": "Crisp pure combed cotton kurta featuring a mandarin collar and subtle side slits, tailored for everyday comfort and festive gatherings.",
+    "details": [
+      "100% Breathable Combed Cotton",
+      "Mandarin collar with subtle contrast stitch",
+      "Side pockets and relaxed fit",
+      "Machine wash cold"
+    ],
+    "colors": [
+      {
+        "name": "Ivory White",
+        "hex": "#F8F6F0",
+        "family": "white",
+        "images": [
+          "/figma/products/cotton-kurta.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/cotton-kurta.jpg",
+          "portrait": "/figma/products/cotton-kurta.jpg",
+          "square": "/figma/products/cotton-kurta.jpg",
+          "thumb": "/figma/products/cotton-kurta.jpg"
+        }
+      },
+      {
+        "name": "Royal Blue",
+        "hex": "#214287",
+        "family": "blue"
+      },
+      {
+        "name": "Beige Sand",
+        "hex": "#D8C7A5",
+        "family": "neutral"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "Ivory White": {
+        "S": 12,
+        "M": 20,
+        "L": 18,
+        "XL": 14,
+        "XXL": 8
+      },
+      "Royal Blue": {
+        "S": 8,
+        "M": 15,
+        "L": 12,
+        "XL": 10,
+        "XXL": 5
+      },
+      "Beige Sand": {
+        "S": 10,
+        "M": 14,
+        "L": 16,
+        "XL": 9,
+        "XXL": 6
+      }
+    }
+  },
+  {
+    "id": "anarkali-kurti",
+    "name": "Anarkali Kurti",
+    "gender": "women",
+    "type": "Kurtis",
+    "art": "kurti",
+    "price": 1499,
+    "compareAt": 2499,
+    "rating": 4.8,
+    "reviewCount": 43,
+    "popularity": 97,
+    "trending": 98,
+    "featured": 2,
+    "createdAt": "2026-10-16",
+    "isNew": true,
+    "collections": [
+      "ethnic",
+      "festive"
+    ],
+    "tags": [
+      "anarkali",
+      "kurti",
+      "women",
+      "ethnic",
+      "festive",
+      "embroidery"
+    ],
+    "description": "Graceful flared Anarkali silhouette with intricate zari embroidery on yoke and hem, crafted from lightweight festive chanderi silk blend.",
+    "details": [
+      "Chanderi Silk Blend with inner lining",
+      "Flared Anarkali silhouette with 32 kali",
+      "Intricate gold zari yoke work",
+      "Dry clean recommended"
+    ],
+    "colors": [
+      {
+        "name": "Crimson Red",
+        "hex": "#A82236",
+        "family": "red",
+        "images": [
+          "/figma/products/anarkali-kurti.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/anarkali-kurti.jpg",
+          "portrait": "/figma/products/anarkali-kurti.jpg",
+          "square": "/figma/products/anarkali-kurti.jpg",
+          "thumb": "/figma/products/anarkali-kurti.jpg"
+        }
+      },
+      {
+        "name": "Mustard Gold",
+        "hex": "#D8A826",
+        "family": "yellow"
+      },
+      {
+        "name": "Emerald Green",
+        "hex": "#226848",
+        "family": "green"
+      }
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "stock": {
+      "Crimson Red": {
+        "XS": 6,
+        "S": 12,
+        "M": 16,
+        "L": 10,
+        "XL": 7
+      },
+      "Mustard Gold": {
+        "XS": 4,
+        "S": 8,
+        "M": 12,
+        "L": 8,
+        "XL": 4
+      },
+      "Emerald Green": {
+        "XS": 5,
+        "S": 10,
+        "M": 14,
+        "L": 9,
+        "XL": 5
+      }
+    }
+  },
+  {
+    "id": "nehru-jacket-set",
+    "name": "Nehru Jacket Set",
+    "gender": "men",
+    "type": "Nehru Jackets",
+    "art": "nehru",
+    "price": 1899,
+    "compareAt": 2999,
+    "rating": 4.9,
+    "reviewCount": 265,
+    "popularity": 95,
+    "trending": 92,
+    "featured": 3,
+    "createdAt": "2026-10-14",
+    "isNew": true,
+    "collections": [
+      "ethnic",
+      "festive"
+    ],
+    "tags": [
+      "nehru jacket",
+      "men",
+      "festive",
+      "ethnic",
+      "brocade",
+      "traditional"
+    ],
+    "description": "Brocade textured sleeveless Nehru jacket layered over a crisp cotton-silk kurta, complete with tailored mandarin collar and pocket square.",
+    "details": [
+      "Woven jacquard brocade fabric",
+      "Structured mandarin collar & metal buttons",
+      "Includes matching straight kurta",
+      "Dry clean only"
+    ],
+    "colors": [
+      {
+        "name": "Golden Beige",
+        "hex": "#DFCA9F",
+        "family": "neutral",
+        "images": [
+          "/figma/products/nehru-jacket.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/nehru-jacket.jpg",
+          "portrait": "/figma/products/nehru-jacket.jpg",
+          "square": "/figma/products/nehru-jacket.jpg",
+          "thumb": "/figma/products/nehru-jacket.jpg"
+        }
+      },
+      {
+        "name": "Midnight Navy",
+        "hex": "#1D2A44",
+        "family": "blue"
+      },
+      {
+        "name": "Jet Black",
+        "hex": "#1E1E22",
+        "family": "black"
+      }
+    ],
+    "sizes": [
+      "38",
+      "40",
+      "42",
+      "44",
+      "46"
+    ],
+    "stock": {
+      "Golden Beige": {
+        "38": 8,
+        "40": 15,
+        "42": 18,
+        "44": 10,
+        "46": 6
+      },
+      "Midnight Navy": {
+        "38": 6,
+        "40": 12,
+        "42": 14,
+        "44": 8,
+        "46": 4
+      },
+      "Jet Black": {
+        "38": 5,
+        "40": 10,
+        "42": 12,
+        "44": 7,
+        "46": 3
+      }
+    }
+  },
+  {
+    "id": "traditional-sari",
+    "name": "Traditional Sari",
+    "gender": "women",
+    "type": "Sarees",
+    "art": "saree",
+    "price": 2199,
+    "compareAt": 3999,
+    "rating": 4.5,
+    "reviewCount": 317,
+    "popularity": 94,
+    "trending": 90,
+    "featured": 4,
+    "createdAt": "2026-10-12",
+    "isNew": true,
+    "collections": [
+      "ethnic",
+      "festive"
+    ],
+    "tags": [
+      "sari",
+      "saree",
+      "silk",
+      "women",
+      "ethnic",
+      "kanjeevaram",
+      "festive"
+    ],
+    "description": "Lustrous turquoise and teal handloom art silk saree adorned with rich gold brocade zari borders and an opulent pallu.",
+    "details": [
+      "Art Silk with metallic zari weave",
+      "5.5 meters length + 0.8m unstitched blouse piece",
+      "Temple border and grand floral pallu",
+      "Dry clean only"
+    ],
+    "colors": [
+      {
+        "name": "Turquoise Teal",
+        "hex": "#1A7B9B",
+        "family": "blue",
+        "images": [
+          "/figma/products/traditional-sari.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/traditional-sari.jpg",
+          "portrait": "/figma/products/traditional-sari.jpg",
+          "square": "/figma/products/traditional-sari.jpg",
+          "thumb": "/figma/products/traditional-sari.jpg"
+        }
+      },
+      {
+        "name": "Royal Violet",
+        "hex": "#6A1ED5",
+        "family": "purple"
+      },
+      {
+        "name": "Emerald Green",
+        "hex": "#1D6A42",
+        "family": "green"
+      }
+    ],
+    "sizes": [
+      "Free Size"
+    ],
+    "stock": {
+      "Turquoise Teal": {
+        "Free Size": 35
+      },
+      "Royal Violet": {
+        "Free Size": 24
+      },
+      "Emerald Green": {
+        "Free Size": 18
+      }
+    }
+  },
+  {
+    "id": "printed-kurta",
+    "name": "Printed Kurta",
+    "gender": "men",
+    "type": "Kurtas",
+    "art": "kurta",
+    "price": 799,
+    "compareAt": 1299,
+    "rating": 4.6,
+    "reviewCount": 87,
+    "popularity": 93,
+    "trending": 88,
+    "featured": 5,
+    "createdAt": "2026-10-18",
+    "isNew": true,
+    "collections": [
+      "ethnic",
+      "essentials"
+    ],
+    "tags": [
+      "printed",
+      "kurta",
+      "men",
+      "ethnic",
+      "cotton",
+      "casual"
+    ],
+    "description": "Subtle floral motif block-printed kurta in comfortable cambric cotton, ideal for casual gatherings and festive celebrations alike.",
+    "details": [
+      "100% Premium Cambric Cotton",
+      "Artisanal hand-block print look",
+      "Mandarin neck with coconut shell buttons",
+      "Machine wash cold"
+    ],
+    "colors": [
+      {
+        "name": "Sand Floral",
+        "hex": "#D2C4B0",
+        "family": "neutral",
+        "images": [
+          "/figma/products/printed-kurta.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/printed-kurta.jpg",
+          "portrait": "/figma/products/printed-kurta.jpg",
+          "square": "/figma/products/printed-kurta.jpg",
+          "thumb": "/figma/products/printed-kurta.jpg"
+        }
+      },
+      {
+        "name": "Indigo Navy",
+        "hex": "#2B3B60",
+        "family": "blue"
+      },
+      {
+        "name": "Olive Leaf",
+        "hex": "#556040",
+        "family": "green"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "Sand Floral": {
+        "S": 10,
+        "M": 18,
+        "L": 22,
+        "XL": 14,
+        "XXL": 8
+      },
+      "Indigo Navy": {
+        "S": 8,
+        "M": 14,
+        "L": 16,
+        "XL": 10,
+        "XXL": 5
+      },
+      "Olive Leaf": {
+        "S": 6,
+        "M": 10,
+        "L": 12,
+        "XL": 7,
+        "XXL": 4
+      }
+    }
+  },
+  {
+    "id": "festive-lehenga",
+    "name": "Festive Lehenga",
+    "gender": "women",
+    "type": "Lehengas",
+    "art": "lehenga",
+    "price": 2499,
+    "compareAt": 4599,
+    "rating": 4.5,
+    "reviewCount": 462,
+    "popularity": 92,
+    "trending": 96,
+    "featured": 6,
+    "createdAt": "2026-10-10",
+    "isNew": true,
+    "collections": [
+      "ethnic",
+      "festive"
+    ],
+    "tags": [
+      "lehenga",
+      "women",
+      "festive",
+      "ethnic",
+      "zari",
+      "wedding"
+    ],
+    "description": "Festive magenta pink lehenga choli set with gold foil prints, intricate gota patti border and sheer organza dupatta.",
+    "details": [
+      "Semi-stitched lehenga with can-can inner lining",
+      "Embroidered blouse piece (unstitched 0.8m)",
+      "2.25m Organza dupatta with taped border",
+      "Dry clean only"
+    ],
+    "colors": [
+      {
+        "name": "Magenta Pink",
+        "hex": "#BA1E58",
+        "family": "pink",
+        "images": [
+          "/figma/products/festive-lehenga.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/festive-lehenga.jpg",
+          "portrait": "/figma/products/festive-lehenga.jpg",
+          "square": "/figma/products/festive-lehenga.jpg",
+          "thumb": "/figma/products/festive-lehenga.jpg"
+        }
+      },
+      {
+        "name": "Royal Plum",
+        "hex": "#5B1865",
+        "family": "purple"
+      },
+      {
+        "name": "Gold Ochre",
+        "hex": "#C99B26",
+        "family": "yellow"
+      }
+    ],
+    "sizes": [
+      "Free Size (Semi-Stitched)"
+    ],
+    "stock": {
+      "Magenta Pink": {
+        "Free Size (Semi-Stitched)": 28
+      },
+      "Royal Plum": {
+        "Free Size (Semi-Stitched)": 15
+      },
+      "Gold Ochre": {
+        "Free Size (Semi-Stitched)": 12
+      }
+    }
+  },
+  {
+    "id": "royal-bandhgala",
+    "name": "Royal Bandhgala",
+    "gender": "men",
+    "type": "Nehru Jackets",
+    "art": "nehru",
+    "price": 2799,
+    "compareAt": 4999,
+    "rating": 4.9,
+    "reviewCount": 189,
+    "popularity": 91,
+    "trending": 91,
+    "featured": 7,
+    "createdAt": "2026-10-11",
+    "isNew": true,
+    "collections": [
+      "ethnic",
+      "festive"
+    ],
+    "tags": [
+      "bandhgala",
+      "sherwani",
+      "men",
+      "festive",
+      "royal",
+      "ethnic"
+    ],
+    "description": "Regal deep royal blue Bandhgala jacket with hand-crafted antique metal crest buttons and satin-piped mandarin collar.",
+    "details": [
+      "Structured Poly-Viscose blend fabric",
+      "Full lining with internal welt pockets",
+      "Signature antique crest buttons",
+      "Dry clean only"
+    ],
+    "colors": [
+      {
+        "name": "Royal Blue",
+        "hex": "#183868",
+        "family": "blue",
+        "images": [
+          "/figma/products/royal-bandhgala.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/royal-bandhgala.jpg",
+          "portrait": "/figma/products/royal-bandhgala.jpg",
+          "square": "/figma/products/royal-bandhgala.jpg",
+          "thumb": "/figma/products/royal-bandhgala.jpg"
+        }
+      },
+      {
+        "name": "Charcoal Black",
+        "hex": "#222225",
+        "family": "black"
+      },
+      {
+        "name": "Maroon Wine",
+        "hex": "#5A1424",
+        "family": "red"
+      }
+    ],
+    "sizes": [
+      "38",
+      "40",
+      "42",
+      "44"
+    ],
+    "stock": {
+      "Royal Blue": {
+        "38": 7,
+        "40": 14,
+        "42": 16,
+        "44": 8
+      },
+      "Charcoal Black": {
+        "38": 5,
+        "40": 10,
+        "42": 11,
+        "44": 6
+      },
+      "Maroon Wine": {
+        "38": 4,
+        "40": 8,
+        "42": 9,
+        "44": 5
+      }
+    }
+  },
+  {
+    "id": "maroon-kurta",
+    "name": "Silk Festive Kurta",
+    "gender": "men",
+    "type": "Kurtas",
+    "art": "kurta",
+    "price": 1199,
+    "compareAt": 1999,
+    "rating": 4.7,
+    "reviewCount": 112,
+    "popularity": 90,
+    "trending": 89,
+    "featured": 8,
+    "createdAt": "2026-10-17",
+    "isNew": true,
+    "collections": [
+      "ethnic",
+      "festive"
+    ],
+    "tags": [
+      "silk kurta",
+      "maroon",
+      "men",
+      "ethnic",
+      "festive"
+    ],
+    "description": "Rich maroon raw silk blend kurta with textured weave and tonal piping, designed for weddings, pujas and festive evenings.",
+    "details": [
+      "Raw Silk-Cotton Blend fabric",
+      "Textured self-stripe weave",
+      "Mandarin collar with concealed placket",
+      "Dry clean or gentle hand wash"
+    ],
+    "colors": [
+      {
+        "name": "Deep Maroon",
+        "hex": "#6B1927",
+        "family": "red",
+        "images": [
+          "/figma/products/maroon-kurta.jpg"
+        ],
+        "photos": {
+          "grid": "/figma/products/maroon-kurta.jpg",
+          "portrait": "/figma/products/maroon-kurta.jpg",
+          "square": "/figma/products/maroon-kurta.jpg",
+          "thumb": "/figma/products/maroon-kurta.jpg"
+        }
+      },
+      {
+        "name": "Forest Green",
+        "hex": "#1E4D2B",
+        "family": "green"
+      },
+      {
+        "name": "Sand Beige",
+        "hex": "#D2C4A8",
+        "family": "neutral"
+      }
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "stock": {
+      "Deep Maroon": {
+        "S": 10,
+        "M": 16,
+        "L": 19,
+        "XL": 11,
+        "XXL": 6
+      },
+      "Forest Green": {
+        "S": 7,
+        "M": 12,
+        "L": 14,
+        "XL": 8,
+        "XXL": 4
+      },
+      "Sand Beige": {
+        "S": 6,
+        "M": 11,
+        "L": 13,
+        "XL": 7,
+        "XXL": 3
+      }
+    }
+  },
+  {
     "id": "essential-tee",
     "name": "Essential Tee",
     "gender": "men",
@@ -10,7 +703,7 @@
     "reviewCount": 417,
     "popularity": 85,
     "trending": 59,
-    "featured": 0,
+    "featured": 10,
     "createdAt": "2026-08-02",
     "isNew": false,
     "collections": [
@@ -93,7 +786,7 @@
     "reviewCount": 63,
     "popularity": 56,
     "trending": 51,
-    "featured": 1,
+    "featured": 11,
     "createdAt": "2026-09-10",
     "isNew": false,
     "collections": [
@@ -184,7 +877,7 @@
     "reviewCount": 265,
     "popularity": 58,
     "trending": 26,
-    "featured": 2,
+    "featured": 12,
     "createdAt": "2026-07-21",
     "isNew": false,
     "collections": [
@@ -270,7 +963,7 @@
     "reviewCount": 317,
     "popularity": 55,
     "trending": 93,
-    "featured": 3,
+    "featured": 13,
     "createdAt": "2026-10-04",
     "isNew": true,
     "collections": [
@@ -356,7 +1049,7 @@
     "reviewCount": 27,
     "popularity": 63,
     "trending": 44,
-    "featured": 4,
+    "featured": 14,
     "createdAt": "2026-06-18",
     "isNew": false,
     "collections": [],
@@ -437,7 +1130,7 @@
     "reviewCount": 463,
     "popularity": 48,
     "trending": 60,
-    "featured": 5,
+    "featured": 15,
     "createdAt": "2026-05-30",
     "isNew": false,
     "collections": [
@@ -519,7 +1212,7 @@
     "reviewCount": 125,
     "popularity": 80,
     "trending": 79,
-    "featured": 6,
+    "featured": 16,
     "createdAt": "2026-11-08",
     "isNew": true,
     "collections": [
@@ -604,7 +1297,7 @@
     "reviewCount": 271,
     "popularity": 48,
     "trending": 59,
-    "featured": 7,
+    "featured": 17,
     "createdAt": "2026-09-25",
     "isNew": false,
     "collections": [
@@ -687,7 +1380,7 @@
     "reviewCount": 116,
     "popularity": 44,
     "trending": 47,
-    "featured": 8,
+    "featured": 18,
     "createdAt": "2026-08-15",
     "isNew": false,
     "collections": [
@@ -770,7 +1463,7 @@
     "reviewCount": 95,
     "popularity": 47,
     "trending": 21,
-    "featured": 9,
+    "featured": 19,
     "createdAt": "2026-04-12",
     "isNew": false,
     "collections": [
@@ -851,7 +1544,7 @@
     "reviewCount": 258,
     "popularity": 70,
     "trending": 73,
-    "featured": 10,
+    "featured": 20,
     "createdAt": "2026-11-12",
     "isNew": true,
     "collections": [
@@ -931,7 +1624,7 @@
     "reviewCount": 92,
     "popularity": 84,
     "trending": 63,
-    "featured": 11,
+    "featured": 21,
     "createdAt": "2026-07-02",
     "isNew": false,
     "collections": [],
@@ -1005,7 +1698,7 @@
     "reviewCount": 186,
     "popularity": 96,
     "trending": 72,
-    "featured": 12,
+    "featured": 22,
     "createdAt": "2026-11-02",
     "isNew": true,
     "collections": [
@@ -1089,7 +1782,7 @@
     "reviewCount": 228,
     "popularity": 95,
     "trending": 24,
-    "featured": 13,
+    "featured": 23,
     "createdAt": "2026-06-08",
     "isNew": false,
     "collections": [],
@@ -1166,7 +1859,7 @@
     "reviewCount": 171,
     "popularity": 71,
     "trending": 40,
-    "featured": 14,
+    "featured": 24,
     "createdAt": "2026-05-14",
     "isNew": false,
     "collections": [
@@ -1261,7 +1954,7 @@
     "reviewCount": 404,
     "popularity": 77,
     "trending": 26,
-    "featured": 15,
+    "featured": 25,
     "createdAt": "2026-09-01",
     "isNew": false,
     "collections": [
@@ -1356,7 +2049,7 @@
     "reviewCount": 50,
     "popularity": 58,
     "trending": 62,
-    "featured": 16,
+    "featured": 26,
     "createdAt": "2026-11-15",
     "isNew": true,
     "collections": [
@@ -1433,7 +2126,7 @@
     "reviewCount": 346,
     "popularity": 89,
     "trending": 97,
-    "featured": 17,
+    "featured": 27,
     "createdAt": "2026-10-20",
     "isNew": true,
     "collections": [
@@ -1517,7 +2210,7 @@
     "reviewCount": 226,
     "popularity": 78,
     "trending": 54,
-    "featured": 18,
+    "featured": 28,
     "createdAt": "2026-03-28",
     "isNew": false,
     "collections": [],
@@ -1591,7 +2284,7 @@
     "reviewCount": 178,
     "popularity": 42,
     "trending": 92,
-    "featured": 19,
+    "featured": 29,
     "createdAt": "2026-10-28",
     "isNew": true,
     "collections": [],
@@ -1661,7 +2354,7 @@
     "reviewCount": 457,
     "popularity": 64,
     "trending": 42,
-    "featured": 20,
+    "featured": 30,
     "createdAt": "2026-06-30",
     "isNew": false,
     "collections": [],
@@ -1723,7 +2416,7 @@
     "reviewCount": 75,
     "popularity": 79,
     "trending": 52,
-    "featured": 21,
+    "featured": 31,
     "createdAt": "2026-02-11",
     "isNew": false,
     "collections": [
@@ -1789,7 +2482,7 @@
     "reviewCount": 188,
     "popularity": 66,
     "trending": 49,
-    "featured": 22,
+    "featured": 32,
     "createdAt": "2026-04-04",
     "isNew": false,
     "collections": [],
@@ -1864,7 +2557,7 @@
     "reviewCount": 269,
     "popularity": 47,
     "trending": 66,
-    "featured": 23,
+    "featured": 33,
     "createdAt": "2026-10-10",
     "isNew": true,
     "collections": [],

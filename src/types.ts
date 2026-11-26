@@ -1,9 +1,12 @@
 export type Gender = 'men' | 'women' | 'unisex';
-export type ProductType = 'T-Shirts' | 'Hoodies' | 'Sweatshirts' | 'Jackets' | 'Bottoms' | 'Footwear' | 'Accessories';
+export type ProductType =
+  | 'T-Shirts' | 'Hoodies' | 'Sweatshirts' | 'Jackets' | 'Bottoms' | 'Footwear' | 'Accessories'
+  | 'Kurtas' | 'Kurtis' | 'Sarees' | 'Lehengas' | 'Nehru Jackets' | 'Ethnic Sets' | 'Dupattas';
 export type ArtKind =
   | 'tee' | 'longsleeve' | 'sweat' | 'hoodie' | 'cropped-hoodie' | 'jacket' | 'bomber'
-  | 'cargo' | 'jeans' | 'wide' | 'cap' | 'bucket' | 'shoe' | 'platform' | 'tote';
-export type ColorFamily = 'black' | 'white' | 'purple' | 'grey' | 'blue' | 'green' | 'neutral';
+  | 'cargo' | 'jeans' | 'wide' | 'cap' | 'bucket' | 'shoe' | 'platform' | 'tote'
+  | 'kurta' | 'kurti' | 'saree' | 'lehenga' | 'nehru' | 'dupatta';
+export type ColorFamily = 'black' | 'white' | 'purple' | 'grey' | 'blue' | 'green' | 'neutral' | 'red' | 'yellow' | 'pink';
 
 export interface ProductColor {
   name: string;
@@ -74,7 +77,7 @@ export interface Review {
   date: string;
 }
 
-export type ExploreTab = 'all' | 'men' | 'women' | 'new' | 'sale';
+export type ExploreTab = 'all' | 'men' | 'women' | 'ethnic' | 'festive' | 'new' | 'sale';
 export type SortKey = 'featured' | 'popular' | 'newest' | 'price-asc' | 'price-desc';
 export type PriceBand = 'under-1000' | '1000-1999' | '2000-plus';
 

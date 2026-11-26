@@ -23,31 +23,31 @@ const HERO_SLIDES: HeroSlide[] = [
     id: '01',
     num: '01',
     photo: '/figma/hero/hero-bg.png',
-    alt: 'Indian streetwear models in lavender hoodie and black hoodie with cargo pants, against brutalist purple concrete architecture',
-    label: 'AW’24\nNEW\nSEASON',
-    shortLabel: 'AW’24',
-    eyebrow: 'New season drop',
-    collection: 'move',
+    alt: 'Indian festive ethnic wear couple in silk kurta, brocade Nehru jacket and embroidered Anarkali gown in palace courtyard',
+    label: 'FESTIVE’24\nETHNIC\nCOLLECTION',
+    shortLabel: 'ETHNIC’24',
+    eyebrow: 'Festive season drop',
+    collection: 'festive',
   },
   {
     id: '02',
     num: '02',
     photo: '/figma/hero/hero-slide-02.png',
-    alt: 'Indian streetwear models in tailored lilac jacket and oversized lavender sweatshirt against purple concrete architecture',
-    label: 'SS’26\nDROP\n02',
-    shortLabel: 'SS’26',
-    eyebrow: 'Summer capsule',
-    collection: 'essential',
+    alt: 'Traditional Indian wedding and festive collection',
+    label: 'WEDDING\nEDITION\n02',
+    shortLabel: 'WEDDING',
+    eyebrow: 'Ceremonial edit',
+    collection: 'ethnic',
   },
   {
     id: '03',
     num: '03',
     photo: '/figma/hero/hero-slide-03.png',
-    alt: 'Indian streetwear models in technical violet zip overshirt and black hoodie against purple monolithic architecture',
-    label: 'NIGHT\nLAB\n26',
-    shortLabel: 'NIGHT LAB',
-    eyebrow: 'After hours',
-    collection: 'active',
+    alt: 'Contemporary fusion everyday ethnic wear',
+    label: 'DAILY\nETHNIC\n24',
+    shortLabel: 'DAILY ETHNIC',
+    eyebrow: 'Everyday comfort',
+    collection: 'essentials',
   },
 ];
 
@@ -255,7 +255,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: DUR.pageEntrance, ease: EASE, delay: 0.45 }}
           >
-            Discover streetwear and everyday essentials designed for comfort, versatility and attitude.
+            Festive &amp; Daily wear for everyone — discover authentic kurtas, sarees, lehengas and ethnic essentials.
           </motion.p>
 
           {/* CTAs */}

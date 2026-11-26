@@ -24,24 +24,24 @@ const typeLinks = (tab: 'men' | 'women', types: ProductType[]) =>
 const MEGA: Record<MegaId, MegaPanel> = {
   men: {
     columns: [
-      { title: 'Clothing', links: [{ label: 'Shop all men', patch: { tab: 'men' } }, ...typeLinks('men', ['T-Shirts', 'Hoodies', 'Sweatshirts', 'Jackets', 'Bottoms'])] },
-      { title: 'More', links: [...typeLinks('men', ['Footwear', 'Accessories']), { label: 'New arrivals', patch: { tab: 'new' } }, { label: 'Sale', patch: { tab: 'sale' } }] },
+      { title: 'Clothing', links: [{ label: 'Shop all men', patch: { tab: 'men' } }, ...typeLinks('men', ['Kurtas', 'Nehru Jackets', 'T-Shirts', 'Hoodies', 'Sweatshirts', 'Jackets', 'Bottoms'])] },
+      { title: 'More', links: [...typeLinks('men', ['Footwear', 'Accessories']), { label: 'Ethnic collection', patch: { tab: 'ethnic' } }, { label: 'New arrivals', patch: { tab: 'new' } }, { label: 'Sale', patch: { tab: 'sale' } }] },
     ],
-    feature: { productId: 'track-jacket', color: 0, title: 'The Track Jacket', text: 'Just dropped in three colours.', patch: { tab: 'men', types: ['Jackets'] } },
+    feature: { productId: 'mens-cotton-kurta', color: 0, title: 'Men\'s Cotton Kurta', text: 'Pure combed cotton with mandarin collar.', patch: { tab: 'men', types: ['Kurtas'] } },
   },
   women: {
     columns: [
-      { title: 'Clothing', links: [{ label: 'Shop all women', patch: { tab: 'women' } }, ...typeLinks('women', ['T-Shirts', 'Hoodies', 'Sweatshirts', 'Jackets', 'Bottoms'])] },
-      { title: 'More', links: [...typeLinks('women', ['Footwear', 'Accessories']), { label: 'New arrivals', patch: { tab: 'new' } }, { label: 'Sale', patch: { tab: 'sale' } }] },
+      { title: 'Clothing', links: [{ label: 'Shop all women', patch: { tab: 'women' } }, ...typeLinks('women', ['Kurtis', 'Sarees', 'Lehengas', 'Ethnic Sets', 'T-Shirts', 'Hoodies'])] },
+      { title: 'More', links: [...typeLinks('women', ['Dupattas', 'Footwear', 'Accessories']), { label: 'Festive edit', patch: { tab: 'festive' } }, { label: 'New arrivals', patch: { tab: 'new' } }, { label: 'Sale', patch: { tab: 'sale' } }] },
     ],
-    feature: { productId: 'cropped-hoodie', color: 0, title: 'Cropped Hoodie', text: 'This season in lavender.', patch: { tab: 'women', types: ['Hoodies'] } },
+    feature: { productId: 'anarkali-kurti', color: 0, title: 'Anarkali Kurti', text: 'Graceful flared silhouette with zari work.', patch: { tab: 'women', types: ['Kurtis'] } },
   },
   collections: {
     columns: [
-      { title: 'Collections', links: [{ label: 'Made for Every Move', patch: { collection: 'move' } }, { label: 'The Essentials', patch: { collection: 'essentials' } }, { label: 'New arrivals', patch: { tab: 'new' } }] },
-      { title: 'Shop by', links: [{ label: 'Bestsellers', patch: { sort: 'popular' } }, { label: 'Under ₹1,000', patch: { prices: ['under-1000'] } }, { label: 'Lavender edit', patch: { colors: ['purple'] } }] },
+      { title: 'Collections', links: [{ label: 'Ethnic & Festive', patch: { tab: 'ethnic' } }, { label: 'Festive Season Drop', patch: { tab: 'festive' } }, { label: 'The Essentials', patch: { collection: 'essentials' } }, { label: 'New arrivals', patch: { tab: 'new' } }] },
+      { title: 'Shop by', links: [{ label: 'Bestsellers', patch: { sort: 'popular' } }, { label: 'Under ₹1,000', patch: { prices: ['under-1000'] } }, { label: 'Festive colors', patch: { colors: ['red', 'purple'] } }] },
     ],
-    feature: { productId: 'satin-bomber', color: 1, title: 'Made for Every Move', text: 'Our cinematic streetwear drop.', patch: { collection: 'move' } },
+    feature: { productId: 'festive-lehenga', color: 0, title: 'Festive Lehenga', text: 'Intricate gota patti border & organza dupatta.', patch: { tab: 'festive' } },
   },
 };
 

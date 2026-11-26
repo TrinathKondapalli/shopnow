@@ -12,17 +12,17 @@ const P = '/figma/products';
 const C = '/figma/categories';
 
 const RAIL: { label: string; img: string; patch: Partial<ExploreState> }[] = [
+  { label: 'Kurtas & Pyjamas', img: `${C}/rail_kurtas.png`, patch: { types: ['Kurtas'] } },
+  { label: 'Sarees & Kurtis', img: `${C}/rail_sarees.png`, patch: { types: ['Sarees', 'Kurtis'] } },
+  { label: 'T-Shirts & Tees', img: `${C}/rail_tees.png`, patch: { types: ['T-Shirts'] } },
+  { label: 'Ethnic Sets', img: `${C}/rail_ethnic_sets.png`, patch: { types: ['Ethnic Sets'] } },
+  { label: 'Lehengas', img: `${C}/rail_lehengas.png`, patch: { types: ['Lehengas'] } },
+  { label: 'Nehru Jackets', img: `${C}/rail_nehru.png`, patch: { types: ['Nehru Jackets'] } },
+  { label: 'Dupattas & Shawls', img: `${C}/rail_dupattas.png`, patch: { types: ['Dupattas'] } },
   { label: 'Men’s Wear', img: `${C}/men.png`, patch: { tab: 'men' } },
   { label: 'Women’s Wear', img: `${C}/women.png`, patch: { tab: 'women' } },
-  { label: 'T-Shirts & Tees', img: `${P}/essential-tee.png`, patch: { types: ['T-Shirts'] } },
-  { label: 'Hoodies & Fleece', img: `${P}/everyday-hoodie.png`, patch: { types: ['Hoodies'] } },
-  { label: 'Sweatshirts & Crews', img: `${P}/heavyweight-crew.png`, patch: { types: ['Sweatshirts'] } },
-  { label: 'Jackets & Layers', img: `${P}/track-jacket.png`, patch: { types: ['Jackets'] } },
-  { label: 'Cargos & Bottoms', img: `${P}/cargo-pants.png`, patch: { types: ['Bottoms'] } },
-  { label: 'Shoes & Sneakers', img: `${P}/platform-sneakers.png`, patch: { types: ['Footwear'] } },
-  { label: 'Caps & Accessories', img: `${C}/accessories.png`, patch: { types: ['Accessories'] } },
-  { label: 'New Arrivals', img: `${P}/zip-overshirt.png`, patch: { tab: 'new' } },
-  { label: 'Sale & Offers', img: `${P}/relaxed-jeans.png`, patch: { tab: 'sale' } },
+  { label: 'Festive Wear', img: `${P}/festive-lehenga.jpg`, patch: { tab: 'festive' } },
+  { label: 'Sale & Offers', img: `${P}/anarkali-kurti.jpg`, patch: { tab: 'sale' } },
 ];
 
 /** Category rail, service strip and three promo tiles that sit directly under the hero banner. */
@@ -86,31 +86,31 @@ export function ShopHighlights() {
           <PromoTile
             i={0}
             className="bg-[linear-gradient(110deg,#0A0A0A_0%,#2A0F5C_55%,#6A1ED5_100%)] text-white"
-            img="/figma/look/night-shift.jpg"
+            img="/figma/categories/promo_festival.jpg"
             imgPos="52% 30%"
-            title={<>Streetwear<br /><span className="text-lav-300">Offer Zone</span></>}
+            title={<>Ethnic Wear<br /><span className="text-lav-300">Festival Zone</span></>}
             text={<>Latest drops<br />Best prices</>}
             cta="Shop now"
             ctaClass="bg-lav-300 text-ink hover:bg-white"
             badge={{ top: 'Up to', value: `${maxOff}%`, bottom: 'OFF', className: 'bg-lav-300 text-ink' }}
-            onClick={() => shopWith({ tab: 'sale' })}
+            onClick={() => shopWith({ tab: 'festive' })}
           />
           <PromoTile
             i={1}
             className="bg-[linear-gradient(110deg,#F6EEFF_0%,#E6DCFF_55%,#C2B0FA_100%)] text-ink"
-            img="/figma/look/lavender-hour.jpg"
+            img="/figma/categories/promo_trends.jpg"
             imgPos="50% 35%"
             title={<>Fashion<br /><span className="text-purple">Trends</span></>}
-            text={<>Style your life<br />with SHOPNOW</>}
+            text={<>Traditional<br />fusion styles</>}
             cta="Shop now"
             ctaClass="bg-purple text-white hover:bg-electric-600"
             badge={{ top: 'New', value: 'IN', bottom: 'this week', className: 'bg-ink text-white' }}
-            onClick={() => shopWith({ tab: 'new' })}
+            onClick={() => shopWith({ tab: 'ethnic' })}
           />
           <PromoTile
             i={2}
             className="bg-[linear-gradient(110deg,#FAF5F0_0%,#F3EDFF_60%,#E6DCFF_100%)] text-ink"
-            img="/figma/featured/drop-02.jpg"
+            img="/figma/categories/promo_access.jpg"
             imgPos="50% 40%"
             title={<>Get Early<br /><span className="text-purple">Access</span></>}
             text={<>First look at new drops<br />and sales by email</>}

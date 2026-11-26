@@ -11,7 +11,10 @@ export const REVIEWS = reviewsJson as unknown as Review[];
 const MAP = new Map(PRODUCTS.map((p) => [p.id, p]));
 export const getProduct = (id: string) => MAP.get(id);
 
-export const PRODUCT_TYPES: ProductType[] = ['T-Shirts', 'Hoodies', 'Sweatshirts', 'Jackets', 'Bottoms', 'Footwear', 'Accessories'];
+export const PRODUCT_TYPES: ProductType[] = [
+  'Kurtas', 'Kurtis', 'Sarees', 'Lehengas', 'Nehru Jackets', 'Ethnic Sets', 'Dupattas',
+  'T-Shirts', 'Hoodies', 'Sweatshirts', 'Jackets', 'Bottoms', 'Footwear', 'Accessories',
+];
 
 export const SIZE_GROUPS: { label: string; sizes: string[] }[] = [
   { label: 'Clothing', sizes: ['XS', 'S', 'M', 'L', 'XL'] },
@@ -47,7 +50,8 @@ export const TABS: { id: ExploreTab; label: string }[] = [
   { id: 'all', label: 'All' },
   { id: 'men', label: 'Men' },
   { id: 'women', label: 'Women' },
-  { id: 'new', label: 'New Arrivals' },
+  { id: 'ethnic', label: 'Ethnic Wear' },
+  { id: 'festive', label: 'Festive' },
   { id: 'sale', label: 'Sale' },
 ];
 
@@ -70,6 +74,8 @@ export function matchesTab(p: Product, tab: ExploreTab) {
   switch (tab) {
     case 'men': return p.gender !== 'women';
     case 'women': return p.gender !== 'men';
+    case 'ethnic': return p.collections.includes('ethnic') || ['Kurtas', 'Kurtis', 'Sarees', 'Lehengas', 'Nehru Jackets', 'Ethnic Sets', 'Dupattas'].includes(p.type);
+    case 'festive': return p.collections.includes('festive') || p.tags.includes('festive');
     case 'new': return p.isNew;
     case 'sale': return !!p.compareAt;
     default: return true;
