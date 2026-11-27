@@ -4,6 +4,8 @@ const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9₹\s-]/g, ' ').rep
 
 // Words people type that mean the same thing as our product types.
 const SYNONYMS: Record<string, string> = {
+  sari: 'saree', saris: 'saree', sarees: 'saree', saree: 'saree', kurtas: 'kurta', kurti: 'kurti', kurtis: 'kurti',
+  lehnga: 'lehenga', lehengas: 'lehenga', lengha: 'lehenga', nehru: 'nehru', bandhgala: 'bandhgala', dupattas: 'dupatta',
   tshirt: 't-shirts', tshirts: 't-shirts', 't-shirt': 't-shirts', tee: 't-shirts', tees: 't-shirts',
   hoody: 'hoodies', hoodie: 'hoodies', sweatshirt: 'sweatshirts', jumper: 'sweatshirts',
   pants: 'bottoms', trousers: 'bottoms', jeans: 'jeans', cargo: 'cargo', joggers: 'joggers',

@@ -23,12 +23,17 @@ export const DUR = {
 
 export const STAGGER = 0.08;
 
-/** Fade-up used by sections; pass the item index as `custom`. */
+/**
+ * Reveal used by sections; pass the item index as `custom`.
+ * Content is never hidden: the "hidden" state is fully opaque and only offset by 12px, so nothing renders
+ * as a blank block before the observer fires (fast scrolling, anchor jumps, slow phones).
+ * With reduced motion, MotionConfig drops the transform and nothing moves at all.
+ */
 export const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 1, y: 12 },
   show: (i: number = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: DUR.section, ease: EASE, delay: i * STAGGER },
+    transition: { duration: 0.3, ease: EASE, delay: Math.min(i, 3) * 0.05 },
   }),
 };

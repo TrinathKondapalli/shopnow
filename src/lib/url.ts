@@ -1,5 +1,5 @@
 import type { ColorFamily, ExploreState, ExploreTab, PriceBand, SortKey } from '../types';
-import { DEFAULT_EXPLORE, PRODUCTS, PRODUCT_TYPES, getProduct } from './catalog';
+import { COLOR_FAMILIES, DEFAULT_EXPLORE, PRODUCTS, PRODUCT_TYPES, getProduct } from './catalog';
 
 /**
  * Shareable links, kept in the URL hash so any static host works:
@@ -8,10 +8,10 @@ import { DEFAULT_EXPLORE, PRODUCTS, PRODUCT_TYPES, getProduct } from './catalog'
  * Every value read from a link is checked against the catalogue.
  */
 
-const TABS: ExploreTab[] = ['all', 'men', 'women', 'new', 'sale'];
+const TABS: ExploreTab[] = ['all', 'men', 'women', 'ethnic', 'festive', 'new', 'sale'];
 const SORTS: SortKey[] = ['featured', 'popular', 'newest', 'price-asc', 'price-desc'];
 const PRICES: PriceBand[] = ['under-1000', '1000-1999', '2000-plus'];
-const COLORS: ColorFamily[] = ['black', 'white', 'purple', 'grey', 'blue', 'green', 'neutral'];
+const COLORS: ColorFamily[] = COLOR_FAMILIES.map((c) => c.id);
 const SIZES = [...new Set(PRODUCTS.flatMap((p) => p.sizes))];
 const COLLECTIONS = [...new Set(PRODUCTS.flatMap((p) => p.collections))];
 
@@ -21,6 +21,12 @@ const LISTS = [
   ['colors', 'color', COLORS],
   ['prices', 'price', PRICES],
 ] as const;
+
+/** Path form of a product link (/product/<id>), rewritten to the hash route on load. */
+export function pathToProduct(path: string): { productId: string; color: number } | null {
+  const m = /^\/product\/([\w-]+)(?:\/(\d+))?\/?$/.exec(path);
+  return m ? hashToProduct(`#p/${m[1]}${m[2] ? `/${m[2]}` : ''}`) : null;
+}
 
 export function productHash(productId: string, color = 0) {
   return `#p/${productId}${color > 0 ? `/${color}` : ''}`;

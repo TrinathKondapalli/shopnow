@@ -14,16 +14,16 @@ export const PIN_POS: Record<LookSlot, [number, number]> = { top: [50, 31], bott
 
 /** A dressed mannequin built from the products in a look. viewBox 240 x 500. */
 export function Mannequin({ look, className }: { look: Look; className?: string }) {
-  const skin = '#D9D3E8';
-  const limb = '#C9C1DD';
+  const skin = 'var(--color-bg-alt)';
+  const limb = 'var(--color-border)';
   const parts = look.items.map((it) => ({ ...it, p: getProduct(it.productId) })).filter((x) => x.p);
   const feet = parts.find((x) => x.slot === 'feet');
-  const shoeC = feet ? feet.p!.colors[feet.color].hex : '#F4F4F6';
+  const shoeC = feet ? feet.p!.colors[feet.color].hex : 'var(--color-bg)';
   const sd = shade(shoeC, -0.25);
   const shoe = (x: number, flip: boolean) => (
     <g transform={`translate(${x} 0)${flip ? ' translate(56 0) scale(-1 1)' : ''}`}>
       <path d="M2 24 Q0 6 22 4 L46 4 Q56 6 56 24 Z" fill={shoeC} />
-      <rect x="-2" y="20" width="62" height={feet?.p?.art === 'platform' ? 13 : 9} rx="4.5" fill="#fff" />
+      <rect x="-2" y="20" width="62" height={feet?.p?.art === 'platform' ? 13 : 9} rx="4.5" fill="var(--color-bg)" />
       <path d="M2 24 H56" stroke={sd} strokeWidth="1.5" />
     </g>
   );
@@ -36,7 +36,7 @@ export function Mannequin({ look, className }: { look: Look; className?: string 
   };
   return (
     <svg viewBox="0 0 240 500" className={className} aria-hidden="true">
-      <ellipse cx="120" cy="488" rx="80" ry="8" fill="#2A1A5E" opacity=".12" />
+      <ellipse cx="120" cy="488" rx="80" ry="8" fill="var(--color-text)" opacity=".12" />
       <line x1="56" y1="108" x2="42" y2="264" stroke={limb} strokeWidth="17" strokeLinecap="round" />
       <line x1="184" y1="108" x2="198" y2="264" stroke={limb} strokeWidth="17" strokeLinecap="round" />
       <rect x="111" y="66" width="18" height="30" rx="8" fill={skin} />

@@ -3,9 +3,10 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
 // Static build: `npm run build` writes a deployable site to dist/.
-// `base: './'` keeps asset paths relative so dist/ works on any host or sub-folder.
+// `base: '/'` is required because the site has real paths (/affiliate, /product/<id>): relative asset
+// paths would resolve to /product/assets/... and break. Deploy dist/ at the domain root.
 export default defineConfig({
-  base: './',
+  base: '/',
   plugins: [react(), tailwindcss()],
   build: {
     rollupOptions: {

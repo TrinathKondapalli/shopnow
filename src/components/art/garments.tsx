@@ -9,11 +9,11 @@ import { isLight, shade } from '../../lib/utils';
  */
 export interface Shape { w: number; h: number; hang?: [number, number]; body: ReactNode }
 
-const SH = '#000';
+const SH = 'var(--color-action-hover)';
 
 export function garmentShape(kind: ArtKind, c: string): Shape {
   const d = shade(c, -0.2);
-  const mark = isLight(c) ? '#1F1F25' : '#FFFFFF';
+  const mark = isLight(c) ? 'var(--color-text)' : 'var(--color-bg)';
   const collar = <path d="M72 22 Q100 52 128 22 Q124 32 118 36 Q100 54 82 36 Q76 32 72 22 Z" fill={d} />;
   switch (kind) {
     case 'tee':
@@ -48,7 +48,7 @@ export function garmentShape(kind: ArtKind, c: string): Shape {
         <path d={`M136 46 L166 62 L190 172 L160 178 L150 96 L150 ${hem} Q132 ${hem + 4} 128 ${hem + 3} Z`} fill={SH} opacity=".07" />
         <path d="M72 50 Q100 76 128 50 Q100 38 72 50 Z" fill={SH} opacity=".28" />
         {!crop && <path d="M66 150 L134 150 L142 186 L58 186 Z" fill={SH} opacity=".09" />}
-        <path d="M90 68 L88 104 M110 68 L112 104" stroke="#fff" strokeOpacity=".75" strokeWidth="2.4" strokeLinecap="round" />
+        <path d="M90 68 L88 104 M110 68 L112 104" stroke="var(--color-bg)" strokeOpacity=".75" strokeWidth="2.4" strokeLinecap="round" />
         <path d={`M10 172 L40 178 L37 192 L7 186 Z M190 172 L160 178 L163 192 L193 186 Z M50 ${hem} Q100 ${hem + 10} 150 ${hem} L150 ${hem + 10} Q100 ${hem + 20} 50 ${hem + 10} Z`} fill={d} />
       </> };
     }
@@ -57,7 +57,7 @@ export function garmentShape(kind: ArtKind, c: string): Shape {
         <path d="M60 40 L28 56 L6 168 L38 176 L50 94 L50 202 L150 202 L150 94 L162 176 L194 168 L172 56 L140 40 L100 66 Z" fill={c} />
         <path d="M140 40 L172 56 L194 168 L162 176 L150 94 L150 202 L104 202 L104 70 Z" fill={SH} opacity=".07" />
         <path d="M66 30 L100 62 L134 30 L148 42 L100 76 L52 42 Z" fill={d} />
-        <path d="M100 72 V202" stroke="#fff" strokeOpacity=".6" strokeWidth="2.2" />
+        <path d="M100 72 V202" stroke="var(--color-bg)" strokeOpacity=".6" strokeWidth="2.2" />
         <path d="M62 142 H90 V172 H62 Z M110 142 H138 V172 H110 Z" fill={SH} opacity=".11" />
         <path d="M6 168 L38 176 L35 190 L3 182 Z M194 168 L162 176 L165 190 L197 182 Z" fill={d} />
       </> };
@@ -84,14 +84,14 @@ export function garmentShape(kind: ArtKind, c: string): Shape {
         <path d="M50 6 H150 L158 60 L166 292 H110 L100 106 L90 292 H34 L42 60 Z" fill={c} />
         <path d="M100 106 L110 292 H166 L158 60 L150 6 H100 Z" fill={SH} opacity=".07" />
         <path d="M50 6 H150 V22 H50 Z" fill={d} />
-        <path d="M100 22 V106 M56 28 Q64 52 86 54 M144 28 Q136 52 114 54 M36 276 H90 M110 276 H164" stroke="#fff" strokeOpacity=".4" strokeWidth="2" fill="none" strokeDasharray="4 3" />
+        <path d="M100 22 V106 M56 28 Q64 52 86 54 M144 28 Q136 52 114 54 M36 276 H90 M110 276 H164" stroke="var(--color-bg)" strokeOpacity=".4" strokeWidth="2" fill="none" strokeDasharray="4 3" />
       </> };
     case 'wide':
       return { w: 200, h: 300, hang: [58, 18], body: <>
         <path d="M50 6 H150 L162 60 L186 292 H110 L100 106 L90 292 H14 L38 60 Z" fill={c} />
         <path d="M100 106 L110 292 H186 L162 60 L150 6 H100 Z" fill={SH} opacity=".07" />
         <path d="M50 6 H150 V22 H50 Z" fill={d} />
-        <path d="M100 22 V106 M56 28 Q64 52 86 54 M144 28 Q136 52 114 54 M16 276 H90 M110 276 H184" stroke="#fff" strokeOpacity=".4" strokeWidth="2" fill="none" strokeDasharray="4 3" />
+        <path d="M100 22 V106 M56 28 Q64 52 86 54 M144 28 Q136 52 114 54 M16 276 H90 M110 276 H184" stroke="var(--color-bg)" strokeOpacity=".4" strokeWidth="2" fill="none" strokeDasharray="4 3" />
       </> };
     case 'cap':
       return { w: 200, h: 160, body: <>
@@ -114,10 +114,10 @@ export function garmentShape(kind: ArtKind, c: string): Shape {
       return { w: 200, h: 100 + (plat ? 8 : 0), body: <>
         <path d="M16 78 V54 Q16 46 26 46 L58 48 Q68 48 74 40 L94 24 Q102 20 110 24 L124 38 Q150 42 178 60 Q190 68 188 78 Z" fill={c} />
         <path d="M110 24 L124 38 Q150 42 178 60 Q190 68 188 78 H120 Z" fill={SH} opacity=".07" />
-        <rect x="14" y="78" width="176" height={sole} rx="6" fill="#fff" stroke={SH} strokeOpacity=".12" />
-        <path d="M84 36 L100 46 M94 30 L110 40 M104 28 L118 38" stroke={isLight(c) ? '#8C8C99' : '#fff'} strokeOpacity=".9" strokeWidth="2.4" strokeLinecap="round" />
+        <rect x="14" y="78" width="176" height={sole} rx="6" fill="var(--color-bg)" stroke={SH} strokeOpacity=".12" />
+        <path d="M84 36 L100 46 M94 30 L110 40 M104 28 L118 38" stroke={isLight(c) ? 'var(--color-text-muted)' : 'var(--color-bg)'} strokeOpacity=".9" strokeWidth="2.4" strokeLinecap="round" />
         <path d="M16 62 Q40 58 62 66" stroke={d} strokeWidth="3" fill="none" />
-        {!plat && <path d="M120 58 Q140 50 160 62" stroke="#7B2FF7" strokeOpacity=".6" strokeWidth="4" fill="none" strokeLinecap="round" />}
+        {!plat && <path d="M120 58 Q140 50 160 62" stroke="var(--color-accent)" strokeOpacity=".6" strokeWidth="4" fill="none" strokeLinecap="round" />}
       </> };
     }
     case 'tote':
@@ -125,7 +125,12 @@ export function garmentShape(kind: ArtKind, c: string): Shape {
         <path d="M70 70 Q70 18 100 18 Q130 18 130 70" stroke={d} strokeWidth="9" fill="none" />
         <path d="M36 66 H164 L172 210 H28 Z" fill={c} />
         <path d="M100 66 H164 L172 210 H100 Z" fill={SH} opacity=".06" />
-        <text x="100" y="150" textAnchor="middle" fontFamily="Arial Black, Arial" fontWeight="900" fontSize="20" fill={mark} opacity=".75" letterSpacing="-1">SHOP<tspan fill="#7B2FF7">NOW</tspan></text>
+        <text x="100" y="150" textAnchor="middle" fontFamily="var(--font-display)" fontWeight="700" fontSize="20" fill={mark} opacity=".8" letterSpacing="-0.5">SHOP<tspan fill="var(--color-accent)">NOW</tspan></text>
       </> };
+    // Ethnic kinds have real photos; this fallback only shows if a colour has no photo yet.
+    case 'kurta': case 'kurti': case 'nehru':
+      return garmentShape('longsleeve', c);
+    case 'saree': case 'lehenga': case 'dupatta':
+      return garmentShape('wide', c);
   }
 }

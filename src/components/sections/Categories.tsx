@@ -1,115 +1,85 @@
 import type React from 'react';
-import { motion } from 'motion/react';
-import type { ExploreState } from '../../types';
-import { PRODUCTS, matchesTab } from '../../lib/catalog';
-import { fadeUp } from '../../lib/motion';
+import { ArrowUpRight } from 'lucide-react';
+import type { ExploreState, ProductType } from '../../types';
+import { countProducts } from '../../lib/catalog';
 import { useShop } from '../../store/ShopProvider';
 
 const DIR = '/figma/categories';
 
-/**
- * Card geometry from Figma 104:315, in the 1648px frame's coordinate system.
- * Cards overlap and step down; `top` is measured from the highest card (Women, y = 163).
- */
-const CATS: {
-  label: string; text: string; countText: string; img: string; patch: Partial<ExploreState>;
-  x: number; top: number; w: number; imgH: number; labelGap: number; labelX: number; labelW: number;
-}[] = [
-  { label: 'Men', text: 'Kurtas, Nehru jackets and everyday ethnic', countText: '15 styles', img: `${DIR}/men.png`, patch: { tab: 'men' }, x: 20.2, top: 13.1, w: 455.587, imgH: 406.524, labelGap: 4.98, labelX: 26.28, labelW: 310.15 },
-  { label: 'Women', text: 'Sarees, kurtis, and festive wear', countText: '14 styles', img: `${DIR}/women.png`, patch: { tab: 'women' }, x: 412.7, top: 0, w: 481.871, imgH: 422.295, labelGap: 2.3, labelX: 23.66, labelW: 343.443 },
-  { label: 'Kurtis & Sets', text: 'Festive and casual kurtis', countText: '12 styles', img: `${DIR}/hoodies.png`, patch: { types: ['Kurtis', 'Ethnic Sets'] }, x: 826.2, top: 38.5, w: 458.216, imgH: 369.727, labelGap: 16.37, labelX: 28.91, labelW: 317.159 },
-  { label: 'Jewelry & Dupattas', text: 'Traditional jewelry, dupattas & bags', countText: '8 styles', img: `${DIR}/accessories.png`, patch: { types: ['Accessories', 'Dupattas'] }, x: 1227.5, top: 79.7, w: 403.02, imgH: 339.938, labelGap: 4.96, labelX: 29.79, labelW: 338.186 },
+interface Cat { label: string; text: string; img: string; pos: string; types: ProductType[]; patch: Partial<ExploreState> }
+
+/** Ethnic categories, each pointed at product types that exist. Cards with no products are dropped. */
+const CATS: Cat[] = [
+  { label: 'Kurtas', text: 'Cotton, printed and silk festive kurtas for men', img: `${DIR}/men.png`, pos: '50% 20%', types: ['Kurtas'], patch: { tab: 'all', types: ['Kurtas'] } },
+  { label: 'Nehru Jackets', text: 'Nehru jacket sets and bandhgalas', img: '/figma/products/nehru-jacket.jpg', pos: '50% 15%', types: ['Nehru Jackets'], patch: { tab: 'all', types: ['Nehru Jackets'] } },
+  { label: 'Sarees', text: 'Traditional drapes for festive days', img: '/figma/products/traditional-sari.jpg', pos: '50% 20%', types: ['Sarees'], patch: { tab: 'all', types: ['Sarees'] } },
+  { label: 'Kurtis & Lehengas', text: 'Anarkali kurtis and festive lehengas', img: '/figma/products/anarkali-kurti.jpg', pos: '50% 15%', types: ['Kurtis', 'Lehengas'], patch: { tab: 'all', types: ['Kurtis', 'Lehengas'] } },
 ];
 
-const FRAME_W = 1648;
-const AREA_H = 530.6; // tallest card (Women)
-const pct = (n: number, of = FRAME_W) => `${(n / of) * 100}%`;
+const countFor = (c: Cat) => c.types.reduce((s, t) => s + countProducts(null, t), 0);
 
-const countFor = (patch: Partial<ExploreState>) =>
-  PRODUCTS.filter((p) => (patch.tab ? matchesTab(p, patch.tab) : true) && (patch.types ? patch.types.includes(p.type) : true)).length;
-
-/** 02 Shop by Category (Figma 104:301). Hover: image zooms 1.05 and arrow turns purple (300ms). */
+/** 02 Shop by category: a clean grid (4 / 2 columns) that becomes a snap scroller on phones. */
 export function Categories() {
   const { shopWith } = useShop();
+  const cats = CATS.map((c) => ({ ...c, count: countFor(c) })).filter((c) => c.count > 0);
+
   return (
-    <section id="categories" className="scroll-mt-16 md:scroll-mt-20 bg-paper pt-12 pb-16 lg:pt-[27.8px] lg:pb-[38.4px]" aria-labelledby="cat-title">
-      <div className="mx-auto w-full max-w-[1648px]">
-        {/* Section header (Figma 104:302) */}
-        <div className="flex flex-wrap items-end justify-between gap-6 px-5 md:px-10 lg:items-start lg:pl-[71px] lg:pr-[44px]">
-          <div>
-            <div className="flex items-center gap-[18px]">
-              <span className="h-[2.6px] w-[58.7px] bg-purple" aria-hidden="true" />
-              <p className="text-[14.5px] font-semibold uppercase leading-none tracking-[0.14em] text-purple">Shop by category</p>
+    <section id="categories" className="scroll-mt-16 bg-bg py-12 md:scroll-mt-20 md:py-16" aria-labelledby="cat-title">
+      <div className="container-x">
+        <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
+          <div className="min-w-0">
+            <div className="flex items-center gap-4">
+              <span className="h-[1px] w-12 bg-accent" aria-hidden="true" />
+              <p className="eyebrow">Shop by category</p>
             </div>
-            <h2 id="cat-title" className="mt-[6px] text-[clamp(3rem,5.64vw,93px)] font-bold leading-[1.075] tracking-[-0.02em] whitespace-nowrap text-ink">
-              Find your <span className="italic text-purple">fit</span>
+            <h2 id="cat-title" className="mt-2 font-display text-[30px] font-semibold leading-[1.15] tracking-[-0.01em] text-text md:text-[48px]">
+              Find your <span className="italic text-accent">fit</span>
             </h2>
           </div>
-          <button type="button" onClick={() => shopWith({})} className="group flex flex-col items-start gap-[6px] lg:mt-[48.8px]">
-            <span className="flex items-center gap-[18px] text-[18px] font-semibold leading-none tracking-[-0.01em] text-ink transition-colors duration-200 group-hover:text-purple lg:text-[22px]">
-              View all products
-              <span className="relative size-[26px] transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true">
-                <span className="absolute inset-[20.83%_16.67%]">
-                  <span className="absolute inset-[-5.36%_-4.69%]"><MaskIcon src={`${DIR}/icon-arrow-right.svg`} /></span>
-                </span>
-              </span>
+          <button
+            type="button"
+            onClick={() => shopWith({ tab: 'ethnic' })}
+            className="group inline-flex min-h-11 flex-col items-start justify-center gap-1.5"
+          >
+            <span className="flex items-center gap-3 text-[16px] font-semibold leading-none text-accent transition-colors group-hover:text-accent-hover lg:text-[18px]">
+              View all ethnic wear
+              <ArrowUpRight size={20} strokeWidth={2} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none" aria-hidden="true" />
             </span>
-            <span className="h-[1.8px] w-full bg-ink transition-colors duration-200 group-hover:bg-purple" />
+            <span className="h-[1.5px] w-full bg-accent transition-colors group-hover:bg-accent-hover" />
           </button>
         </div>
 
-        {/* Category cards (Figma 104:315): overlapping, stepped layout on desktop */}
-        <div
-          className="@container mt-8 grid grid-cols-2 gap-x-4 gap-y-7 px-5 sm:mt-10 sm:gap-8 md:px-10 lg:relative lg:mt-[3px] lg:block lg:px-0 lg:[height:var(--h)]"
-          // Women card: image 422.3 + gap 2.3 scale with width; the 106px label does not.
-          style={{ '--h': `calc(${(422.295 / FRAME_W) * 100}cqw + ${AREA_H - 422.295}px)` } as React.CSSProperties}
+        <ul
+          className="no-scrollbar -mx-5 mt-8 flex snap-x snap-mandatory scroll-px-5 gap-4 overflow-x-auto px-5 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4 md:mt-10"
+          aria-label="Ethnic categories"
         >
-          {CATS.map((c, i) => (
-            <motion.button
-              key={c.label}
-              type="button"
-              onClick={() => shopWith(c.patch)}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-              custom={i}
-              className="group flex w-full flex-col text-left lg:absolute lg:[left:var(--x)] lg:[top:var(--t)] lg:[width:var(--w)]"
-              style={{ '--x': pct(c.x), '--t': `${(c.top / FRAME_W) * 100}cqw`, '--w': pct(c.w) } as React.CSSProperties}
-            >
-              <span className="relative block w-full overflow-hidden mix-blend-multiply" style={{ aspectRatio: `${c.w} / ${c.imgH}` }}>
-                <img
-                  src={c.img}
-                  alt={`${c.label} category`}
-                  loading="lazy"
-                  className="pointer-events-none absolute inset-0 size-full max-w-none object-cover transition-transform duration-300 ease-out group-hover:scale-[1.05]"
-                />
-              </span>
-
-              {/* Category Label (Figma 104:258) */}
-              <span
-                className="flex flex-col items-start lg:[margin-top:var(--lg)] lg:[margin-left:var(--lx)] lg:[width:var(--lw)]"
-                style={{ '--lg': `${c.labelGap}px`, '--lx': pct(c.labelX, c.w), '--lw': pct(c.labelW, c.w) } as React.CSSProperties}
+          {cats.map((c) => (
+            <li key={c.label} className="flex w-[75%] shrink-0 snap-start sm:w-auto">
+              <button
+                type="button"
+                onClick={() => shopWith(c.patch)}
+                className="group grid w-full grid-rows-[auto_auto_1fr_auto] rounded-[var(--radius-card)] text-left"
               >
-                <span className="flex w-full items-center justify-between">
-                  <h3 className="mt-2 text-[21px] font-bold leading-tight tracking-[-0.004em] whitespace-nowrap text-ink sm:mt-0 sm:text-[34px] sm:leading-[50px] xl:text-[41px]">{c.label}</h3>
-                  <span className="relative size-5 shrink-0 text-ink transition-colors duration-300 group-hover:text-purple" aria-hidden="true">
-                    <span className="absolute inset-[29.17%]">
-                      <span className="absolute inset-[-8%]"><MaskIcon src={`${DIR}/icon-arrow-up-right.svg`} /></span>
-                    </span>
-                  </span>
+                <span className="relative block aspect-[4/5] w-full overflow-hidden rounded-[var(--radius-card)] bg-bg-alt">
+                  <img
+                    src={c.img}
+                    alt=""
+                    loading="lazy"
+                    className="absolute inset-0 size-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                    style={{ objectPosition: c.pos } as React.CSSProperties}
+                  />
                 </span>
-                <span className="mt-0.5 text-[13.5px] leading-snug text-ink-2 sm:mt-0 sm:text-[17px] sm:leading-[30px] sm:whitespace-nowrap">{c.text}</span>
-                <span className="text-[13px] leading-6 whitespace-nowrap text-[#716F73] sm:text-[16px] sm:leading-[26px]">{c.countText || `${countFor(c.patch)} styles`}</span>
-              </span>
-            </motion.button>
+                <span className="mt-4 flex items-start justify-between gap-3">
+                  <span className="min-w-0 font-display text-[24px] font-semibold leading-tight text-text [overflow-wrap:anywhere] xl:text-[28px]">{c.label}</span>
+                  <ArrowUpRight size={20} strokeWidth={2} className="mt-1 shrink-0 text-text transition-colors group-hover:text-accent" aria-hidden="true" />
+                </span>
+                <span className="mt-1 text-[14px] leading-snug text-text-muted sm:text-[15px]">{c.text}</span>
+                <span className="mt-2 text-[14px] font-medium leading-6 text-text-muted tabular-nums">{c.count} {c.count === 1 ? 'style' : 'styles'}</span>
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
-}
-
-function MaskIcon({ src }: { src: string }) {
-  return <span className="figma-icon" style={{ '--icon': `url(${src})` } as React.CSSProperties} />;
 }

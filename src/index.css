@@ -1,46 +1,68 @@
 @import "tailwindcss";
 
-/* SHOPNOW design tokens: warm background, deep ink black, signature purple and electric accents. */
+/* SHOPNOW clean neutral e-commerce + rani pink accent tokens */
 @theme {
-  --color-ink: #0A0A0A;
-  --color-ink-2: #3D3B42;
-  --color-ink-hover: #2A2433;
-  --color-muted: #6D6C77;
-  --color-paper: #FAF5F0;
-  --color-line: #EBE5E1;
-  --color-lav-50: #FAF5F0;
-  --color-lav-100: #F3EDFF;
-  --color-lav-200: #E6DCFF;
-  --color-lav-300: #C2B0FA;
-  --color-lav-400: #A88BF5;
-  --color-purple: #6A1ED5;
-  --color-purple-bright: #8B4DFF;
-  --color-electric: #6A1ED5;
-  --color-electric-600: #5414B3;
-  --color-electric-alt: #7609F0;
-  --color-success: #15803D;
-  --color-danger: #C62828;
-  --color-warn: #B45309;
+  /* Neutrals (60% white, 30% neutral text & surfaces) */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F7F5F2;
+  --color-border: #E7E3DE;
+  --color-border-strong: #857F79;
+  --color-text: #1C1917;
+  --color-text-muted: #5F5A55;
+  --color-text-inverse: #FFFFFF;
+  --color-dark-muted: #D6D3D1;
 
-  --font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Action ("do this" black) */
+  --color-action: #1C1917;
+  --color-action-hover: #000000;
+  --color-action-text: #FFFFFF;
 
+  /* Brand accent (deep indigo, used sparingly ~10%) */
+  --color-accent: #23408E;
+  --color-accent-hover: #1A3270;
+  --color-accent-soft: #E8EDF8;
+  --color-accent-dark: #9DB4F0;
+
+  /* Status */
+  --color-success: #2E7D32;
+  --color-error: #C62828;
+  --color-warning: #B45309;
+  --color-rating: #F5A623;
+
+  /* Typography */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Radius */
+  --radius-btn: 8px;
+  --radius-input: 8px;
+  --radius-card: 12px;
+  --radius-modal: 16px;
+  --radius-pill: 9999px;
+
+  /* Motion & Shadows */
   --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
-  --shadow-card: 0 18px 40px -18px rgb(40 20 90 / 0.16);
-  --shadow-pop: 0 24px 60px -20px rgb(10 10 10 / 0.3);
+  --shadow-card: 0 8px 24px rgba(28, 25, 23, 0.08);
+  --shadow-pop: 0 24px 64px rgba(28, 25, 23, 0.18);
 }
 
 @layer base {
-  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-  body {
-    @apply bg-paper font-sans text-ink antialiased;
-    font-feature-settings: "cv11", "ss01";
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scrollbar-color: var(--color-border-strong) var(--color-bg-alt);
   }
-  ::selection { background: #E6DCFF; color: var(--color-ink); }
-  :focus-visible { outline: 2px solid var(--color-purple-bright); outline-offset: 3px; border-radius: 4px; }
+  body {
+    @apply bg-bg font-sans text-text antialiased text-[16px] leading-[1.6];
+  }
+  ::selection { background: var(--color-accent-soft); color: var(--color-text); }
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 4px; }
   button { cursor: pointer; }
   button:disabled { cursor: not-allowed; }
   img, svg { display: block; }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg-alt); }
+  ::-webkit-scrollbar-thumb { background: var(--color-border-strong); border-radius: 9999px; }
 }
 
 @layer components {
@@ -55,36 +77,36 @@
   @media (min-width: 1280px) {
     .container-x { padding-left: 4.75rem; padding-right: 4.75rem; }
   }
-  .display { font-family: var(--font-display); letter-spacing: -0.04em; line-height: 1; font-weight: 700; }
-  .eyebrow { @apply text-[14px] font-semibold uppercase tracking-[0.18em] text-electric; }
+  .display { font-family: var(--font-display); letter-spacing: -0.01em; line-height: 1.1; font-weight: 600; }
+  .eyebrow { @apply text-[12px] font-semibold uppercase tracking-[0.14em] text-accent; }
 
-  /* CTA: scale and arrow movement */
+  /* CTA buttons */
   .btn {
-    @apply inline-flex h-13 items-center justify-center gap-3 rounded-[2px] px-7 text-[15px] font-medium whitespace-nowrap select-none;
-    transition: transform 150ms var(--ease-soft), background-color 180ms, color 180ms, box-shadow 180ms;
+    @apply inline-flex h-12 items-center justify-center gap-3 rounded-btn px-6 text-[15px] font-semibold whitespace-nowrap select-none;
+    transition: transform 150ms var(--ease-soft), background-color 180ms, color 180ms, border-color 180ms, box-shadow 180ms;
   }
   .btn:hover:not(:disabled) { transform: translateY(-1px); }
-  .btn:active:not(:disabled) { transform: translateY(0); opacity: 0.88; }
+  .btn:active:not(:disabled) { transform: translateY(0); opacity: 0.92; }
   .btn .arrow { transition: transform 180ms var(--ease-soft); }
   .btn:hover .arrow { transform: translateX(5px); }
-  .btn-dark { @apply bg-ink text-white hover:bg-ink-hover; }
-  .btn-light { @apply bg-white text-ink border border-line hover:border-ink; }
-  .btn-line { @apply border border-ink/20 bg-white/70 text-ink backdrop-blur hover:border-ink; }
-  .btn-electric { @apply bg-purple text-white hover:bg-electric-600; }
+  .btn-dark { @apply bg-action text-action-text hover:bg-action-hover; }
+  .btn-light { @apply bg-bg text-text border-[1.5px] border-text hover:bg-bg-alt; }
+  .btn-line { @apply border-[1.5px] border-text bg-bg text-text hover:bg-bg-alt; }
+  .btn-electric { @apply bg-action text-action-text hover:bg-action-hover; }
   .btn:disabled { @apply opacity-50; }
 
   .chip {
-    @apply inline-flex h-9 items-center gap-1.5 rounded-[100px] border border-[#cfc8c5] bg-white px-3.5 text-[13px] font-medium text-ink;
+    @apply inline-flex h-9 items-center gap-1.5 rounded-pill border border-border-strong bg-bg px-3.5 text-[13px] font-medium text-text;
     transition: background-color 180ms, border-color 180ms, color 180ms;
   }
-  .chip:hover { @apply border-ink; }
-  .chip[aria-pressed="true"] { @apply border-ink bg-ink text-white; }
+  .chip:hover { @apply border-accent bg-accent-soft text-accent; }
+  .chip[aria-pressed="true"] { @apply border-accent bg-accent-soft text-accent font-semibold; }
 
   .icon-btn {
-    @apply relative grid size-11 place-items-center rounded-full text-ink;
+    @apply relative grid size-11 place-items-center rounded-full text-text;
     transition: background-color 150ms, color 150ms;
   }
-  .icon-btn:hover { @apply bg-lav-100 text-purple; }
+  .icon-btn:hover { @apply bg-bg-alt text-accent; }
 
   /* Figma SVG icon rendered as a mask so it inherits currentColor (hover states). */
   .figma-icon {
@@ -94,14 +116,14 @@
     mask: var(--icon) center / 100% 100% no-repeat;
   }
 
-  .art-bg { background: linear-gradient(180deg, #F0EAE4 0%, #E3DCD5 100%); }
-  .art-bg-alt { background: radial-gradient(90% 80% at 50% 30%, #F5EDFF 0%, #D8C5FF 100%); }
+  .art-bg { background-color: var(--color-bg-alt); }
+  .art-bg-alt { background-color: var(--color-bg-alt); }
 
   .no-scrollbar { scrollbar-width: none; }
   .no-scrollbar::-webkit-scrollbar { display: none; }
 
   .skeleton {
-    background: linear-gradient(90deg, #ECE8F3 25%, #F7F5FB 50%, #ECE8F3 75%);
+    background: linear-gradient(90deg, var(--color-bg-alt) 25%, var(--color-bg) 50%, var(--color-bg-alt) 75%);
     background-size: 200% 100%;
     animation: shimmer 1.2s linear infinite;
   }

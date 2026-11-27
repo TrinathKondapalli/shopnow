@@ -11,26 +11,83 @@ export const REVIEWS = reviewsJson as unknown as Review[];
 const MAP = new Map(PRODUCTS.map((p) => [p.id, p]));
 export const getProduct = (id: string) => MAP.get(id);
 
-export const PRODUCT_TYPES: ProductType[] = [
+const ALL_TYPES: ProductType[] = [
   'Kurtas', 'Kurtis', 'Sarees', 'Lehengas', 'Nehru Jackets', 'Ethnic Sets', 'Dupattas',
   'T-Shirts', 'Hoodies', 'Sweatshirts', 'Jackets', 'Bottoms', 'Footwear', 'Accessories',
 ];
 
-export const SIZE_GROUPS: { label: string; sizes: string[] }[] = [
-  { label: 'Clothing', sizes: ['XS', 'S', 'M', 'L', 'XL'] },
-  { label: 'Waist', sizes: ['28', '30', '32', '34', '36'] },
-  { label: 'Shoes', sizes: ['UK 6', 'UK 7', 'UK 8', 'UK 9', 'UK 10'] },
+/** Product types that actually have products. Empty categories are never shown in nav, filters or chips. */
+export const PRODUCT_TYPES: ProductType[] = ALL_TYPES.filter((t) => PRODUCTS.some((p) => p.type === t));
+
+export const ETHNIC_TYPES: ProductType[] = ['Kurtas', 'Kurtis', 'Sarees', 'Lehengas', 'Nehru Jackets', 'Ethnic Sets', 'Dupattas'];
+
+/** Customer-facing label for a product type. */
+export const TYPE_LABEL: Partial<Record<ProductType, string>> = {
+  Kurtis: 'Kurtis & Sets',
+};
+export const typeLabel = (t: ProductType) => TYPE_LABEL[t] ?? t;
+
+const inGender = (p: Product, g: 'men' | 'women') => p.gender === g || p.gender === 'unisex';
+export const countProducts = (g: 'men' | 'women' | null, t?: ProductType) =>
+  PRODUCTS.filter((p) => (!g || inGender(p, g)) && (!t || p.type === t)).length;
+
+export interface NavLink { label: string; patch: Partial<ExploreState> }
+export interface NavGroup { id: 'men' | 'women'; label: string; links: NavLink[] }
+
+/**
+ * The one navigation source shared by the desktop nav, the All Categories mega menu and the mobile menu.
+ * Each group lists its sub-categories in a fixed order and drops any that have no products.
+ */
+const NAV_WANTED: Record<'men' | 'women', ProductType[]> = {
+  men: ['Kurtas', 'Nehru Jackets', 'Ethnic Sets', 'Accessories'],
+  women: ['Sarees', 'Kurtis', 'Lehengas', 'Dupattas'],
+};
+export const NAV_GROUPS: NavGroup[] = (['men', 'women'] as const).map((g) => ({
+  id: g,
+  label: g === 'men' ? 'Men' : 'Women',
+  links: NAV_WANTED[g]
+    .filter((t) => countProducts(g, t) > 0)
+    .map((t) => ({ label: typeLabel(t), patch: { tab: g, types: [t] } as Partial<ExploreState> })),
+}));
+
+/** Top-level destinations after Men and Women. */
+export const NAV_EXTRAS: NavLink[] = [
+  { label: 'New Arrivals', patch: { tab: 'new' } },
+  { label: 'Festive Edit', patch: { tab: 'festive' } },
+  { label: 'Sale', patch: { tab: 'sale' } },
 ];
 
-export const COLOR_FAMILIES: { id: ColorFamily; label: string; swatch: string }[] = [
+const SIZE_ORDER = ['XS', 'S', 'M', 'L', 'XL', 'XXL', '38', '40', '42', '44', '46', '28', '30', '32', '34', '36', 'UK 6', 'UK 7', 'UK 8', 'UK 9', 'UK 10'];
+const sizeRank = (s: string) => { const i = SIZE_ORDER.indexOf(s); return i < 0 ? 999 : i; };
+const ALL_SIZES = [...new Set(PRODUCTS.flatMap((p) => p.sizes))];
+const groupOf = (z: string, p: Product) =>
+  /^(XXS|XS|S|M|L|XL|XXL|XXXL)$/.test(z) ? 'Clothing'
+    : z.startsWith('UK') ? 'Shoes'
+      : /^\d+$/.test(z) ? (p.type === 'Bottoms' ? 'Waist' : 'Chest')
+        : 'One size';
+
+/** Size filter options built from the real product sizes (never a hard-coded list). */
+export const SIZE_GROUPS: { label: string; sizes: string[] }[] = ['Clothing', 'Chest', 'Waist', 'Shoes', 'One size']
+  .map((label) => ({
+    label,
+    sizes: ALL_SIZES.filter((z) => PRODUCTS.some((p) => p.sizes.includes(z) && groupOf(z, p) === label)).sort((a, b) => sizeRank(a) - sizeRank(b) || a.localeCompare(b)),
+  }))
+  .filter((g) => g.sizes.length > 0);
+
+const ALL_COLOR_FAMILIES: { id: ColorFamily; label: string; swatch: string }[] = [
   { id: 'black', label: 'Black', swatch: '#1F1F25' },
   { id: 'white', label: 'White', swatch: '#F4F4F6' },
+  { id: 'red', label: 'Red', swatch: '#B3263A' },
+  { id: 'pink', label: 'Pink', swatch: '#D63F8C' },
+  { id: 'yellow', label: 'Yellow', swatch: '#D9A520' },
   { id: 'purple', label: 'Purple', swatch: '#9B6BFF' },
-  { id: 'grey', label: 'Grey', swatch: '#8C8C99' },
   { id: 'blue', label: 'Blue', swatch: '#3F5C96' },
-  { id: 'green', label: 'Green', swatch: '#62684A' },
+  { id: 'green', label: 'Green', swatch: '#3E7D55' },
+  { id: 'grey', label: 'Grey', swatch: '#8C8C99' },
   { id: 'neutral', label: 'Neutral', swatch: '#D9C7A6' },
 ];
+/** Colour filter options that at least one product actually comes in. */
+export const COLOR_FAMILIES = ALL_COLOR_FAMILIES.filter((c) => PRODUCTS.some((p) => p.colors.some((x) => x.family === c.id)));
 
 export const PRICE_BANDS: { id: PriceBand; label: string; test: (n: number) => boolean }[] = [
   { id: 'under-1000', label: 'Under ₹1,000', test: (n) => n < 1000 },
@@ -51,11 +108,14 @@ export const TABS: { id: ExploreTab; label: string }[] = [
   { id: 'men', label: 'Men' },
   { id: 'women', label: 'Women' },
   { id: 'ethnic', label: 'Ethnic Wear' },
-  { id: 'festive', label: 'Festive' },
+  { id: 'festive', label: 'Festive Edit' },
+  { id: 'new', label: 'New Arrivals' },
   { id: 'sale', label: 'Sale' },
 ];
 
 export const COLLECTIONS: Record<string, string> = {
+  ethnic: 'Ethnic Edit',
+  festive: 'Festive Edit',
   move: 'Made for Every Move',
   essentials: 'The Essentials',
 };
@@ -74,7 +134,7 @@ export function matchesTab(p: Product, tab: ExploreTab) {
   switch (tab) {
     case 'men': return p.gender !== 'women';
     case 'women': return p.gender !== 'men';
-    case 'ethnic': return p.collections.includes('ethnic') || ['Kurtas', 'Kurtis', 'Sarees', 'Lehengas', 'Nehru Jackets', 'Ethnic Sets', 'Dupattas'].includes(p.type);
+    case 'ethnic': return p.collections.includes('ethnic') || ETHNIC_TYPES.includes(p.type);
     case 'festive': return p.collections.includes('festive') || p.tags.includes('festive');
     case 'new': return p.isNew;
     case 'sale': return !!p.compareAt;
@@ -103,3 +163,7 @@ export function applyExplore(s: ExploreState): Product[] {
 
 export const activeFilterCount = (s: ExploreState) =>
   s.types.length + s.sizes.length + s.colors.length + s.prices.length + (s.collection ? 1 : 0) + (s.query.trim() ? 1 : 0);
+
+/** Reviews whose product is in the catalogue, newest first. */
+export const CATALOG_REVIEWS: Review[] = REVIEWS.filter((r) => MAP.has(r.productId)).sort((a, b) => b.date.localeCompare(a.date));
+export const reviewsFor = (productId: string) => CATALOG_REVIEWS.filter((r) => r.productId === productId);

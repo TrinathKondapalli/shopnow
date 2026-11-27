@@ -44,21 +44,21 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#FAF5F0] px-6 text-center text-ink selection:bg-purple selection:text-white">
+        <div className="flex min-h-screen w-full flex-col items-center justify-center bg-bg px-6 text-center text-text selection:bg-accent-soft selection:text-text">
           <div className="mx-auto max-w-md">
-            <span className="display text-3xl tracking-[-0.05em] text-ink">
-              SHOP<span className="text-purple">NOW</span>
+            <span className="display text-3xl tracking-[-0.02em] text-text">
+              SHOP<span className="text-accent">NOW</span>
             </span>
 
-            <div className="mt-8 grid size-16 place-items-center rounded-full bg-purple/10 text-purple mx-auto">
+            <div className="mt-8 grid size-16 place-items-center rounded-full bg-accent-soft text-accent mx-auto">
               <AlertTriangle size={32} />
             </div>
 
-            <h1 className="mt-6 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+            <h1 className="mt-6 font-display text-3xl font-semibold tracking-tight text-text sm:text-4xl">
               Something went wrong
             </h1>
 
-            <p className="mt-3 text-sm leading-relaxed text-[#504D4F]">
+            <p className="mt-3 text-sm leading-relaxed text-text-muted">
               An unexpected error interrupted your shopping experience. Refreshing the storefront usually resolves this immediately.
             </p>
 
@@ -66,7 +66,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <button
                 type="button"
                 onClick={this.handleReload}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-ink-hover"
+                className="inline-flex items-center justify-center gap-2 rounded-btn bg-action px-6 py-3 text-[15px] font-semibold text-action-text shadow-sm transition-colors hover:bg-action-hover"
               >
                 <RefreshCw size={16} />
                 <span>Reload storefront</span>
@@ -75,7 +75,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <button
                 type="button"
                 onClick={this.handleReset}
-                className="inline-flex items-center justify-center rounded-full border border-line bg-white px-6 py-3 text-sm font-semibold text-ink transition-colors hover:bg-neutral-100"
+                className="inline-flex items-center justify-center rounded-btn border-[1.5px] border-text bg-bg px-6 py-3 text-[15px] font-semibold text-text transition-colors hover:bg-bg-alt"
               >
                 Return to home
               </button>

@@ -1,70 +1,45 @@
 [
   {
-    "id": "city-layers",
-    "name": "City Layers",
-    "caption": "A soft hoodie, utility cargos and a retro runner for everyday errands.",
+    "id": "festive-kurta",
+    "name": "Festive Kurta Look",
+    "caption": "A silk festive kurta layered with a brocade Nehru jacket set for pujas and weddings.",
     "figure": "m",
     "items": [
       {
-        "productId": "everyday-hoodie",
-        "color": 1,
+        "productId": "maroon-kurta",
+        "color": 0,
         "slot": "top"
       },
       {
-        "productId": "cargo-pants",
+        "productId": "nehru-jacket-set",
         "color": 0,
-        "slot": "bottom"
-      },
-      {
-        "productId": "retro-runner",
-        "color": 0,
-        "slot": "feet"
+        "slot": "top"
       }
     ]
   },
   {
-    "id": "lavender-hour",
-    "name": "Lavender Hour",
-    "caption": "Cropped fleece over wide-leg denim, finished with a platform sole.",
+    "id": "saree",
+    "name": "Saree Look",
+    "caption": "A turquoise silk saree with gold zari borders and a rich pallu.",
     "figure": "f",
     "items": [
       {
-        "productId": "cropped-hoodie",
+        "productId": "traditional-sari",
         "color": 0,
         "slot": "top"
-      },
-      {
-        "productId": "wide-leg-jeans",
-        "color": 0,
-        "slot": "bottom"
-      },
-      {
-        "productId": "platform-sneakers",
-        "color": 0,
-        "slot": "feet"
       }
     ]
   },
   {
-    "id": "night-shift",
-    "name": "Night Shift",
-    "caption": "Track jacket, tech joggers and a cap. Built for late plans.",
-    "figure": "m",
+    "id": "anarkali",
+    "name": "Anarkali Look",
+    "caption": "A flared Anarkali kurti with zari embroidery on the yoke and hem.",
+    "figure": "f",
     "items": [
       {
-        "productId": "track-jacket",
+        "productId": "anarkali-kurti",
         "color": 0,
         "slot": "top"
-      },
-      {
-        "productId": "tech-joggers",
-        "color": 0,
-        "slot": "bottom"
-      },
-      {
-        "productId": "dad-cap",
-        "color": 2,
-        "slot": "head"
       }
     ]
   }

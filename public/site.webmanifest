@@ -1,11 +1,11 @@
 {
-  "name": "SHOPNOW Streetwear & Everyday Fashion",
+  "name": "SHOPNOW Ethnic & Festive Wear",
   "short_name": "SHOPNOW",
-  "description": "Architectural streetwear and everyday essentials designed for unrestricted movement.",
+  "description": "Ethnic and festive wear for men and women: kurtas, sarees, lehengas, kurtis and ethnic sets.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FAF5F0",
-  "theme_color": "#0F0F14",
+  "background_color": "#FFFFFF",
+  "theme_color": "#23408E",
   "icons": [
     {
       "src": "/favicon.svg",

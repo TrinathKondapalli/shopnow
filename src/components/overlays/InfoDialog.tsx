@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { Check, HelpCircle, RefreshCw, Ruler, Sparkles, Truck, X } from 'lucide-react';
 import { useDialog, useLockBodyScroll } from '../../hooks/useOverlay';
+import { SITE_INFO } from '../../config/siteInfo';
 import { useShop, type InfoType } from '../../store/ShopProvider';
 
 const TITLES: Record<InfoType, string> = {
@@ -45,12 +46,12 @@ function InfoPanel({ type, onClose }: { type: InfoType; onClose: () => void }) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.94, y: 12 }}
         transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-3xl border border-white/15 bg-[#121216] p-6 text-white shadow-2xl sm:p-8"
+        className="relative z-10 w-full max-w-xl max-h-[85vh] overflow-y-auto rounded-[var(--radius-modal)] border border-white/12 bg-text p-6 text-text-inverse shadow-[var(--shadow-pop)] sm:p-8"
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-5 top-5 grid size-9 place-items-center rounded-full bg-white/10 text-white/70 transition-colors hover:bg-white/20 hover:text-white"
+          className="absolute right-4 top-4 grid size-11 place-items-center rounded-full bg-white/10 text-dark-muted transition-colors hover:bg-white/20 hover:text-text-inverse focus-visible:outline-accent-dark"
           aria-label="Close dialog"
         >
           <X size={18} />
@@ -58,29 +59,29 @@ function InfoPanel({ type, onClose }: { type: InfoType; onClose: () => void }) {
 
         {type === 'size-guide' && (
           <div>
-            <div className="flex items-center gap-3 text-lav-300">
+            <div className="flex items-center gap-3 text-accent">
               <Ruler size={22} />
-              <span className="eyebrow text-lav-300">Size & Measurements</span>
+              <span className="eyebrow text-accent">Size & Measurements</span>
             </div>
-            <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">Garment Size Guide</h3>
-            <p className="mt-1 text-sm text-white/60">
-              Designed with a relaxed streetwear drape. Choose your standard size for an oversized look, or size down for a tailored fit.
+            <h3 className="mt-2 font-display text-3xl font-semibold text-bg">Garment Size Guide</h3>
+            <p className="mt-1 text-sm text-bg/80">
+              Garment measurements for kurtas and everyday tops. Measure a piece that fits you well and compare. If you are between sizes, choose the larger one.
             </p>
 
-            <div className="mt-5 flex items-center justify-between border-b border-white/10 pb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider text-white/40">Tops & Outerwear</span>
-              <div className="flex rounded-full bg-white/10 p-0.5 text-xs">
+            <div className="mt-5 flex items-center justify-between border-b border-bg/15 pb-3">
+              <span className="text-xs font-semibold uppercase tracking-wider text-bg/80">Kurtas & tops</span>
+              <div className="flex rounded-pill bg-bg/10 p-0.5 text-xs">
                 <button
                   type="button"
                   onClick={() => setUnit('cm')}
-                  className={`rounded-full px-3 py-1 font-semibold transition-colors ${unit === 'cm' ? 'bg-electric text-white' : 'text-white/60 hover:text-white'}`}
+                  className={`min-h-11 rounded-pill px-4 font-semibold transition-colors focus-visible:outline-accent ${unit === 'cm' ? 'bg-accent text-text' : 'text-bg/80 hover:text-bg'}`}
                 >
                   CM
                 </button>
                 <button
                   type="button"
                   onClick={() => setUnit('in')}
-                  className={`rounded-full px-3 py-1 font-semibold transition-colors ${unit === 'in' ? 'bg-electric text-white' : 'text-white/60 hover:text-white'}`}
+                  className={`min-h-11 rounded-pill px-4 font-semibold transition-colors focus-visible:outline-accent ${unit === 'in' ? 'bg-accent text-text' : 'text-bg/80 hover:text-bg'}`}
                 >
                   INCHES
                 </button>
@@ -123,29 +124,29 @@ function InfoPanel({ type, onClose }: { type: InfoType; onClose: () => void }) {
 
         {type === 'shipping' && (
           <div>
-            <div className="flex items-center gap-3 text-lav-300">
+            <div className="flex items-center gap-3 text-accent-dark">
               <Truck size={22} />
-              <span className="eyebrow text-lav-300">Fast Dispatch</span>
+              <span className="eyebrow text-accent-dark">Fast Dispatch</span>
             </div>
-            <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">Shipping & Delivery</h3>
-            <p className="mt-1 text-sm text-white/60">
+            <h3 className="mt-2 font-display text-3xl font-semibold text-text-inverse">Shipping & Delivery</h3>
+            <p className="mt-1 text-sm text-dark-muted">
               We currently ship across India.
             </p>
 
             <div className="mt-6 space-y-4">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="flex items-center justify-between">
-                  <h4 className="font-semibold text-white">Standard delivery across India</h4>
-                  <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-xs font-semibold text-emerald-400">3-5 Days</span>
+              <div className="rounded-[var(--radius-card)] border border-white/12 bg-white/5 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <h4 className="font-semibold text-text-inverse">Standard delivery across India</h4>
+                  <span className="shrink-0 rounded-pill bg-accent px-2.5 py-0.5 text-xs font-semibold text-text-inverse">{SITE_INFO.delivery.badge}</span>
                 </div>
-                <p className="mt-1 text-xs text-white/60">
-                  Free shipping on orders above ₹999. A flat ₹99 delivery fee applies to smaller orders.
+                <p className="mt-1 text-sm text-dark-muted">
+                  {SITE_INFO.delivery.message}. Free shipping on orders above ₹999; a flat ₹99 delivery fee applies to smaller orders.
                 </p>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <h4 className="font-semibold text-white">Same-Day Dispatch Guarantee</h4>
-                <p className="mt-1 text-xs text-white/60">
+              <div className="rounded-[var(--radius-card)] border border-white/12 bg-white/5 p-4">
+                <h4 className="font-semibold text-text-inverse">Same-Day Dispatch Guarantee</h4>
+                <p className="mt-1 text-sm text-dark-muted">
                   All orders placed before 2:00 PM IST Monday through Saturday are securely packed and dispatched the same afternoon.
                 </p>
               </div>
@@ -155,37 +156,37 @@ function InfoPanel({ type, onClose }: { type: InfoType; onClose: () => void }) {
 
         {type === 'returns' && (
           <div>
-            <div className="flex items-center gap-3 text-lav-300">
+            <div className="flex items-center gap-3 text-accent">
               <RefreshCw size={22} />
-              <span className="eyebrow text-lav-300">Guaranteed Peace of Mind</span>
+              <span className="eyebrow text-accent">Guaranteed Peace of Mind</span>
             </div>
-            <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">7-Day Returns & Exchanges</h3>
-            <p className="mt-1 text-sm text-white/60">
+            <h3 className="mt-2 font-display text-3xl font-semibold text-bg">7-Day Returns & Exchanges</h3>
+            <p className="mt-1 text-sm text-bg/80">
               Need another size or changed your mind? Return or exchange any unworn piece within 7 days of delivery.
             </p>
 
             <div className="mt-6 space-y-4">
               <div className="flex items-start gap-4">
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-electric text-sm font-bold">1</span>
+                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-text">1</span>
                 <div>
-                  <h4 className="text-sm font-semibold text-white">Contact us within 7 days</h4>
-                  <p className="text-xs text-white/60">Tell us your order details and the size you need, or that you want a refund.</p>
+                  <h4 className="text-sm font-semibold text-bg">Contact us within 7 days</h4>
+                  <p className="text-sm text-bg/80">Tell us your order details and the size you need, or that you want a refund.</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-electric text-sm font-bold">2</span>
+                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-text">2</span>
                 <div>
-                  <h4 className="text-sm font-semibold text-white">Doorstep Courier Pickup</h4>
-                  <p className="text-xs text-white/60">Our courier collects the original garment directly from your doorstep at zero extra cost.</p>
+                  <h4 className="text-sm font-semibold text-bg">Doorstep Courier Pickup</h4>
+                  <p className="text-sm text-bg/80">Our courier collects the original garment directly from your doorstep at zero extra cost.</p>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-electric text-sm font-bold">3</span>
+                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-accent text-sm font-bold text-text">3</span>
                 <div>
-                  <h4 className="text-sm font-semibold text-white">Replacement or refund</h4>
-                  <p className="text-xs text-white/60">Once the piece reaches us, we ship your new size or refund you to the original payment method.</p>
+                  <h4 className="text-sm font-semibold text-bg">Replacement or refund</h4>
+                  <p className="text-sm text-bg/80">Once the piece reaches us, we ship your new size or refund you to the original payment method.</p>
                 </div>
               </div>
             </div>
@@ -194,31 +195,31 @@ function InfoPanel({ type, onClose }: { type: InfoType; onClose: () => void }) {
 
         {type === 'care' && (
           <div>
-            <div className="flex items-center gap-3 text-lav-300">
+            <div className="flex items-center gap-3 text-accent">
               <Sparkles size={22} />
-              <span className="eyebrow text-lav-300">Fabric Longevity</span>
+              <span className="eyebrow text-accent">Fabric Longevity</span>
             </div>
-            <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">Garment Care Guide</h3>
-            <p className="mt-1 text-sm text-white/60">
-              Crafted from 400 GSM custom-milled heavyweight combed cotton and Japanese hardware. Maintain pristine condition with simple steps.
+            <h3 className="mt-2 font-display text-3xl font-semibold text-bg">Garment Care Guide</h3>
+            <p className="mt-1 text-sm text-bg/80">
+              Always follow the care label on each piece first. These general steps keep everyday cotton pieces looking their best.
             </p>
 
-            <ul className="mt-6 space-y-3 text-xs text-white/70">
+            <ul className="mt-6 space-y-3 text-sm text-bg/80">
               <li className="flex items-start gap-2.5">
-                <Check size={16} className="shrink-0 text-emerald-400 mt-0.5" />
+                <Check size={16} className="shrink-0 text-accent mt-0.5" />
                 <span>Wash cold (30°C / 85°F) inside-out with gentle detergent to protect pigments and custom textures.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Check size={16} className="shrink-0 text-emerald-400 mt-0.5" />
+                <Check size={16} className="shrink-0 text-accent mt-0.5" />
                 <span>Line dry in shade. Avoid machine tumble drying to prevent shrinking and preserve drape.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Check size={16} className="shrink-0 text-emerald-400 mt-0.5" />
-                <span>Iron inside out on medium heat if required. Do not iron directly on screenprints or heat-stamped logos.</span>
+                <Check size={16} className="shrink-0 text-accent mt-0.5" />
+                <span>Iron inside out on medium heat if required. Do not iron directly on prints, embroidery or embellishments.</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <Check size={16} className="shrink-0 text-emerald-400 mt-0.5" />
-                <span>Do not bleach or dry clean. Our fabrics develop a richer character the more you wear and wash them.</span>
+                <Check size={16} className="shrink-0 text-accent mt-0.5" />
+                <span>Do not bleach. For embroidered, zari or embellished festive pieces, follow the care label.</span>
               </li>
             </ul>
           </div>
@@ -226,23 +227,23 @@ function InfoPanel({ type, onClose }: { type: InfoType; onClose: () => void }) {
 
         {type === 'faq' && (
           <div>
-            <div className="flex items-center gap-3 text-lav-300">
+            <div className="flex items-center gap-3 text-accent">
               <HelpCircle size={22} />
-              <span className="eyebrow text-lav-300">Common Inquiries</span>
+              <span className="eyebrow text-accent">Common Inquiries</span>
             </div>
-            <h3 className="mt-2 text-2xl font-bold tracking-tight text-white">Frequently Asked Questions</h3>
+            <h3 className="mt-2 font-display text-3xl font-semibold text-bg">Frequently Asked Questions</h3>
 
-            <div className="mt-6 space-y-4 text-xs">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <h4 className="font-semibold text-white">How do SHOPNOW drops work?</h4>
+            <div className="mt-6 space-y-4 text-sm">
+              <div className="rounded-[var(--radius-card)] border border-bg/15 bg-bg/5 p-4">
+                <h4 className="font-semibold text-white">How do sizes work for sarees, lehengas and Nehru jackets?</h4>
                 <p className="mt-1.5 text-white/60 leading-relaxed">
-                  We release collections in numbered seasonal drops (e.g. Drop 01). Each piece is produced in limited archival batches to eliminate deadstock.
+                  Sarees are free size. Lehengas come semi-stitched in a free size. Nehru jackets are sized by chest (38 to 46). Kurtas and kurtis use letter sizes (XS to XXL); see the size guide.
                 </p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                 <h4 className="font-semibold text-white">Are all sizes true to fit?</h4>
                 <p className="mt-1.5 text-white/60 leading-relaxed">
-                  All hoodies and sweatshirts feature an oversized boxy drape. Our T-shirts have relaxed shoulders. If you prefer a fitted silhouette, take one size down.
+                  In our everyday range, hoodies and sweatshirts have a relaxed, boxy fit. Our T-shirts have relaxed shoulders. If you prefer a fitted silhouette, take one size down.
                 </p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-white/5 p-4">

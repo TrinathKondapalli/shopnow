@@ -19,14 +19,27 @@ export function isLight(hex: string) {
   return 0.299 * r + 0.587 * g + 0.114 * b > 170;
 }
 
+/** Height of the sticky header, so scroll targets land just below it. */
+export const headerOffset = () => (document.querySelector('header')?.getBoundingClientRect().height ?? 72) + 8;
+
+/**
+ * Scrolls a section to just below the sticky header. Content above the target can still change height
+ * while the smooth scroll runs (images loading, grids re-filtering), so the position is corrected once
+ * the scroll settles. This is what stops "scrolls halfway to the results".
+ */
 export function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Offset by the sticky header so the target isn't hidden underneath it.
-  const header = document.querySelector('header')?.getBoundingClientRect().height ?? 72;
-  const top = el.getBoundingClientRect().top + window.scrollY - header - 8;
-  window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+  const target = () => el.getBoundingClientRect().top + window.scrollY - headerOffset();
+  window.scrollTo({ top: target(), behavior: reduce ? 'auto' : 'smooth' });
+  let settle = 0;
+  const check = () => {
+    const off = Math.abs(el.getBoundingClientRect().top - headerOffset());
+    if (off > 4 && settle < 3) { settle++; window.scrollTo({ top: target(), behavior: 'auto' }); }
+  };
+  window.setTimeout(check, reduce ? 50 : 700);
+  window.setTimeout(check, reduce ? 300 : 1300);
 }
 
 export const prefersReducedMotion = () =>

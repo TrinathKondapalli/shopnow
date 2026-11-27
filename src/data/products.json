@@ -275,7 +275,7 @@
   },
   {
     "id": "traditional-sari",
-    "name": "Traditional Sari",
+    "name": "Traditional Saree",
     "gender": "women",
     "type": "Sarees",
     "art": "saree",
@@ -363,7 +363,7 @@
     "trending": 88,
     "featured": 5,
     "createdAt": "2026-10-18",
-    "isNew": true,
+    "isNew": false,
     "collections": [
       "ethnic",
       "essentials"
@@ -616,7 +616,7 @@
     "trending": 89,
     "featured": 8,
     "createdAt": "2026-10-17",
-    "isNew": true,
+    "isNew": false,
     "collections": [
       "ethnic",
       "festive"
@@ -965,7 +965,7 @@
     "trending": 93,
     "featured": 13,
     "createdAt": "2026-10-04",
-    "isNew": true,
+    "isNew": false,
     "collections": [
       "move"
     ],
@@ -1214,7 +1214,7 @@
     "trending": 79,
     "featured": 16,
     "createdAt": "2026-11-08",
-    "isNew": true,
+    "isNew": false,
     "collections": [
       "move"
     ],
@@ -1546,7 +1546,7 @@
     "trending": 73,
     "featured": 20,
     "createdAt": "2026-11-12",
-    "isNew": true,
+    "isNew": false,
     "collections": [
       "move"
     ],
@@ -1700,7 +1700,7 @@
     "trending": 72,
     "featured": 22,
     "createdAt": "2026-11-02",
-    "isNew": true,
+    "isNew": false,
     "collections": [
       "move"
     ],
@@ -2051,7 +2051,7 @@
     "trending": 62,
     "featured": 26,
     "createdAt": "2026-11-15",
-    "isNew": true,
+    "isNew": false,
     "collections": [
       "move"
     ],
@@ -2128,7 +2128,7 @@
     "trending": 97,
     "featured": 27,
     "createdAt": "2026-10-20",
-    "isNew": true,
+    "isNew": false,
     "collections": [
       "move"
     ],
@@ -2286,7 +2286,7 @@
     "trending": 92,
     "featured": 29,
     "createdAt": "2026-10-28",
-    "isNew": true,
+    "isNew": false,
     "collections": [],
     "tags": [
       "sneakers",
@@ -2559,7 +2559,7 @@
     "trending": 66,
     "featured": 33,
     "createdAt": "2026-10-10",
-    "isNew": true,
+    "isNew": false,
     "collections": [],
     "tags": [
       "long sleeve",

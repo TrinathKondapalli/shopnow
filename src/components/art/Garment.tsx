@@ -26,7 +26,7 @@ export function Garment({ kind, color, view = 'front', className }: Props) {
         <defs>
           <pattern id={`weave-${id}`} width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
             <rect width="4" height="4" fill="transparent" />
-            <path d="M0 0 V4" stroke="#000" strokeOpacity=".07" strokeWidth="1.2" />
+            <path d="M0 0 V4" stroke="var(--color-text)" strokeOpacity=".07" strokeWidth="1.2" />
           </pattern>
         </defs>
         {s.body}
@@ -46,7 +46,7 @@ export function Garment({ kind, color, view = 'front', className }: Props) {
   return (
     <svg viewBox={`0 0 ${s.w} ${s.h + off}`} className={className} aria-hidden="true">
       {hangable && s.hang && (
-        <g stroke="#8F8BAA" strokeWidth="3" fill="none" strokeLinecap="round">
+        <g stroke="var(--color-text-muted)" strokeWidth="3" fill="none" strokeLinecap="round">
           <path d="M100 30 V21 Q100 8 112 8 Q122 8 122 17" />
           <path d={`M100 30 L${s.hang[0]} ${s.hang[1] + off} M100 30 L${s.w - s.hang[0]} ${s.hang[1] + off}`} />
         </g>

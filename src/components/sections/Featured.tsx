@@ -1,14 +1,14 @@
 import { useEffect, useState, type CSSProperties } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-import type { Product } from '../../types';
-import { PRODUCTS } from '../../lib/catalog';
-import { cn, inr } from '../../lib/utils';
-import { DUR, EASE } from '../../lib/motion';
+import { motion } from 'motion/react';
+import type { ExploreState, Product } from '../../types';
+import { getProduct } from '../../lib/catalog';
+import { cn, inr, prefersReducedMotion } from '../../lib/utils';
+import { EASE } from '../../lib/motion';
 import { useShop } from '../../store/ShopProvider';
 import { ProductImage } from '../product/ProductImage';
 
 const A = '/figma/featured';
-const CAMPAIGN_PHOTO = `${A}/campaign.png`;
+const P = '/figma/products';
 const CAMPAIGN_MASK = `${A}/campaign-mask.svg`;
 const CORNER_ARC = `${A}/corner-arc.png`;
 const ICON_ARROW = `${A}/icon-arrow.svg`;
@@ -16,175 +16,113 @@ const ICON_PREV = `${A}/icon-arrow-prev.svg`;
 const ICON_NEXT = `${A}/icon-arrow-next.svg`;
 const ICON_HEART = `${A}/icon-heart.svg`;
 
-interface DropPick {
-  id: string;
-  color: number;
-  image?: string;
-}
-
-interface DropConfig {
-  drop: string;
-  season: string;
+interface EditConfig {
+  edit: string;
+  name: string;
+  label: string;
   photo: string;
+  photoPos: string;
   alt: string;
   titleMain: string;
   titleAccent: string;
   description: string;
-  collection: string;
-  picks: DropPick[];
+  patch: Partial<ExploreState>;
+  picks: string[];
 }
 
-const DROPS: DropConfig[] = [
+/** Ethnic edits. Every pick is a product id that exists in products.json; missing ids are skipped. */
+const EDITS: EditConfig[] = [
   {
-    drop: '01',
-    season: 'SPRING-SUMMER 26',
-    photo: `${A}/drop-01.jpg`,
-    alt: 'Model in minimal oversized white tee and relaxed denim against concrete',
-    titleMain: 'Pure comfort in',
-    titleAccent: 'every thread.',
-    description: 'Minimal cuts, breathable jersey and effortless draping. Timeless staples made for relaxed daily routines.',
-    collection: 'neutral',
-    picks: [
-      { id: 'essential-tee', color: 0, image: `${A}/drop-01-tee.jpg` },
-      { id: 'relaxed-jeans', color: 0, image: `${A}/drop-01-jeans.jpg` },
-      { id: 'retro-runner', color: 0, image: `${A}/drop-01-shoes.jpg` },
-    ],
+    edit: '01',
+    name: 'Festive Edit',
+    label: 'FESTIVE EDIT',
+    photo: `${P}/festive-lehenga.jpg`,
+    photoPos: '50% 20%',
+    alt: 'Model in a magenta festive lehenga with gold zari work and a sheer dupatta',
+    titleMain: 'Dressed for',
+    titleAccent: 'every festival.',
+    description: 'Lehengas, sarees and Anarkali kurtis with rich embroidery and zari detail, made for pujas, sangeets and family celebrations.',
+    patch: { tab: 'festive', types: ['Lehengas', 'Sarees', 'Kurtis'] },
+    picks: ['festive-lehenga', 'traditional-sari', 'anarkali-kurti'],
   },
   {
-    drop: '02',
-    season: 'SUMMER CAPSULE',
-    photo: `${A}/drop-02.jpg`,
-    alt: 'Model in boxy graphic tee and parachute pants beside concrete pillars',
-    titleMain: 'Light layers for',
-    titleAccent: 'warmer days.',
-    description: 'Airy poplins, relaxed cotton and effortless fits. Designed to keep cool when the temperature climbs.',
-    collection: 'essential',
-    picks: [
-      { id: 'boxy-graphic-tee', color: 0, image: `${A}/drop-02-tee.jpg` },
-      { id: 'parachute-pants', color: 0, image: `${A}/drop-02-pants.jpg` },
-      { id: 'platform-sneakers', color: 0, image: `${A}/drop-02-shoes.jpg` },
-    ],
-  },
-  {
-    drop: '03',
-    season: 'URBAN ESSENTIALS',
-    photo: `${A}/drop-03.jpg`,
-    alt: 'Model in cropped lavender jacket and wide-leg trousers by concrete monolith',
-    titleMain: 'Sharp lines for',
-    titleAccent: 'city streets.',
-    description: 'Technical tailoring, structured fleece and tactical accents. Engineered for clean transitions across town.',
-    collection: 'streetwear',
-    picks: [
-      { id: 'cropped-hoodie', color: 0, image: `${A}/drop-03-top.jpg` },
-      { id: 'wide-leg-jeans', color: 0, image: `${A}/drop-03-pants.jpg` },
-      { id: 'retro-runner', color: 0, image: `${A}/drop-03-shoes.jpg` },
-    ],
-  },
-  {
-    drop: '04', // The original Figma drop!
-    season: 'AUTUMN-WINTER 26',
-    photo: CAMPAIGN_PHOTO,
-    alt: 'Model in a dark zip jacket and olive cargo pants against purple concrete',
+    edit: '02',
+    name: 'Wedding Edit',
+    label: 'WEDDING EDIT',
+    photo: `${P}/nehru-jacket.jpg`,
+    photoPos: '50% 15%',
+    alt: 'Model in a golden beige brocade Nehru jacket over a silk kurta',
     titleMain: 'Made for',
-    titleAccent: 'every move.',
-    description: 'Stretch fabrics, satin layers and cushioned soles. Pieces that keep up from the morning commute to the late show.',
-    collection: 'move',
-    picks: [
-      { id: 'everyday-hoodie', color: 0, image: `${A}/drop-04-hoodie.jpg` },
-      { id: 'cargo-pants', color: 0, image: `${A}/drop-04-pants.jpg` },
-      { id: 'zip-overshirt', color: 0, image: `${A}/drop-04-jacket.jpg` },
-    ],
+    titleAccent: 'the big day.',
+    description: 'Bandhgalas, Nehru jacket sets and silk kurtas for weddings, receptions and every function in between.',
+    patch: { tab: 'festive', types: ['Nehru Jackets', 'Kurtas'] },
+    picks: ['royal-bandhgala', 'nehru-jacket-set', 'maroon-kurta'],
   },
   {
-    drop: '05',
-    season: 'NIGHT LAB 26',
-    photo: `${A}/drop-05.jpg`,
-    alt: 'Model in reflective black track jacket and utility cargo joggers at night',
-    titleMain: 'Built for',
-    titleAccent: 'after hours.',
-    description: 'Deep obsidian dyes, reflective piping and water-resistant nylon. Form and function tuned for the night.',
-    collection: 'active',
-    picks: [
-      { id: 'track-jacket', color: 0, image: `${A}/drop-05-jacket.jpg` },
-      { id: 'tech-joggers', color: 0, image: `${A}/drop-05-joggers.jpg` },
-      { id: 'retro-runner', color: 0, image: `${A}/drop-05-shoes.jpg` },
-    ],
-  },
-  {
-    drop: '06',
-    season: 'WINTER CORE 26',
-    photo: `${A}/drop-06.jpg`,
-    alt: 'Model in heavy layered loopback sweatshirt and insulated bomber jacket',
-    titleMain: 'Heavyweight warmth for',
-    titleAccent: 'cold days.',
-    description: 'Brushed loopback fleece, insulated outerwear and rugged knits. Substantial comfort when winter hits.',
-    collection: 'winter',
-    picks: [
-      { id: 'oversized-sweatshirt', color: 0, image: `${A}/drop-06-sweatshirt.jpg` },
-      { id: 'satin-bomber', color: 0, image: `${A}/drop-06-bomber.jpg` },
-      { id: 'cargo-pants', color: 0, image: `${A}/drop-06-pants.jpg` },
-    ],
+    edit: '03',
+    name: 'Ethnic Edit',
+    label: 'ETHNIC EDIT',
+    photo: '/figma/categories/men.png',
+    photoPos: '50% 25%',
+    alt: 'Model in an ivory cotton kurta and churidar standing under carved sandstone arches',
+    titleMain: 'Easy ethnic',
+    titleAccent: 'for every day.',
+    description: 'Breathable cotton and printed kurtas and easy kurtis that move from office days to evening plans.',
+    patch: { tab: 'ethnic', types: ['Kurtas', 'Kurtis'] },
+    picks: ['mens-cotton-kurta', 'printed-kurta', 'anarkali-kurti'],
   },
 ];
 
-const SLIDES = DROPS.length;
+const SLIDES = EDITS.length;
 const pad = (n: number) => String(n).padStart(2, '0');
 
 /**
- * 04 Featured Collection (Figma 114:539, 1648 × 927.5). Masked campaign photograph on the
- * left, editorial copy, three mini product cards and CTAs on the right. Horizontal offsets
- * are percentages of the 1648px frame so the layout is pixel-matched at 1648 and scales below.
+ * 04 Featured collection (Figma 114:539). Masked campaign photograph on the left, editorial copy,
+ * three mini product cards and CTAs on the right. Every slide is always rendered with content:
+ * slide changes cross-fade, so the area never shows as an empty block.
  */
 export function Featured() {
   const { shopWith } = useShop();
-  const [slide, setSlide] = useState(0); // Starts at Drop 01 so all 6 appear one by one
+  const [slide, setSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const current = DROPS[slide];
+  const [reduced] = useState(prefersReducedMotion);
+  const current = EDITS[slide];
 
-  // 5 seconds auto-rotation with pause on hover/focus
+  // 6-second auto-rotation, paused on hover/focus and off entirely with reduced motion.
   useEffect(() => {
-    if (isPaused) return;
-    const timer = window.setInterval(() => {
-      setSlide((s) => (s + 1) % SLIDES);
-    }, 5000);
+    if (isPaused || reduced) return;
+    const timer = window.setInterval(() => setSlide((s) => (s + 1) % SLIDES), 6000);
     return () => window.clearInterval(timer);
-  }, [isPaused, slide]);
+  }, [isPaused, reduced, slide]);
 
   const nextSlide = () => setSlide((s) => (s + 1) % SLIDES);
   const prevSlide = () => setSlide((s) => (s - 1 + SLIDES) % SLIDES);
 
-  const picks = current.picks.flatMap(({ id, color, image }) => {
-    const p = PRODUCTS.find((x) => x.id === id);
-    return p ? [{ product: p, color, image }] : [];
+  const picks = current.picks.flatMap((id) => {
+    const p = getProduct(id);
+    return p ? [p] : [];
   });
 
   return (
     <section
       id="featured"
-      className="relative scroll-mt-16 md:scroll-mt-20 overflow-hidden bg-[#F9F0EC] text-ink"
+      className="relative scroll-mt-16 overflow-hidden bg-bg-alt text-text md:scroll-mt-20"
       aria-labelledby="featured-title"
+      aria-roledescription="carousel"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       onFocus={() => setIsPaused(true)}
       onBlur={() => setIsPaused(false)}
     >
       <div className="relative mx-auto max-w-[1648px] lg:flex lg:items-start">
-        {/* Decoration / Corner Arc (114:540) */}
-        <div className="pointer-events-none absolute bottom-0 right-0 hidden h-[158.7px] w-[307.522px] overflow-hidden lg:block" aria-hidden="true">
+        <div className="pointer-events-none absolute bottom-0 right-0 hidden h-[158.7px] w-[307.522px] overflow-hidden opacity-25 lg:block" aria-hidden="true">
           <img src={CORNER_ARC} alt="" className="absolute left-[-6.41%] top-0 h-full w-[106.41%] max-w-none" />
         </div>
 
-        {/* Campaign Visual (114:541): 778.7 × 927.5 */}
-        <motion.div
-          className="@container relative aspect-[778.7/927.5] w-full shrink-0 lg:w-[47.251%]"
-          initial={{ opacity: 0.95 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: DUR.heroMask, ease: EASE }}
-        >
-          {/* Masked Photography (114:543) */}
+        {/* Campaign visual (114:541): 778.7 × 927.5 */}
+        <div className="@container relative aspect-[778.7/927.5] w-full shrink-0 lg:w-[47.251%]">
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 bg-border"
             style={{
               WebkitMaskImage: `url(${CAMPAIGN_MASK})`,
               maskImage: `url(${CAMPAIGN_MASK})`,
@@ -197,184 +135,127 @@ export function Featured() {
               maskPosition: '-0.5px -0.5px',
             }}
           >
-            <AnimatePresence mode="wait">
-              <motion.img
+            {/* All photos stay mounted; the active one is opaque, so a photo is always on screen. */}
+            {EDITS.map((d, i) => (
+              <img
+                key={d.edit}
                 decoding="async"
-                key={current.drop}
-                src={current.photo}
-                alt={current.alt}
-                initial={{ opacity: 0, scale: 1.03 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.65, ease: EASE }}
-                className="pointer-events-none absolute inset-0 size-full max-w-none object-cover"
+                src={d.photo}
+                alt={i === slide ? d.alt : ''}
+                aria-hidden={i === slide ? undefined : true}
+                className={cn(
+                  'pointer-events-none absolute inset-0 size-full max-w-none object-cover transition-opacity duration-300 ease-soft',
+                  i === slide ? 'opacity-100' : 'opacity-0',
+                )}
+                style={{ objectPosition: d.photoPos }}
               />
-            </AnimatePresence>
+            ))}
+            {/* Scrims keep the white labels readable on light photos (WCAG AA). */}
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-[34%] bg-gradient-to-b from-text/65 to-transparent" aria-hidden="true" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[24%] bg-gradient-to-t from-text/65 to-transparent" aria-hidden="true" />
           </div>
 
-          {/* Photo tags (114:545 / 114:546) */}
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={`drop-tag-${current.drop}`}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.35, ease: EASE }}
-              className="pointer-events-none absolute left-[19.751%] top-[16.288%] whitespace-nowrap text-[1.926cqw] font-semibold leading-none tracking-[0.115em] text-white select-none"
-              aria-hidden="true"
-            >
-              SHOPNOW / DROP {current.drop}
-            </motion.p>
-          </AnimatePresence>
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={`season-tag-${current.drop}`}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.35, ease: EASE }}
-              className="pointer-events-none absolute left-[67.587%] top-[16.288%] whitespace-nowrap text-[1.926cqw] font-semibold leading-none tracking-[0.115em] text-white select-none"
-              aria-hidden="true"
-            >
-              {current.season}
-            </motion.p>
-          </AnimatePresence>
+          {/* Photo labels */}
+          <div
+            className="pointer-events-none absolute left-[19.751%] right-[12%] top-[16.288%] flex flex-wrap justify-between gap-x-4 gap-y-1 text-[max(12px,1.926cqw)] font-semibold leading-none tracking-[0.115em] text-text-inverse select-none"
+            aria-hidden="true"
+          >
+            <span>EDIT {current.edit}</span>
+            <span>{current.label}</span>
+          </div>
 
-          {/* Progress line (114:547): 5-second motion graphic countdown fill */}
+          {/* Progress line: decorative 6-second countdown */}
           <div className="pointer-events-none absolute left-[12.97%] top-[36.13%] h-[49.952%] w-[1.5px] overflow-hidden bg-white/30" aria-hidden="true">
-            <motion.div
-              key={current.drop}
-              className="h-full w-full origin-top bg-white"
-              initial={{ scaleY: 0 }}
-              animate={{ scaleY: isPaused ? undefined : 1 }}
-              transition={{ duration: 5, ease: 'linear' }}
-            />
+            {!reduced && (
+              <motion.div
+                key={`${current.edit}-${isPaused}`}
+                className="h-full w-full origin-top bg-accent-dark"
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: isPaused ? 0 : 1 }}
+                transition={{ duration: isPaused ? 0 : 6, ease: 'linear' }}
+              />
+            )}
           </div>
 
-          {/* Slide counter (114:548) */}
-          <p className="pointer-events-none absolute left-[12.662%] top-[88.608%] whitespace-nowrap text-[max(14px,2.633cqw)] leading-none text-white select-none" aria-live="polite">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.span
-                key={current.drop}
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.25, ease: EASE }}
-                className="inline-block font-semibold"
-              >
-                {current.drop}
-              </motion.span>
-            </AnimatePresence>
+          {/* Slide counter */}
+          <p className="pointer-events-none absolute left-[12.662%] top-[88.608%] whitespace-nowrap text-[max(14px,2.633cqw)] leading-none text-text-inverse tabular-nums select-none" aria-live="polite">
+            <span className="sr-only">{current.label}, slide </span>
+            <span className="font-semibold">{current.edit}</span>
             <span className="font-normal">{` / ${pad(SLIDES)}`}</span>
           </p>
 
-          {/* Carousel arrows (114:549 / 114:554) */}
-          <button
-            type="button"
-            onClick={prevSlide}
-            className="absolute left-[72.017%] top-[86.717%] flex size-[max(40px,7.346cqw)] items-center justify-center rounded-full bg-white transition-transform duration-[180ms] ease-soft hover:scale-105 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-bright"
-            aria-label="Previous featured look"
-          >
-            <span className="relative size-[45.45%] shrink-0 overflow-clip" aria-hidden="true">
-              <span className="absolute inset-[20.83%_16.67%]">
-                <span className="absolute inset-[-6.07%_-5.31%]">
-                  <img src={ICON_PREV} alt="" className="block size-full max-w-none" />
-                </span>
-              </span>
-            </span>
-          </button>
-          <button
-            type="button"
-            onClick={nextSlide}
-            className="absolute left-[80.878%] top-[86.717%] flex size-[max(40px,7.346cqw)] items-center justify-center rounded-full bg-purple transition-transform duration-[180ms] ease-soft hover:scale-105 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-bright"
-            aria-label="Next featured look"
-          >
-            <span className="relative size-[45.45%] shrink-0 overflow-clip" aria-hidden="true">
-              <span className="absolute inset-[20.83%_16.67%]">
-                <span className="absolute inset-[-6.07%_-5.31%]">
-                  <img src={ICON_NEXT} alt="" className="block size-full max-w-none" />
-                </span>
-              </span>
-            </span>
-          </button>
-        </motion.div>
-
-        {/* Content column: x 825 → 1575.1 in the 1648 frame */}
-        <div className="relative flex min-w-0 flex-1 flex-col items-start px-4 pt-12 pb-14 sm:px-8 lg:pl-[2.81%] lg:pr-[4.42%] lg:pt-[clamp(40px,4.325vw,71.27px)] lg:pb-[clamp(48px,4.6vw,75.9px)]">
-          {/* Accent line + eyebrow (114:559 / 114:560) */}
-          <div className="ml-[11.8px] flex items-center gap-[23.6px]">
-            <span className="h-[3px] w-[50.3px] translate-y-px bg-purple" aria-hidden="true" />
-            <p className="text-[15px] font-semibold uppercase leading-[18px] tracking-[0.198em] text-ink">Featured collection</p>
-          </div>
-
-          {/* Title & Description with smooth fade transition */}
-          <div className="relative w-full">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={current.drop}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.45, ease: EASE }}
-              >
-                {/* Title (114:561 / 114:562) */}
-                <h2
-                  id="featured-title"
-                  className="mt-[33.27px] ml-[0.077em] whitespace-nowrap text-[clamp(52px,6.25vw,103px)] font-bold leading-[1.05] text-ink select-none"
-                >
-                  <span className="block tracking-[-0.044em]">{current.titleMain}</span>{' '}
-                  <span className="-mt-[0.05em] -ml-[0.0194em] block italic tracking-[-0.045em] text-purple pb-1 drop-shadow-[0_2px_10px_rgba(106,30,213,0.12)]">{current.titleAccent}</span>
-                </h2>
-
-                {/* Description (114:563) */}
-                <p className="mt-[28.53px] ml-[13.8px] max-w-[591.4px] text-[17px] leading-[1.438] tracking-[0.027em] text-[#504D4F] lg:text-[18.5px] lg:leading-[26.6px]">
-                  {current.description}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Mini product cards (114:564 / 114:572 / 114:580) */}
-          <div className="mt-[48.63px] w-full max-w-[750.1px]">
-            <AnimatePresence mode="wait" initial={false}>
-              <motion.div
-                key={current.drop}
-                className="grid grid-cols-3 gap-[15.8px]"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.35, ease: EASE }}
-              >
-                {picks.map(({ product, color, image }, i) => (
-                  <MiniProductCard key={`${current.drop}-${product.id}`} product={product} color={color} image={image} index={i} />
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* CTAs (114:588 / 114:594) */}
-          <div className="mt-[56.5px] ml-[9.8px] flex flex-wrap items-start gap-x-[56px] gap-y-6">
-            {/* Button / Primary (96:26) */}
+          {/* Carousel arrows */}
+          <div className="absolute left-[64%] top-[86.717%] flex gap-[max(8px,1.5cqw)]">
             <button
               type="button"
-              onClick={() => shopWith({ collection: current.collection })}
-              className="group flex h-14 w-full items-center justify-center gap-5 whitespace-nowrap bg-ink pl-[41px] pr-[42px] text-[18px] font-medium leading-none text-white transition-[background-color,opacity] duration-[180ms] ease-soft hover:bg-ink-hover active:opacity-[0.88] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-bright sm:w-[292px] lg:h-[61.1px] lg:text-[20px]"
+              onClick={prevSlide}
+              className="flex size-[max(44px,7.346cqw)] items-center justify-center rounded-full bg-bg shadow-[var(--shadow-card)] transition-transform duration-[180ms] ease-soft hover:scale-105 active:scale-95"
+              aria-label="Previous edit"
             >
-              Shop the collection
-              <span className="relative size-[22px] shrink-0 transition-transform duration-[180ms] ease-soft group-hover:translate-x-[5px]" aria-hidden="true">
-                <span className="absolute inset-[20.83%_16.67%]">
-                  <span className="absolute inset-[-5.36%_-4.69%]">
-                    <img src={ICON_ARROW} alt="" className="block size-full max-w-none" />
-                  </span>
-                </span>
-              </span>
+              <img src={ICON_PREV} alt="" className="block size-[30%] max-w-none" />
+            </button>
+            <button
+              type="button"
+              onClick={nextSlide}
+              className="flex size-[max(44px,7.346cqw)] items-center justify-center rounded-full bg-action shadow-[var(--shadow-card)] transition-transform duration-[180ms] ease-soft hover:scale-105 hover:bg-action-hover active:scale-95"
+              aria-label="Next edit"
+            >
+              <img src={ICON_NEXT} alt="" className="block size-[30%] max-w-none" />
+            </button>
+          </div>
+        </div>
+
+        {/* Content column */}
+        <div className="relative flex min-w-0 flex-1 flex-col items-start px-5 pb-14 pt-12 sm:px-8 lg:pb-[clamp(48px,4.6vw,75.9px)] lg:pl-[2.81%] lg:pr-[4.42%] lg:pt-[clamp(40px,4.325vw,71.27px)]">
+          <div className="flex items-center gap-4 lg:ml-[11.8px]">
+            <span className="h-[1px] w-12 bg-accent" aria-hidden="true" />
+            <p className="eyebrow">Featured collection</p>
+          </div>
+
+          {/* Title and description */}
+          <motion.div
+            key={current.edit}
+            className="w-full"
+            initial={{ opacity: 0.25, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, ease: EASE }}
+          >
+            <h2
+              id="featured-title"
+              className="mt-6 font-display text-[30px] font-semibold leading-[1.12] tracking-[-0.01em] text-text sm:text-[42px] lg:ml-[0.077em] lg:text-[48px]"
+            >
+              <span className="block">{current.titleMain}</span>{' '}
+              <span className="block pb-1 italic text-accent">{current.titleAccent}</span>
+            </h2>
+            <p className="mt-4 max-w-[591px] text-[16px] leading-[1.6] text-text-muted lg:ml-[13.8px] lg:text-[17px]">
+              {current.description}
+            </p>
+          </motion.div>
+
+          {/* Mini product cards */}
+          <div className="mt-8 w-full max-w-[750.1px]">
+            <div className="grid grid-cols-3 gap-3 sm:gap-[15.8px]">
+              {picks.map((product) => (
+                <MiniProductCard key={`${current.edit}-${product.id}`} product={product} />
+              ))}
+            </div>
+          </div>
+
+          {/* CTAs */}
+          <div className="mt-10 flex w-full flex-wrap items-center gap-x-10 gap-y-5 lg:ml-[9.8px]">
+            <button
+              type="button"
+              onClick={() => shopWith(current.patch)}
+              className="group flex h-13 w-full items-center justify-center gap-4 whitespace-nowrap rounded-btn bg-action px-8 text-[15px] font-semibold text-action-text transition-colors duration-[180ms] ease-soft hover:bg-action-hover active:opacity-[0.9] sm:w-auto lg:h-14 lg:text-[16px]"
+            >
+              Shop the {current.name}
+              <img src={ICON_ARROW} alt="" className="block size-[16px] max-w-none transition-transform duration-[180ms] ease-soft group-hover:translate-x-[5px]" />
             </button>
 
-            {/* Link / Text (96:39) */}
-            <button type="button" onClick={() => shopWith({})} className="group relative flex flex-col items-start gap-[5px] lg:mt-[11.9px]">
-              <span className="text-[18px] font-medium leading-none text-ink lg:text-[20px]">View all products</span>
-              <span className="relative h-[1.5px] w-full bg-ink">
-                <span className="absolute inset-0 origin-left scale-x-0 bg-purple transition-transform duration-200 group-hover:scale-x-100" />
+            <button type="button" onClick={() => shopWith({ tab: 'ethnic' })} className="group relative flex min-h-11 flex-col items-start justify-center gap-[5px]">
+              <span className="text-[16px] font-semibold leading-none text-accent lg:text-[17px]">View all ethnic wear</span>
+              <span className="relative h-[1.5px] w-full bg-accent/40">
+                <span className="absolute inset-0 origin-left scale-x-0 bg-accent transition-transform duration-200 group-hover:scale-x-100" />
               </span>
             </button>
           </div>
@@ -384,45 +265,28 @@ export function Featured() {
   );
 }
 
-/** Mini Product Card (Figma 114:564): 239.5 × 296.4, image 239.5 × 232.6, 33.5px wishlist. */
-function MiniProductCard({ product, color, image, index }: { product: Product; color: number; image?: string; index: number }) {
+function MiniProductCard({ product }: { product: Product }) {
   const { openQuickView, isWished, toggleWish, toast, openPanel } = useShop();
   const on = isWished(product.id);
 
   return (
-    <motion.div
-      className="group relative min-w-0"
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.45, ease: EASE, delay: index * 0.08 }}
-    >
+    <div className="group relative min-w-0">
       <button
         type="button"
-        onClick={() => openQuickView(product.id)}
-        className="block w-full text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-bright"
-        aria-label={`Quick view ${product.name}`}
+        onClick={() => openQuickView(product.id, 0)}
+        className="block w-full text-left"
       >
-        <span className="relative block aspect-[239.5/232.6] overflow-hidden">
-          {image ? (
-            <img
-              decoding="async"
-              src={image}
-              alt={product.name}
-              className="h-full w-full object-cover transition-transform duration-500 ease-soft group-hover:scale-[1.04]"
-            />
-          ) : (
-            <ProductImage product={product} color={color} crop="square" className="transition-transform duration-500 ease-soft group-hover:scale-[1.04]" />
-          )}
+        <span className="relative block aspect-[4/5] overflow-hidden rounded-[var(--radius-card)] bg-bg-alt">
+          <ProductImage product={product} color={0} className="object-top transition-transform duration-500 ease-soft group-hover:scale-[1.04]" />
         </span>
-        <span className="mt-[8.19px] ml-[7.01%] block truncate text-[clamp(14px,1.153vw,19px)] font-semibold leading-[1.21] tracking-[-0.01em] text-ink transition-colors group-hover:text-purple">
+        <span className="mt-2 block text-[15px] font-semibold leading-[1.25] text-text transition-colors group-hover:text-accent sm:text-[16px]">
           {product.name}
         </span>
-        <span className="mt-[9.6px] ml-[6.6%] block text-[clamp(14px,1.153vw,19px)] font-normal leading-[1.21] tracking-[-0.005em] text-ink">
+        <span className="mt-1 block text-[15px] font-bold leading-[1.21] text-text tabular-nums sm:text-[16px]">
           {inr(product.price)}
         </span>
       </button>
 
-      {/* Wishlist Button (114:522) */}
       <button
         type="button"
         onClick={() => {
@@ -434,8 +298,8 @@ function MiniProductCard({ product, color, image, index }: { product: Product; c
         aria-pressed={on}
         aria-label={on ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
         className={cn(
-          'absolute right-[14.75px] top-[10.85px] flex size-[33.5px] items-center justify-center overflow-clip rounded-full bg-white transition-[color,transform] duration-200 hover:scale-105 active:scale-90',
-          on ? 'text-purple' : 'text-ink hover:text-purple',
+          "absolute right-1.5 top-1.5 flex size-[34px] items-center justify-center rounded-full bg-bg transition-[color,transform] duration-200 after:absolute after:-inset-[5px] after:content-[''] hover:scale-105 active:scale-90 sm:right-3 sm:top-2.5",
+          on ? 'text-accent' : 'text-text hover:text-accent',
         )}
       >
         <span className="relative size-[18px] shrink-0 overflow-clip" aria-hidden="true">
@@ -446,6 +310,6 @@ function MiniProductCard({ product, color, image, index }: { product: Product; c
           </span>
         </span>
       </button>
-    </motion.div>
+    </div>
   );
 }

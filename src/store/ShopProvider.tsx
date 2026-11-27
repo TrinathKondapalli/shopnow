@@ -3,7 +3,8 @@ import type { CartLine, ExploreState, Toast } from '../types';
 import { DEFAULT_EXPLORE, LOOKS, getProduct, stockFor } from '../lib/catalog';
 import { usePersistentState } from '../lib/storage';
 import { scrollToId } from '../lib/utils';
-import { exploreToHash, hashToExplore, hashToProduct, productHash } from '../lib/url';
+import { exploreToHash, hashToExplore, hashToProduct, pathToProduct, productHash } from '../lib/url';
+import { navigate } from '../lib/router';
 
 export const FREE_SHIPPING_AT = 999;
 export const SHIPPING_FEE = 99;
@@ -83,6 +84,7 @@ export function computeTotals(cart: CartLine[]): Totals {
   // A look earns 15% off for every complete set of its pieces added as a bundle.
   let discount = 0;
   for (const look of LOOKS) {
+    if (look.items.length < 2) continue; // a one-piece "look" is not a bundle
     const sets = Math.min(
       ...look.items.map((it) => cart.filter((l) => l.lookId === look.id && l.productId === it.productId).reduce((s, l) => s + l.qty, 0)),
     );
@@ -184,12 +186,18 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const shopWith = useCallback((patch: Partial<ExploreState>) => {
     setExploreState({ ...DEFAULT_EXPLORE, ...patch });
     setMobileMenuOpen(false);
-    window.requestAnimationFrame(() => scrollToId('shop'));
+    setSearchOpen(false);
+    // From another page (e.g. /affiliate), go home first, then scroll once the grid has rendered.
+    if (window.location.pathname !== '/') { navigate('/'); window.setTimeout(() => scrollToId('shop'), 80); }
+    else window.requestAnimationFrame(() => scrollToId('shop'));
   }, []);
 
   // Links: #p/<id> opens a product, #shop?… restores filters.
   useEffect(() => {
-    const fromLink = hashToProduct(window.location.hash);
+    // /product/<id> links (shareable) are rewritten to the home page with the product open.
+    const fromPath = pathToProduct(window.location.pathname);
+    if (fromPath) window.history.replaceState(null, '', '/' + productHash(fromPath.productId, fromPath.color));
+    const fromLink = fromPath ?? hashToProduct(window.location.hash);
     if (fromLink) showProduct(fromLink.productId, fromLink.color);
     const filters = hashToExplore(window.location.hash);
     if (filters) {
@@ -217,9 +225,9 @@ export function ShopProvider({ children }: { children: ReactNode }) {
   const dismissToast = useCallback((id: number) => setToasts((t) => t.filter((x) => x.id !== id)), []);
   const toast = useCallback<ShopContextValue['toast']>((t) => {
     const id = ++toastId.current;
+    // Auto-dismiss (4s, paused on hover) is handled by the Toaster.
     setToasts((prev) => [...prev.slice(-2), { tone: 'success', ...t, id }]);
-    window.setTimeout(() => dismissToast(id), 3600);
-  }, [dismissToast]);
+  }, []);
 
   const totals = useMemo(() => computeTotals(cart), [cart]);
 

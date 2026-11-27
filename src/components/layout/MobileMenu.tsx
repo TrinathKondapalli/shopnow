@@ -1,21 +1,18 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { ChevronDown, Heart, Search, ShoppingBag, X } from 'lucide-react';
-import type { ExploreState, ProductType } from '../../types';
-import { PRODUCT_TYPES } from '../../lib/catalog';
+import { ArrowRight, ChevronDown, Gift, Heart, ShoppingBag, X } from 'lucide-react';
+import type { ExploreState } from '../../types';
+import { NAV_EXTRAS, NAV_GROUPS } from '../../lib/catalog';
+import { AFFILIATE_PATH, linkHandler } from '../../lib/router';
 import { cn } from '../../lib/utils';
 import { DUR, EASE } from '../../lib/motion';
 import { useDialog, useLockBodyScroll } from '../../hooks/useOverlay';
 import { useShop } from '../../store/ShopProvider';
+import { BrandLogo } from './BrandLogo';
 
-const GROUPS: { id: 'men' | 'women'; label: string; types: ProductType[] }[] = [
-  { id: 'men', label: 'Men', types: PRODUCT_TYPES },
-  { id: 'women', label: 'Women', types: PRODUCT_TYPES },
-];
-
-/** Responsive hamburger menu: slides in from the left, 300ms. */
+/** Responsive hamburger menu: slides in from the left, 300ms. Built from the same NAV_GROUPS / NAV_EXTRAS as the desktop nav. */
 export function MobileMenu() {
-  const { mobileMenuOpen, setMobileMenuOpen, shopWith, setSearchOpen, openPanel, totals, wishlist } = useShop();
+  const { mobileMenuOpen, setMobileMenuOpen, shopWith, openPanel, totals, wishlist } = useShop();
   const ref = useRef<HTMLDivElement>(null);
   const [expanded, setExpanded] = useState<'men' | 'women' | null>('men');
   const close = () => setMobileMenuOpen(false);
@@ -27,7 +24,7 @@ export function MobileMenu() {
     <AnimatePresence>
       {mobileMenuOpen && (
         <div className="fixed inset-0 z-[70] lg:hidden">
-          <motion.div className="absolute inset-0 bg-ink/40 backdrop-blur-[2px]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: DUR.mobileMenu }} onClick={close} />
+          <motion.div className="absolute inset-0 bg-text/40 backdrop-blur-[2px]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: DUR.mobileMenu }} onClick={close} />
           <motion.div
             ref={ref}
             role="dialog"
@@ -37,45 +34,75 @@ export function MobileMenu() {
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ duration: DUR.mobileMenu, ease: EASE }}
-            className="absolute inset-y-0 left-0 flex w-[min(86vw,380px)] flex-col bg-white shadow-[var(--shadow-pop)]"
+            className="absolute inset-y-0 left-0 flex w-[min(86vw,380px)] flex-col rounded-r-[var(--radius-modal)] bg-bg shadow-[var(--shadow-pop)]"
             style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'env(safe-area-inset-bottom)', paddingLeft: 'env(safe-area-inset-left)' }}
           >
-            <div className="flex h-16 items-center justify-between border-b border-line px-5">
-              <span className="display text-2xl tracking-[-0.05em]">SHOP<span className="text-electric">NOW</span></span>
-              <button type="button" className="icon-btn -mr-2" onClick={close} aria-label="Close menu"><X size={22} /></button>
+            <div className="flex h-16 items-center justify-between border-b border-border px-5">
+              <BrandLogo markClassName="size-8" textClassName="text-[22px]" />
+              <button type="button" className="icon-btn -mr-2" onClick={close} aria-label="Close menu"><X size={22} aria-hidden="true" /></button>
             </div>
-            <div className="flex-1 overflow-y-auto px-5 py-4">
-              {GROUPS.map((g) => (
-                <div key={g.id} className="border-b border-line">
-                  <button type="button" className="flex w-full items-center justify-between py-4 text-lg font-semibold" aria-expanded={expanded === g.id} onClick={() => setExpanded((e) => (e === g.id ? null : g.id))}>
-                    {g.label}
-                    <ChevronDown size={18} className={cn('transition-transform duration-200', expanded === g.id && 'rotate-180')} />
-                  </button>
-                  {expanded === g.id && (
-                    <ul className="grid grid-cols-2 gap-x-4 gap-y-1 pb-4">
-                      <li className="col-span-2"><button type="button" onClick={() => go({ tab: g.id })} className="py-1.5 text-[15px] font-semibold text-electric">Shop all {g.label.toLowerCase()}</button></li>
-                      {g.types.map((t) => (
-                        <li key={t}><button type="button" onClick={() => go({ tab: g.id, types: [t] })} className="py-1.5 text-[15px] text-ink-2">{t}</button></li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              ))}
-              {[
-                { label: 'New Arrivals', patch: { tab: 'new' } },
-                { label: 'Made for Every Move', patch: { collection: 'move' } },
-                { label: 'The Essentials', patch: { collection: 'essentials' } },
-                { label: 'Sale', patch: { tab: 'sale' } },
-              ].map((l) => (
-                <button key={l.label} type="button" onClick={() => go(l.patch as Partial<ExploreState>)} className={cn('block w-full border-b border-line py-4 text-left text-lg font-semibold', l.label === 'Sale' && 'text-electric')}>
+            <nav className="flex-1 overflow-y-auto px-5 py-3" aria-label="Main">
+              <a
+                href={AFFILIATE_PATH}
+                onClick={(e) => { close(); linkHandler(AFFILIATE_PATH)(e); }}
+                className="my-2 flex min-h-12 items-center justify-between gap-3 rounded-pill bg-accent-soft px-4 text-[15px] font-semibold text-accent transition-colors hover:bg-accent hover:text-text-inverse"
+              >
+                <span className="flex items-center gap-2.5"><Gift size={20} aria-hidden="true" /> Earn with us</span>
+                <ArrowRight size={18} aria-hidden="true" />
+              </a>
+
+              {NAV_GROUPS.map((g) => {
+                const isOpen = expanded === g.id;
+                const listId = `mobile-nav-${g.id}`;
+                return (
+                  <div key={g.id} className="border-b border-border">
+                    <button
+                      type="button"
+                      className="flex min-h-14 w-full items-center justify-between text-lg font-semibold text-text"
+                      aria-expanded={isOpen}
+                      aria-controls={listId}
+                      onClick={() => setExpanded((e) => (e === g.id ? null : g.id))}
+                    >
+                      {g.label}
+                      <ChevronDown size={18} className={cn('transition-transform duration-200', isOpen && 'rotate-180')} aria-hidden="true" />
+                    </button>
+                    {isOpen && (
+                      <ul id={listId} className="grid grid-cols-2 gap-x-4 pb-3">
+                        <li className="col-span-2">
+                          <button type="button" onClick={() => go({ tab: g.id })} className="flex min-h-11 w-full items-center text-left text-[15px] font-semibold text-accent">
+                            Shop all {g.label.toLowerCase()}
+                          </button>
+                        </li>
+                        {g.links.map((l) => (
+                          <li key={l.label}>
+                            <button type="button" onClick={() => go(l.patch)} className="flex min-h-11 w-full items-center text-left text-[15px] text-text-muted hover:text-accent">
+                              {l.label}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })}
+              {NAV_EXTRAS.map((l) => (
+                <button
+                  key={l.label}
+                  type="button"
+                  onClick={() => go(l.patch)}
+                  className={cn('flex min-h-14 w-full items-center border-b border-border text-left text-lg font-semibold text-text', l.label === 'Sale' && 'text-accent')}
+                >
                   {l.label}
                 </button>
               ))}
-            </div>
-            <div className="grid grid-cols-3 gap-2 border-t border-line p-4">
-              <button type="button" className="chip justify-center" onClick={() => { close(); setSearchOpen(true); }}><Search size={15} /> Search</button>
-              <button type="button" className="chip justify-center" onClick={() => openPanel('wishlist')}><Heart size={15} /> {wishlist.length}</button>
-              <button type="button" className="chip justify-center" onClick={() => openPanel('cart')}><ShoppingBag size={15} /> {totals.count}</button>
+            </nav>
+            <div className="grid grid-cols-2 gap-2 border-t border-border p-4">
+              <button type="button" className="chip h-11 justify-center text-[14px]" onClick={() => openPanel('wishlist')}>
+                <Heart size={16} aria-hidden="true" /> Wishlist ({wishlist.length})
+              </button>
+              <button type="button" className="chip h-11 justify-center text-[14px]" onClick={() => openPanel('cart')}>
+                <ShoppingBag size={16} aria-hidden="true" /> Cart ({totals.count})
+              </button>
             </div>
           </motion.div>
         </div>
